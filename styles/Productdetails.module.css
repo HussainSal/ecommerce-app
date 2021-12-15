@@ -1,0 +1,98 @@
+.card {
+  width: 1170px;
+  height: 509px;
+  margin: auto;
+  margin-top: 121px;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 1px 10px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 130px;
+  /* border-radius: 25px; */
+}
+
+.imageBox {
+  width: 357px;
+  height: 487px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0px;
+}
+
+.textBox {
+  display: flex;
+  flex-direction: column;
+  width: 549px;
+  margin-top: 70px;
+}
+
+.starBox {
+  margin-top: 12px;
+}
+
+.priceBox {
+  display: flex;
+  margin-top: 12px;
+}
+
+.addToCart {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.shareBox {
+  display: flex;
+}
+
+.socialSites {
+  height: 15px;
+}
+
+.goldStar svg * {
+  fill: #ffc416;
+}
+
+.starBox {
+  display: flex;
+  align-items: center;
+}
+
+.containerProductDetail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.descriptionSection {
+  background-color: #f9f8fe;
+  margin-bottom: 80px;
+}
+
+.descrptionContainer {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-top: 110px;
+  padding-bottom: 121px;
+  width: 1155px;
+  cursor: pointer;
+}
+
+.descrptionHeading {
+  display: flex;
+  width: 672px;
+  justify-content: space-between;
+}
+
+.descriptionText1 {
+  margin-top: 60px;
+}
+
+.moredetailsDescription {
+  display: flex;
+  align-items: center;
+  padding-bottom: 15px;
+}

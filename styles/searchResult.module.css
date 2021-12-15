@@ -1,0 +1,132 @@
+.searchResultContainer {
+  margin: auto;
+  margin-top: 127px;
+  display: flex;
+  justify-content: center;
+  align-content: space-around;
+}
+
+.searchResultBox {
+  display: flex;
+  justify-content: space-between;
+  width: 901px;
+}
+
+.searchResultItem {
+  width: 506px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.inputPerPage {
+  width: 100px;
+  border: 1px solid #e7e6ef;
+  margin-left: 5px;
+  color: #8a8fb9;
+  text-align: center;
+}
+
+.inputPerPage:focus {
+  border: 1px solid #e7e6ef;
+  outline: none;
+}
+
+.inputPerPageLabel {
+  display: flex;
+  color: #8a8fb9;
+}
+
+/* SEARCHED SECTION */
+
+.searchedOutputSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 100px;
+}
+
+.searchedOutput {
+  width: 921px;
+  height: 230px;
+  display: flex;
+  margin: 28px;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.searchedOutput:hover {
+  transition: all 0.3s;
+  transform: scale(1.03);
+}
+
+.searchedOutputImage {
+  width: 284px;
+  height: 197px;
+  background-color: #dbdbdb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 16px;
+  padding: 50px;
+}
+
+.searchedOutputData {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  height: 175px;
+  margin-top: 26px;
+}
+
+.searchedOutputTextSlice1 {
+  display: flex;
+  align-items: center;
+}
+
+.searchedOutputTextSlice2 {
+  display: flex;
+  margin-top: 8px;
+}
+
+.searchedOutputTextSlice4 {
+  display: flex;
+  width: 144px;
+  justify-content: space-between;
+}
+
+.circleBox {
+  display: flex;
+  width: 50px;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+
+.circle {
+  width: 12.15px;
+  height: 12.15px;
+  border-radius: 50%;
+  display: block;
+}
+
+.color1 {
+  background-color: #de9034;
+}
+.color2 {
+  background-color: #e60584;
+}
+.color3 {
+  background-color: #5e37ff;
+}
+
+.ratingStarBox {
+  margin-left: 16px;
+}
+
+.goldStar svg * {
+  fill: #ffc416;
+}

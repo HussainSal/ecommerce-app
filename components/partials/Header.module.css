@@ -1,0 +1,16 @@
+.section {
+}
+
+.container {
+  background-color: #f6f5ff;
+  height: 286px;
+}
+
+.textContainer {
+  margin: 95px 0px 125px 375px;
+  display: inline-block;
+}
+
+.subTextContainer {
+  display: flex;
+}
