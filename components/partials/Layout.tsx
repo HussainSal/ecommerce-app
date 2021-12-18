@@ -51,6 +51,7 @@ const navItem = ["home", "pages", "products", "shop", "contact"];
 const Layout = ({ children, props }) => {
   const style = useStyle();
   const [currency, setcurrency] = useState("usd");
+  const [state, setState] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -61,7 +62,7 @@ const Layout = ({ children, props }) => {
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     const searchedData = inputRef.current?.value.toLocaleLowerCase();
-    router.push(`/${searchedData}`);
+    router.push(`/products/${searchedData}`);
     inputRef.current.value = "";
   };
 
@@ -104,9 +105,14 @@ const Layout = ({ children, props }) => {
               </FormControl>
             </Box>
             <Link className={`${classes.link} ${style.link}`}>
-              <Typography className={style.navigationItem} variant="subtitle1">
-                Login
-              </Typography>
+              <NextLink href={"/login"}>
+                <Typography
+                  className={style.navigationItem}
+                  variant="subtitle1"
+                >
+                  Login
+                </Typography>
+              </NextLink>
               <Login />
             </Link>
             <Link className={`${classes.link} ${style.link}`}>
@@ -127,7 +133,7 @@ const Layout = ({ children, props }) => {
           <div className={classes.linkBox2}>
             {navItem.map((cur, i) => {
               return (
-                <NextLink href={cur === "home" ? "/" : cur} key={i}>
+                <NextLink href={cur === "home" ? "/" : `/${cur}`} key={i}>
                   <Typography className={style.link2}>{cur}</Typography>
                 </NextLink>
               );

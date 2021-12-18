@@ -1,5 +1,4 @@
 import { Fragment, useState } from "react";
-import styles from "../styles/Home.module.css";
 import classes from "../styles/index.module.css";
 import Image from "next/image";
 import {
@@ -13,29 +12,17 @@ import {
 import { Grid } from "@mui/material";
 import promotinalLamp from "../assets/images/promotionallamp.png";
 import promotionChair from "../assets/images/promotionChair.png";
-import { featuredProductsData } from "../assets/data/featuredProductsData";
-import { latestProductsCategory } from "../assets/data/latestProductsData";
-import { latestProductData } from "../assets/data/latestProductsData";
+import { latestProductsCategory } from "../assets/data/allData";
 import { shopexOfferList } from "../assets/data/shopexOfferData";
-import { trendingProductsList1 } from "../assets/data/trendingProductsData";
 import uniqueProductSofa from "../assets/images/uniqueFeatureCough.png";
-import { trendingProductOffers } from "../assets/data/trendingProductsData";
-import img from "../assets/images/exclusiveChair1.png";
-import discountedChair from "../assets/images/discountedChair.png";
-import { exclusiveChairs } from "../assets/data/trendingProductsData";
-import {
-  discountedLinks,
-  discountedProducts,
-} from "../assets/data/discountedProducts";
+import { discountedLinks } from "../assets/data/allData";
 import { Tick } from "../components/icons/icon";
-import {
-  topCategoriesData,
-  topCAtegoryChangehandlerData,
-} from "../assets/data/topCategories";
-import { latestProductsNo } from "../assets/data/latestProductsData";
+import { topCAtegoryChangehandlerData } from "../assets/data/allData";
 import Divider from "../components/partials/Divider";
 import product5 from "../assets/images/trendingProduct(4).png";
 import product6 from "../assets/images/trendingProduct(5).png";
+import NextLink from "next/link";
+import { allData } from "../assets/data/allData";
 
 const useStyle = makeStyles({
   colorFB2E86: {
@@ -67,6 +54,35 @@ const useStyle = makeStyles({
       },
     },
   },
+});
+
+//FILTERING FEATURED DATA
+const featuredProductMatch = allData.filter((product) => {
+  return product.category?.includes("Featured Products");
+});
+
+//LATEST PRODUCT DATA
+const latestProductMatch = allData.filter((product) => {
+  return product.category?.includes("LatestProducts");
+});
+
+// TRENDING PRODUCTS DATA
+const trendingProductMatch = allData.filter((product) => {
+  return product.category?.includes("TrendingProducts");
+});
+
+const trendingProductMatch2 = allData.filter((product) => {
+  return product.category?.includes("TrendingProducts2");
+});
+
+// DISCOUNT PRODUCTS DATA
+const discountProductMatch = allData.filter((product) => {
+  return product.category?.includes("DiscountCategories");
+});
+
+// TOP PRODUCTS DATA
+const topProductMatch = allData.filter((product) => {
+  return product.category?.includes("TopCategories");
 });
 
 export default function Home() {
@@ -137,53 +153,50 @@ export default function Home() {
             <b>Featured Products</b>
           </Typography>
           <div className={classes.featuredProductsList}>
-            {featuredProductsData.map((cur, i) => {
+            {featuredProductMatch.map((cur, i) => {
               return (
-                <div key={i} className={classes.featuredProduct}>
-                  <Card
-                    className={`${classes.featuredProductCard} ${style.featuredProductCard}`}
-                  >
-                    <div className={classes.featuredProductImage}>
-                      <Image alt="" src={cur.image} />
-                      <Button
-                        className={classes.featuredButton}
-                        style={{
-                          // marginTop: "170px",
-                          backgroundColor: "#08d15f",
-                          color: "#fff",
-                        }}
-                        variant="contained"
-                      >
-                        View Shop
-                      </Button>
-                    </div>
-                    <div className={classes.featuredProductText}>
-                      <Typography
-                        style={{ marginTop: "8px" }}
-                        color="primary"
-                        variant="body1"
-                      >
-                        {cur.heading}
-                      </Typography>
-                      <div className={classes.featuredProductChange}>
-                        <span className={classes.change}></span>
-                        <span
-                          className={`${classes.change} ${style.colorF701A8}`}
-                        ></span>
-                        <span
-                          className={`${classes.change} ${style.color00009D}`}
-                        ></span>
+                <NextLink href={`products/chair/${cur.id}`}>
+                  <div key={i} className={classes.featuredProduct}>
+                    <Card
+                      className={`${classes.featuredProductCard} ${style.featuredProductCard}`}
+                    >
+                      <div className={classes.featuredProductImage}>
+                        <Image alt="" src={cur.image} />
                       </div>
+                      <div className={classes.featuredProductText}>
+                        <Typography
+                          style={{ marginTop: "8px" }}
+                          color="primary"
+                          variant="body1"
+                        >
+                          {cur.heading}
+                        </Typography>
+                        <div className={classes.featuredProductChange}>
+                          <span className={classes.change}></span>
+                          <span
+                            className={`${classes.change} ${style.colorF701A8}`}
+                          ></span>
+                          <span
+                            className={`${classes.change} ${style.color00009D}`}
+                          ></span>
+                        </div>
 
-                      <Typography className={style.color151875} variant="body2">
-                        {cur.code}
-                      </Typography>
-                      <Typography className={style.color151875} variant="body2">
-                        {cur.price}
-                      </Typography>
-                    </div>
-                  </Card>
-                </div>
+                        <Typography
+                          className={style.color151875}
+                          variant="body2"
+                        >
+                          {cur.code}
+                        </Typography>
+                        <Typography
+                          className={style.color151875}
+                          variant="body2"
+                        >
+                          {cur.price}
+                        </Typography>
+                      </div>
+                    </Card>
+                  </div>
+                </NextLink>
               );
             })}
           </div>
@@ -226,44 +239,46 @@ export default function Home() {
           </div>
           <div className={classes.latestProductList}>
             <Grid container columnGap="37px" rowGap="120px">
-              {latestProductData.map((cur, i) => {
+              {latestProductMatch.map((cur, i) => {
                 return (
                   cur.page == changeLatestCategory && (
-                    <Grid className={classes.latestGridBox} key={i} item>
-                      <Card className={style.card2}>
-                        <div className={classes.latestProductPicture}>
-                          <Image alt="" src={cur.image} />
-                        </div>
-                        <div className={classes.latestProductText}>
-                          <Typography style={{ color: "#151875" }}>
-                            {cur.name}
-                          </Typography>
-
-                          <div className={classes.latestPriceText}>
-                            <Typography
-                              variant="body2"
-                              style={{
-                                marginRight: "10px",
-                                color: "#151875",
-                                fontSize: "14px",
-                              }}
-                            >
-                              {cur.Price}
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              style={{
-                                textDecoration: "line-through",
-                                color: "#FB2448",
-                                fontSize: "12px",
-                              }}
-                            >
-                              {cur.EarlierPrice}
-                            </Typography>
+                    <NextLink href={`products/chair/${cur.id}`}>
+                      <Grid className={classes.latestGridBox} key={i} item>
+                        <Card className={style.card2}>
+                          <div className={classes.latestProductPicture}>
+                            <Image alt="" src={cur.image} />
                           </div>
-                        </div>
-                      </Card>
-                    </Grid>
+                          <div className={classes.latestProductText}>
+                            <Typography style={{ color: "#151875" }}>
+                              {cur.name}
+                            </Typography>
+
+                            <div className={classes.latestPriceText}>
+                              <Typography
+                                variant="body2"
+                                style={{
+                                  marginRight: "10px",
+                                  color: "#151875",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {cur.Price}
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                style={{
+                                  textDecoration: "line-through",
+                                  color: "#FB2448",
+                                  fontSize: "12px",
+                                }}
+                              >
+                                {cur.EarlierPrice}
+                              </Typography>
+                            </div>
+                          </div>
+                        </Card>
+                      </Grid>
+                    </NextLink>
                   )
                 );
               })}
@@ -387,42 +402,44 @@ export default function Home() {
           </Typography>
 
           <div className={classes.trendingProductsList1}>
-            {trendingProductsList1.map((cur, i) => {
+            {trendingProductMatch.map((cur, i) => {
               return (
-                <div key={i} className={classes.trendingProduct}>
-                  <div className={classes.trendingProductImage}>
-                    <Image src={cur.image} alt="" />
-                  </div>
-                  <div className={classes.trendingProductText}>
-                    <Typography
-                      style={{ color: "#151875", marginTop: "15px" }}
-                      variant="subtitle1"
-                    >
-                      {cur.name}
-                    </Typography>
-                    <div className={classes.trendingProductPrice}>
+                <NextLink href={`products/chair/${cur.id}`}>
+                  <div key={i} className={classes.trendingProduct}>
+                    <div className={classes.trendingProductImage}>
+                      <Image src={cur.image} alt="" />
+                    </div>
+                    <div className={classes.trendingProductText}>
                       <Typography
-                        style={{
-                          fontSize: "14px",
-                          lineHeight: "14px",
-                          color: "#151875",
-                        }}
+                        style={{ color: "#151875", marginTop: "15px" }}
+                        variant="subtitle1"
                       >
-                        {cur.price}
+                        {cur.name}
                       </Typography>
-                      <Typography
-                        style={{
-                          textDecoration: "line-through",
-                          fontSize: "12px",
-                          lineHeight: "12px",
-                          color: "#C4C4C4",
-                        }}
-                      >
-                        {cur.earlierPrice}
-                      </Typography>
+                      <div className={classes.trendingProductPrice}>
+                        <Typography
+                          style={{
+                            fontSize: "14px",
+                            lineHeight: "14px",
+                            color: "#151875",
+                          }}
+                        >
+                          {cur.price}
+                        </Typography>
+                        <Typography
+                          style={{
+                            textDecoration: "line-through",
+                            fontSize: "12px",
+                            lineHeight: "12px",
+                            color: "#C4C4C4",
+                          }}
+                        >
+                          {cur.earlierPrice}
+                        </Typography>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </NextLink>
               );
             })}
           </div>
@@ -477,24 +494,29 @@ export default function Home() {
             </div>
 
             <div className={classes.exclusiveSeatChairBox}>
-              {exclusiveChairs.map((cur, i) => {
+              {trendingProductMatch2.map((cur, i) => {
                 return (
-                  <div key={i} className={classes.exclusiveSeatChair}>
-                    <div className={classes.exclusiveChairImage}>
-                      <Image alt="" src={cur.image} />
+                  <NextLink href={`chair/${cur.id}`}>
+                    <div key={i} className={classes.exclusiveSeatChair}>
+                      <div className={classes.exclusiveChairImage}>
+                        <Image alt="" src={cur.image} />
+                      </div>
+                      <div className={classes.executiveChairText}>
+                        <Typography
+                          style={{ color: "#151875" }}
+                          variant="body2"
+                        >
+                          {cur.title}
+                        </Typography>
+                        <Typography
+                          style={{ color: "#151875", fontSize: "12px" }}
+                          variant="body2"
+                        >
+                          {cur.price}
+                        </Typography>
+                      </div>
                     </div>
-                    <div className={classes.executiveChairText}>
-                      <Typography style={{ color: "#151875" }} variant="body2">
-                        {cur.title}
-                      </Typography>
-                      <Typography
-                        style={{ color: "#151875", fontSize: "12px" }}
-                        variant="body2"
-                      >
-                        {cur.price}
-                      </Typography>
-                    </div>
-                  </div>
+                  </NextLink>
                 );
               })}
             </div>
@@ -534,7 +556,7 @@ export default function Home() {
               })}
             </div>
           </div>
-          {discountedProducts.map((data, i) => {
+          {discountProductMatch.map((data, i) => {
             return (
               data.name === discountItemActiveLink && (
                 <div key={i} className={classes.discountProductsSubcontainer2}>
@@ -547,7 +569,7 @@ export default function Home() {
                       variant="subtitle2"
                       style={{ marginTop: "15px" }}
                     >
-                      {data.name === discountItemActiveLink && data.category}
+                      {data.name === discountItemActiveLink && data.title}
                     </Typography>
                     <Typography
                       variant="subtitle1"
@@ -584,19 +606,21 @@ export default function Home() {
                       })}
                     </Grid>
 
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{
-                        textTransform: "capitalize",
-                        height: "57px",
-                        width: "200px",
-                        marginTop: "40px",
-                      }}
-                      disableElevation
-                    >
-                      Shop now
-                    </Button>
+                    <NextLink href={`products/chair/${data.id}`}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{
+                          textTransform: "capitalize",
+                          height: "57px",
+                          width: "200px",
+                          marginTop: "40px",
+                        }}
+                        disableElevation
+                      >
+                        Shop now
+                      </Button>
+                    </NextLink>
                   </div>
                   <div className={classes.discountProductsSubcontainer2Image}>
                     <Image src={data.image} />
@@ -607,6 +631,7 @@ export default function Home() {
           })}
         </div>
       </section>
+
       {/* TOP CATEGORIES */}
       <section className={classes.sectionTopCategories}>
         <div className={classes.containerTopProducts}>
@@ -617,25 +642,27 @@ export default function Home() {
             <b>Top Categories</b>
           </Typography>
           <div className={classes.topCategoriesList}>
-            {topCategoriesData.map((cur, i) => {
+            {topProductMatch.map((cur, i) => {
               return (
-                changeTopCategory === cur.category && (
+                changeTopCategory === cur.identifier && (
                   <div key={i} className={classes.topCategoriesProduct}>
                     <div className={classes.topCategoriesImage}>
                       <div className={classes.topCategoriesInnerImage}>
                         <Image alt="" src={cur.image} />
                       </div>
-                      <Button
-                        className={classes.topCategoryButton}
-                        style={{
-                          marginTop: "170px",
-                          backgroundColor: "#08d15f",
-                          color: "#fff",
-                        }}
-                        variant="contained"
-                      >
-                        View Shop
-                      </Button>
+                      <NextLink href={`products/chair/${cur.id}`}>
+                        <Button
+                          className={classes.topCategoryButton}
+                          style={{
+                            marginTop: "170px",
+                            backgroundColor: "#08d15f",
+                            color: "#fff",
+                          }}
+                          variant="contained"
+                        >
+                          View Shop
+                        </Button>
+                      </NextLink>
                     </div>
                     <div className={classes.topCategoriesText}>
                       <Typography color="secondary" variant="subtitle1">
