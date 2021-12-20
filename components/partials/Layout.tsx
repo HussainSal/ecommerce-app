@@ -18,6 +18,7 @@ import {
 import { footerData1 } from "./FooterData";
 import { useRouter } from "next/dist/client/router";
 import NextLink from "next/link";
+import { useAppContext } from "../../store/authContext";
 
 const useStyle = makeStyles({
   navigationItem: {
@@ -48,10 +49,12 @@ const useStyle = makeStyles({
 
 const navItem = ["home", "pages", "products", "shop", "contact"];
 
-const Layout = ({ children, props }) => {
+const Layout = ({ children }) => {
   const style = useStyle();
+  const ctx = useAppContext();
+
+  console.log(ctx);
   const [currency, setcurrency] = useState("usd");
-  const [state, setState] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -65,6 +68,8 @@ const Layout = ({ children, props }) => {
     router.push(`/products/${searchedData}`);
     inputRef.current.value = "";
   };
+
+  // router.push(ctx.loggedin ? '/account': '/login')
 
   return (
     <Fragment>
@@ -105,12 +110,12 @@ const Layout = ({ children, props }) => {
               </FormControl>
             </Box>
             <Link className={`${classes.link} ${style.link}`}>
-              <NextLink href={"/login"}>
+              <NextLink href={`${ctx.loggedin ? "/account" : "/login"}`}>
                 <Typography
                   className={style.navigationItem}
                   variant="subtitle1"
                 >
-                  Login
+                  {ctx.loggedin ? "Account" : "login"}
                 </Typography>
               </NextLink>
               <Login />

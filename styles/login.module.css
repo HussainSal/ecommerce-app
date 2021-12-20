@@ -24,7 +24,10 @@
 }
 
 .form {
-  /* margin: auto; */
   text-align: center;
-  /* display: inline-block; */
+}
+
+.signupUserCard {
+  width: 580px;
+  height: 550px;
 }

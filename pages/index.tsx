@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import classes from "../styles/index.module.css";
 import Image from "next/image";
 import {
@@ -23,6 +23,11 @@ import product5 from "../assets/images/trendingProduct(4).png";
 import product6 from "../assets/images/trendingProduct(5).png";
 import NextLink from "next/link";
 import { allData } from "../assets/data/allData";
+
+import { collection, addDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+
+const db = getFirestore();
 
 const useStyle = makeStyles({
   colorFB2E86: {
@@ -155,8 +160,8 @@ export default function Home() {
           <div className={classes.featuredProductsList}>
             {featuredProductMatch.map((cur, i) => {
               return (
-                <NextLink href={`products/chair/${cur.id}`}>
-                  <div key={i} className={classes.featuredProduct}>
+                <NextLink key={i} href={`products/chair/${cur.id}`}>
+                  <div className={classes.featuredProduct}>
                     <Card
                       className={`${classes.featuredProductCard} ${style.featuredProductCard}`}
                     >
@@ -220,6 +225,7 @@ export default function Home() {
             {latestProductsCategory.map((cur, i) => {
               return (
                 <Typography
+                  key={i}
                   variant="body1"
                   className={`${
                     changeLatestCategory === i
@@ -242,8 +248,8 @@ export default function Home() {
               {latestProductMatch.map((cur, i) => {
                 return (
                   cur.page == changeLatestCategory && (
-                    <NextLink href={`products/chair/${cur.id}`}>
-                      <Grid className={classes.latestGridBox} key={i} item>
+                    <NextLink key={i} href={`products/chair/${cur.id}`}>
+                      <Grid className={classes.latestGridBox} item>
                         <Card className={style.card2}>
                           <div className={classes.latestProductPicture}>
                             <Image alt="" src={cur.image} />
@@ -404,8 +410,8 @@ export default function Home() {
           <div className={classes.trendingProductsList1}>
             {trendingProductMatch.map((cur, i) => {
               return (
-                <NextLink href={`products/chair/${cur.id}`}>
-                  <div key={i} className={classes.trendingProduct}>
+                <NextLink key={i} href={`products/chair/${cur.id}`}>
+                  <div className={classes.trendingProduct}>
                     <div className={classes.trendingProductImage}>
                       <Image src={cur.image} alt="" />
                     </div>
@@ -496,8 +502,8 @@ export default function Home() {
             <div className={classes.exclusiveSeatChairBox}>
               {trendingProductMatch2.map((cur, i) => {
                 return (
-                  <NextLink href={`chair/${cur.id}`}>
-                    <div key={i} className={classes.exclusiveSeatChair}>
+                  <NextLink key={i} href={`chair/${cur.id}`}>
+                    <div className={classes.exclusiveSeatChair}>
                       <div className={classes.exclusiveChairImage}>
                         <Image alt="" src={cur.image} />
                       </div>
