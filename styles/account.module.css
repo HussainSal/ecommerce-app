@@ -5,6 +5,13 @@
   justify-content: space-around;
   margin-top: 120px;
   margin-bottom: 80px;
+  /* position: relative; */
+}
+
+.accountSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profileContainer {
@@ -15,6 +22,8 @@
   margin: 40px 0px;
   justify-content: space-around;
   justify-content: space-around;
+  position: relative;
+  overflow: visible;
 }
 
 .profileItem {
@@ -32,4 +41,26 @@
   padding: 0px 20px;
   margin: 40px 0px;
   justify-content: space-around;
+}
+
+.editIcon {
+  position: absolute;
+  top: -6%;
+  right: -7%;
+  z-index: 100055;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right bottom,
+    rgb(247 187 242),
+    rgb(251, 46, 134)
+  );
+}
+
+.mainIcon {
+  position: absolute;
+  top: 25%;
+  left: 27%;
 }

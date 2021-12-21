@@ -11,14 +11,18 @@ import {
   signOut,
 } from "firebase/auth";
 import { useRouter } from "next/dist/client/router";
+import { useAppContext } from "../store/authContext";
+import EditIcon from "@material-ui/icons/Edit";
+import { useState } from "react";
 
 const useStyle = makeStyles({});
 
 const account = () => {
   const style = useStyle();
   const router = useRouter();
-
+  const ctx = useAppContext();
   const auth = getAuth();
+  const [editable, setEditable] = useState(false);
 
   const signoutHandler = () => {
     signOut(auth)
@@ -32,24 +36,61 @@ const account = () => {
   };
 
   return (
-    <section>
+    <section className={classes.accountSection}>
       <Card className={classes.accountContainer}>
-        <Card className={classes.profileContainer}>
-          {userinfo.map((cur) => {
-            return (
-              <div className={classes.profileItem}>
-                <Typography>{cur.heading} :</Typography>
-                <TextField
-                  value={cur.info}
-                  style={{ width: "270px" }}
-                  disabled
-                  variant="outlined"
-                >
-                  {cur.info}
-                </TextField>
-              </div>
-            );
-          })}
+        <Card
+          className={classes.profileContainer}
+          style={{ overflow: "visible" }}
+        >
+          <div
+            onClick={() => {
+              setEditable(!editable);
+            }}
+            className={classes.editIcon}
+          >
+            <EditIcon className={classes.mainIcon} style={{ color: "#FFF" }} />
+          </div>
+          <div className={classes.profileItem}>
+            <Typography>Name :</Typography>
+            <TextField
+              value={ctx.loggedin ? ctx.loggedin.userData.name : "Name"}
+              style={{ width: "270px" }}
+              disabled
+              variant="outlined"
+            ></TextField>
+          </div>
+          <div className={classes.profileItem}>
+            <Typography>Email :</Typography>
+            <TextField
+              value={ctx.loggedin ? ctx.loggedin.userData.email : "Email"}
+              style={{ width: "270px" }}
+              disabled
+              variant="outlined"
+            ></TextField>
+          </div>
+          <div className={classes.profileItem}>
+            <Typography>Phone :</Typography>
+            <TextField
+              value="12345689"
+              type="number"
+              style={{ width: "270px" }}
+              disabled={!editable}
+              variant="outlined"
+            >
+              {/* 123456789 */}
+            </TextField>
+          </div>
+          <div className={classes.profileItem}>
+            <Typography>Address :</Typography>
+            <TextField
+              value="abc street,NY"
+              style={{ width: "270px" }}
+              disabled={!editable}
+              variant="outlined"
+            >
+              {" "}
+            </TextField>
+          </div>
         </Card>
         <div>
           <Card className={classes.passwordContainer}>
@@ -83,6 +124,19 @@ const account = () => {
           </Button>
         </div>
       </Card>
+
+      <Button
+        color="primary"
+        variant="contained"
+        style={{
+          width: "300px",
+          textTransform: "capitalize",
+          marginBottom: "20px",
+          visibility: `${editable ? "visible" : "hidden"}`,
+        }}
+      >
+        Save Changes
+      </Button>
     </section>
   );
 };
