@@ -126,9 +126,15 @@ const Layout = ({ children }) => {
               </Typography>
               <Heart />
             </Link>
-            <Typography className={style.navigationItem} variant="subtitle1">
-              <AddToCart />
-            </Typography>
+            <NextLink href={"/shopingcart"}>
+              <Typography
+                style={{ cursor: "pointer" }}
+                className={style.navigationItem}
+                variant="subtitle1"
+              >
+                <AddToCart />
+              </Typography>
+            </NextLink>
           </div>
         </div>
         <div className={classes.navigation2}>

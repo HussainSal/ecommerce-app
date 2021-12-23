@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "../styles/account.module.css";
 import { Button, Card, TextField, Typography } from "@material-ui/core";
 import { userinfo } from "../assets/data/account";
 import { makeStyles } from "@material-ui/core";
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  getAuth,
-  signOut,
-} from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { useRouter } from "next/dist/client/router";
 import { useAppContext } from "../store/authContext";
 import EditIcon from "@material-ui/icons/Edit";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { setDoc, doc, getFirestore } from "firebase/firestore";
+// import { item } from "./products/[searchResults]/[productDetail]";
 
 const useStyle = makeStyles({});
+
+const db = getFirestore();
+
+// console.log(item);
 
 const account = () => {
   const style = useStyle();
@@ -23,7 +23,34 @@ const account = () => {
   const ctx = useAppContext();
   const auth = getAuth();
   const [editable, setEditable] = useState(false);
+  const [phonenumber, setPhoneumber] = useState("");
+  const [address, setAddress] = useState("");
 
+  console.log(ctx.loggedin);
+
+  //  SENDING UPDATED PHONENUMBER AND ADDRESS
+
+  const saveHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    const userPhNumber = phonenumber;
+    const userAddress = address;
+    const userName = ctx.loggedin && ctx.loggedin.userData.name;
+    const userEmail = ctx.loggedin && ctx.loggedin.userData.email;
+    // ctx.reset();
+    // ctx.reset();
+    {
+      ctx.loggedin &&
+        setDoc(doc(db, "user", ctx.loggedin.userId), {
+          name: userName,
+          email: userEmail,
+          phonenumber: userPhNumber,
+          address: userAddress,
+          cartItems: ctx.loggedin.userData.cartItems,
+        });
+
+      setEditable(false);
+    }
+  };
   const signoutHandler = () => {
     signOut(auth)
       .then(() => {
@@ -34,6 +61,11 @@ const account = () => {
         console.log("signout failed");
       });
   };
+
+  useEffect(() => {
+    setAddress(ctx.loggedin && ctx.loggedin.userData.address);
+    setPhoneumber(ctx.loggedin && ctx.loggedin.userData.phonenumber);
+  }, [ctx.loggedin]);
 
   return (
     <section className={classes.accountSection}>
@@ -50,47 +82,80 @@ const account = () => {
           >
             <EditIcon className={classes.mainIcon} style={{ color: "#FFF" }} />
           </div>
-          <div className={classes.profileItem}>
-            <Typography>Name :</Typography>
-            <TextField
-              value={ctx.loggedin ? ctx.loggedin.userData.name : "Name"}
-              style={{ width: "270px" }}
-              disabled
-              variant="outlined"
-            ></TextField>
-          </div>
-          <div className={classes.profileItem}>
-            <Typography>Email :</Typography>
-            <TextField
-              value={ctx.loggedin ? ctx.loggedin.userData.email : "Email"}
-              style={{ width: "270px" }}
-              disabled
-              variant="outlined"
-            ></TextField>
-          </div>
-          <div className={classes.profileItem}>
-            <Typography>Phone :</Typography>
-            <TextField
-              value="12345689"
-              type="number"
-              style={{ width: "270px" }}
-              disabled={!editable}
-              variant="outlined"
+          <form className={classes.form} onSubmit={saveHandler}>
+            <div className={classes.profileItem}>
+              <Typography>Name :</Typography>
+              <TextField
+                value={ctx.loggedin ? ctx.loggedin.userData.name : "Name"}
+                style={{ width: "270px" }}
+                disabled
+                variant="outlined"
+              ></TextField>
+            </div>
+            <div className={classes.profileItem}>
+              <Typography>Email :</Typography>
+              <TextField
+                value={ctx.loggedin ? ctx.loggedin.userData.email : "Email"}
+                style={{ width: "270px" }}
+                disabled
+                variant="outlined"
+              ></TextField>
+            </div>
+            <div className={classes.profileItem}>
+              <Typography>Phone :</Typography>
+              <TextField
+                type="number"
+                style={{ width: "270px" }}
+                disabled={!editable}
+                onChange={(e) => {
+                  setPhoneumber(e.target.value);
+                }}
+                value={phonenumber}
+                variant="outlined"
+              ></TextField>
+            </div>
+            <div className={classes.profileItem}>
+              <Typography>Address :</Typography>
+              <TextField
+                id="address"
+                style={{ width: "270px" }}
+                disabled={!editable}
+                variant="outlined"
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+                value={address}
+              ></TextField>
+            </div>
+
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              style={{
+                width: "300px",
+                textTransform: "capitalize",
+                marginBottom: "20px",
+                visibility: `${editable ? "visible" : "hidden"}`,
+              }}
             >
-              {/* 123456789 */}
-            </TextField>
-          </div>
-          <div className={classes.profileItem}>
-            <Typography>Address :</Typography>
-            <TextField
-              value="abc street,NY"
-              style={{ width: "270px" }}
-              disabled={!editable}
-              variant="outlined"
+              Save Changes
+            </Button>
+            <Button
+              // type="submit"
+              onClick={() => setEditable(false)}
+              color="primary"
+              variant="contained"
+              style={{
+                width: "300px",
+                textTransform: "capitalize",
+                // marginBottom: "20px",
+                visibility: `${editable ? "visible" : "hidden"}`,
+              }}
             >
-              {" "}
-            </TextField>
-          </div>
+              Cancel
+            </Button>
+          </form>
         </Card>
         <div>
           <Card className={classes.passwordContainer}>
@@ -124,19 +189,6 @@ const account = () => {
           </Button>
         </div>
       </Card>
-
-      <Button
-        color="primary"
-        variant="contained"
-        style={{
-          width: "300px",
-          textTransform: "capitalize",
-          marginBottom: "20px",
-          visibility: `${editable ? "visible" : "hidden"}`,
-        }}
-      >
-        Save Changes
-      </Button>
     </section>
   );
 };

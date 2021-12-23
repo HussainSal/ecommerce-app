@@ -1,0 +1,81 @@
+.cartSection {
+  display: flex;
+  margin: auto;
+  margin-top: 131px;
+  margin-bottom: 50px;
+  justify-content: space-evenly;
+}
+
+.cartContainer {
+  display: flex;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.productsContainerHeading {
+  width: 712px;
+  text-align: start;
+  display: flex;
+  justify-content: space-between;
+  text-align: start;
+  margin-bottom: 35px;
+}
+
+.cartProductList {
+  display: grid;
+  grid-template-columns: 300px 152px 208px 124px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #e1e1e4;
+}
+
+.cartProduct {
+  display: flex;
+}
+
+.cartProductImage {
+  width: 120px;
+  height: 110px;
+  padding: 15px;
+}
+
+.cartProductDescription {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+/* PRICE CONTAINER*/
+
+.totalContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+.totalPriceContainer {
+  width: 371px;
+  height: 300px;
+  background-color: #f4f4fc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 3px;
+  margin-top: 0px;
+}
+
+.priceitem {
+  display: flex;
+  justify-content: space-between;
+  width: 308px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #e8e6f1;
+}
+
+.priceItemTotal {
+  border-bottom: 2px dotted #000;
+  border-top: 2px dotted #000;
+  padding: 15px;
+}

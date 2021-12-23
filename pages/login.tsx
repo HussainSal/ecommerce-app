@@ -62,6 +62,7 @@ const login = () => {
             setDoc(doc(db, "user", user.uid), {
               name: fullNameRef,
               email: email,
+              // cartItems: [],
             });
 
             router.push("/");

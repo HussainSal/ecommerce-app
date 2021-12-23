@@ -31,7 +31,10 @@ const AppContext = createContext({
 export function AppWrapper({ children }) {
   const [loggedin, setLoggedin] = useState(null);
   const [loading, setLoading] = useState(true);
+  // const [reset, setReset] = useState(0);
   const router = useRouter();
+
+  // setReset(Math.random());
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

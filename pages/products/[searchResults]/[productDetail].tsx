@@ -14,15 +14,29 @@ import { productMatch } from "../../../assets/data/allData";
 import { Button } from "@material-ui/core";
 import socialsites from "../../assets/images/socialsites.png";
 import brands from "../../assets/images/brands.png";
+import { useAppContext } from "../../../store/authContext";
+import { doc, setDoc, getFirestore, updateDoc } from "firebase/firestore";
 
 const productDetail = () => {
   const router = useRouter();
   const productId = router.query.productDetail;
-  console.log(productId);
+  // console.log(productId);
+  const db = getFirestore();
   const dataMatch = productMatch(+productId);
-  console.log(dataMatch);
   const stars = [1, 2, 3, 4, 5];
   const additionalInfo = ["Description", "AdditionalInfo", "Reviews", "Video"];
+  const ctx = useAppContext();
+
+  const itemToCart = (id: number) => {
+    console.log(ctx.loggedin.userData.cartItems.length);
+
+    updateDoc(doc(db, "user", ctx.loggedin.userId), {
+      cartItems:
+        ctx.loggedin.userData.cartItems.length > 1
+          ? [...ctx.loggedin.userData.cartItems, id]
+          : [id],
+    });
+  };
 
   return (
     <Fragment>
@@ -94,7 +108,13 @@ const productDetail = () => {
                     variant="subtitle1"
                     style={{ lineHeight: "29px", marginRight: "20px" }}
                   >
-                    <Button variant="contained" color="primary">
+                    <Button
+                      onClick={() => {
+                        itemToCart(dataMatch.id);
+                      }}
+                      variant="contained"
+                      color="primary"
+                    >
                       Add To Cart
                     </Button>
                   </Typography>
