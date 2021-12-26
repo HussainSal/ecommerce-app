@@ -26,8 +26,9 @@
 .cartProductList {
   display: grid;
   grid-template-columns: 300px 152px 208px 124px;
-  padding-bottom: 20px;
-  border-bottom: 3px solid #e1e1e4;
+  /* padding-bottom: 20px; */
+  margin-bottom: 30px;
+  position: relative;
 }
 
 .cartProduct {
@@ -36,8 +37,10 @@
 
 .cartProductImage {
   width: 120px;
-  height: 110px;
-  padding: 15px;
+  height: 116px;
+  padding: 32px;
+  background-color: #eaeaea;
+  margin-right: 10px;
 }
 
 .cartProductDescription {
@@ -78,4 +81,11 @@
   border-bottom: 2px dotted #000;
   border-top: 2px dotted #000;
   padding: 15px;
+}
+
+.cancelItem {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  cursor: pointer;
 }

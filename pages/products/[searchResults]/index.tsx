@@ -59,11 +59,13 @@ const searchResults = (props) => {
               <b>Ecommerce Acceories & Fashion item</b>
             </Typography>
             <Typography
+              color="primary"
               style={{
-                fontSize: "12px",
-                lineHeight: "14px",
-                color: "#8A8FB9",
-                fontWeight: "400",
+                fontSize: "16px",
+                lineHeight: "16px",
+                marginTop: "15px",
+                fontWeight: "bold",
+                // color: "#8A8FB9",
               }}
               variant="body1"
             >

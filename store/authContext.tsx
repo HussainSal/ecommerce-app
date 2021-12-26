@@ -26,22 +26,24 @@ const auth = getAuth();
 const AppContext = createContext({
   loggedin: null,
   loading: true,
+  reset: null,
+  setReset: null,
 });
 
 export function AppWrapper({ children }) {
   const [loggedin, setLoggedin] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [reset, setReset] = useState(0);
+  const [reset, setReset] = useState(0);
   const router = useRouter();
-
-  // setReset(Math.random());
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
+        console.log(uid);
         //  ENSURING THAT USER DOES NOT GO ON LOGIN PAGE IF HE IS LOGGED IN
         router.pathname == "/login" && router.push("/");
+        // setReset(Math.random)
 
         // GETTIN USER DATA i.e HIS INFORMATION
         const gettingData = async () => {
@@ -65,10 +67,10 @@ export function AppWrapper({ children }) {
         console.log("not signed in");
       }
     });
-  }, []);
+  }, [reset]);
 
   return (
-    <AppContext.Provider value={{ loggedin, loading }}>
+    <AppContext.Provider value={{ loggedin, loading, reset, setReset }}>
       {children}
     </AppContext.Provider>
   );

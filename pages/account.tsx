@@ -36,16 +36,17 @@ const account = () => {
     const userAddress = address;
     const userName = ctx.loggedin && ctx.loggedin.userData.name;
     const userEmail = ctx.loggedin && ctx.loggedin.userData.email;
-    // ctx.reset();
-    // ctx.reset();
+    ctx.setReset((prvState) => prvState + 1);
     {
       ctx.loggedin &&
         setDoc(doc(db, "user", ctx.loggedin.userId), {
           name: userName,
           email: userEmail,
-          phonenumber: userPhNumber,
-          address: userAddress,
-          cartItems: ctx.loggedin.userData.cartItems,
+          phonenumber: userPhNumber || "",
+          address: userAddress || "",
+          cartItems: ctx.loggedin.userData.cartItems
+            ? ctx.loggedin.userData.cartItems
+            : "",
         });
 
       setEditable(false);

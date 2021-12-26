@@ -135,12 +135,31 @@ const Layout = ({ children }) => {
                 <AddToCart />
               </Typography>
             </NextLink>
+            {ctx.loggedin &&
+              ctx.loggedin.userData.cartItems &&
+              ctx.loggedin.userData.cartItems.length > 0 && (
+                <div className={classes.cartItems}>
+                  <Typography
+                    className={classes.cartItemsText}
+                    style={{ color: "#FFF", fontSize: "14px" }}
+                  >
+                    {ctx.loggedin &&
+                      ctx.loggedin.userData.cartItems.length > 0 &&
+                      ctx.loggedin.userData.cartItems.length}
+                  </Typography>
+                </div>
+              )}
           </div>
         </div>
         <div className={classes.navigation2}>
-          <Typography style={{ color: "#0D0E43" }} variant="h4">
-            Hekto
-          </Typography>
+          <NextLink href={"/"}>
+            <Typography
+              style={{ color: "#0D0E43", cursor: "pointer" }}
+              variant="h4"
+            >
+              Hekto
+            </Typography>
+          </NextLink>
           <div className={classes.linkBox2}>
             {navItem.map((cur, i) => {
               return (

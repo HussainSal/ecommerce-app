@@ -27,15 +27,16 @@ const productDetail = () => {
   const additionalInfo = ["Description", "AdditionalInfo", "Reviews", "Video"];
   const ctx = useAppContext();
 
+  // ADDING ITEMS TO CART
   const itemToCart = (id: number) => {
-    console.log(ctx.loggedin.userData.cartItems.length);
-
+    // console.log(ctx.loggedin.userData.cartItems.length);
     updateDoc(doc(db, "user", ctx.loggedin.userId), {
-      cartItems:
-        ctx.loggedin.userData.cartItems.length > 1
-          ? [...ctx.loggedin.userData.cartItems, id]
-          : [id],
+      cartItems: ctx.loggedin.userData.cartItems
+        ? [...ctx.loggedin.userData.cartItems, id]
+        : [id],
     });
+
+    ctx.setReset((prvState) => prvState + 1);
   };
 
   return (

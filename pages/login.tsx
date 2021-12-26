@@ -73,6 +73,7 @@ const login = () => {
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            alert(errorMessage);
           });
     }
 
@@ -89,6 +90,7 @@ const login = () => {
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+            alert(errorMessage);
           });
     }
   };
