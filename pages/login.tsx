@@ -21,12 +21,15 @@ const useStyle = makeStyles({
     color: "9096B2",
 
     "&:hover > *": {
-      border: "none",
       outline: "none",
     },
     "&:focus > *": {
-      borderRadius: "none",
+      border: "2px solid red !important",
     },
+  },
+  errorText: {
+    color: "red",
+    paddingTop: "15px",
   },
 });
 
@@ -37,6 +40,7 @@ const login = () => {
   const inputFullNameRef = useRef<HTMLInputElement>(null);
 
   const [signup, setSignup] = useState(false);
+  const [error, setError] = useState(false);
   const router = useRouter();
 
   // WHETHER USER WANT TO  SIGNUP OR LOGIN
@@ -73,7 +77,7 @@ const login = () => {
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            alert(errorMessage);
+            setError(true);
           });
     }
 
@@ -89,8 +93,7 @@ const login = () => {
           })
           .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorMessage);
+            setError(true);
           });
     }
   };
@@ -192,6 +195,11 @@ const login = () => {
             >
               {!signup ? "Sign in" : "Sign Up"}
             </Button>
+            {error && (
+              <Typography className={style.errorText}>
+                Invalid Email or Password ! Try Again.{" "}
+              </Typography>
+            )}
           </form>
           <Typography
             onClick={signupHandler}

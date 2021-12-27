@@ -11,6 +11,7 @@ import { useAppContext } from "../store/authContext";
 import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import { CancelCart } from "../components/icons/icon";
+import { count } from "console";
 const headingList = ["Products", "Price", "Quantity", "Total"];
 
 const usestyle = makeStyles({
@@ -27,22 +28,38 @@ const shopingCart = () => {
   const ctx = useAppContext();
   const router = useRouter();
   const [cartItem, setCartItem] = useState([]);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState([]);
   const qtyRef = useRef<HTMLInputElement>(null);
-
-  const qtty = qtyRef.current?.value;
-  console.log(qtty);
 
   useEffect(() => {
     setCartItem(ctx.loggedin && ctx.loggedin.userData.cartItems);
   }, [ctx.loggedin]);
 
+  // making item 1
+
+  let counts = {};
+  let data = ctx.loggedin && ctx.loggedin.userData.cartItems;
+
+  function count_duplicate(a) {
+    if (a != null) {
+      for (let i = 0; i < a.length; i++) {
+        if (counts[a[i]]) {
+          counts[a[i]] += 1;
+        } else {
+          counts[a[i]] = 1;
+        }
+      }
+    }
+  }
+
+  count_duplicate(data);
+
   const dataCart =
-    cartItem &&
-    cartItem.map((cur) => {
+    counts &&
+    Object.keys(counts).map((cur) => {
       return allData
         .filter((item) => {
-          return item.id == cur;
+          return item.id == parseInt(cur);
         })
         .pop();
     });
@@ -70,26 +87,11 @@ const shopingCart = () => {
     ctx.setReset((prvState) => prvState + 1);
   };
 
-  const qtyChangeHandler = (id) => {};
+  const qtyChangeHandler = (id) => {
+    let quantity = qtyRef.current?.value;
+  };
 
-  // making item 1
-
-  let counts = {};
-
-  let a = ctx.loggedin && ctx.loggedin.userData.cartItems;
-  console.log(ctx.loggedin && ctx.loggedin.userData.cartItems);
-  function count_duplicate(a) {
-    for (let i = 0; i < a.length; i++) {
-      if (counts[a[i]]) {
-        counts[a[i]] += 1;
-      } else {
-        counts[a[i]] = 1;
-      }
-    }
-    console.log(counts);
-  }
-
-  count_duplicate(a);
+  //
 
   return (
     <section>
@@ -173,7 +175,14 @@ const shopingCart = () => {
                       min="1"
                       id={cur.id.toString()}
                       placeholder="1"
-                      ref={qtyRef}
+                      // value={
+                      //   counts ?
+                      //   Object.keys(counts).map((key) => {
+                      //     cur.id == parseInt(key)
+                      //       ? Object.keys(counts)[key]
+                      //       : 1;
+                      //   }) : 1
+                      // }
                       style={{
                         marginTop: "38px",
                         textAlign: "center",
@@ -192,7 +201,7 @@ const shopingCart = () => {
                         color="secondary"
                         variant="body2"
                       >
-                        $ {+cur.price * quantity}.00
+                        $ {+cur.price * 2}.00
                         <div
                           onClick={() => {
                             removeOneItem(cur.id);

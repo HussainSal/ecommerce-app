@@ -268,7 +268,7 @@ export default function Home() {
                                   fontSize: "14px",
                                 }}
                               >
-                                {cur.Price}
+                                {cur.price}
                               </Typography>
                               <Typography
                                 variant="body2"
@@ -450,59 +450,65 @@ export default function Home() {
             })}
           </div>
           <div className={classes.trendingProductsList1}>
-            <div className={classes.trendingProductOffer}>
-              <div className={classes.trendingProductOfferText}>
-                <Typography
-                  variant="h5"
-                  style={{
-                    color: "#151875",
-                    cursor: "pointer",
-                    marginBottom: "10px",
-                  }}
-                >
-                  23% off in all products
-                </Typography>
-                <Link
-                  style={{ cursor: "pointer" }}
-                  color="primary"
-                  variant="subtitle1"
-                >
-                  Shop now
-                </Link>
+            {
+              <NextLink href={"products/chair"}>
+                <div className={classes.trendingProductOffer}>
+                  <div className={classes.trendingProductOfferText}>
+                    <Typography
+                      variant="h5"
+                      style={{
+                        color: "#151875",
+                        cursor: "pointer",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      23% off in all products
+                    </Typography>
+                    <Link
+                      style={{ cursor: "pointer" }}
+                      color="primary"
+                      variant="subtitle1"
+                    >
+                      Shop now
+                    </Link>
+                  </div>
+                  <div className={classes.trendingProductImage2}>
+                    <Image alt="" src={product5} />
+                  </div>
+                </div>
+              </NextLink>
+            }
+            <NextLink href={"products/chair"}>
+              <div className={classes.trendingProductOffer3}>
+                <div className={classes.trendingProductOfferText}>
+                  <Typography
+                    variant="h5"
+                    style={{
+                      color: "#151875",
+                      cursor: "pointer",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    23% off in all products
+                  </Typography>
+                  <Link
+                    style={{ cursor: "pointer" }}
+                    color="primary"
+                    variant="subtitle1"
+                  >
+                    View Collection
+                  </Link>
+                </div>
+                <div className={classes.trendingProductImage3}>
+                  <Image alt="" src={product6} />
+                </div>
               </div>
-              <div className={classes.trendingProductImage2}>
-                <Image alt="" src={product5} />
-              </div>
-            </div>
-            <div className={classes.trendingProductOffer3}>
-              <div className={classes.trendingProductOfferText}>
-                <Typography
-                  variant="h5"
-                  style={{
-                    color: "#151875",
-                    cursor: "pointer",
-                    marginBottom: "10px",
-                  }}
-                >
-                  23% off in all products
-                </Typography>
-                <Link
-                  style={{ cursor: "pointer" }}
-                  color="primary"
-                  variant="subtitle1"
-                >
-                  View Collection
-                </Link>
-              </div>
-              <div className={classes.trendingProductImage3}>
-                <Image alt="" src={product6} />
-              </div>
-            </div>
+            </NextLink>
 
             <div className={classes.exclusiveSeatChairBox}>
               {trendingProductMatch2.map((cur, i) => {
                 return (
-                  <NextLink key={i} href={`chair/${cur.id}`}>
+                  <NextLink key={i} href={`products/chair/${cur.id}`}>
                     <div className={classes.exclusiveSeatChair}>
                       <div className={classes.exclusiveChairImage}>
                         <Image alt="" src={cur.image} />

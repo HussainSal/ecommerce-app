@@ -52,8 +52,6 @@ const navItem = ["home", "pages", "products", "shop", "contact"];
 const Layout = ({ children }) => {
   const style = useStyle();
   const ctx = useAppContext();
-
-  console.log(ctx);
   const [currency, setcurrency] = useState("usd");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -69,7 +67,23 @@ const Layout = ({ children }) => {
     inputRef.current.value = "";
   };
 
-  // router.push(ctx.loggedin ? '/account': '/login')
+  // taking out every item only one time from ctx
+
+  let counts = {};
+  let data = ctx.loggedin && ctx.loggedin.userData.cartItems;
+
+  function count_duplicate(a) {
+    if (a != null) {
+      for (let i = 0; i < a.length; i++) {
+        if (counts[a[i]]) {
+          counts[a[i]] += 1;
+        } else {
+          counts[a[i]] = 1;
+        }
+      }
+    }
+  }
+  count_duplicate(data);
 
   return (
     <Fragment>
@@ -144,8 +158,8 @@ const Layout = ({ children }) => {
                     style={{ color: "#FFF", fontSize: "14px" }}
                   >
                     {ctx.loggedin &&
-                      ctx.loggedin.userData.cartItems.length > 0 &&
-                      ctx.loggedin.userData.cartItems.length}
+                      Object.keys(counts).length > 0 &&
+                      Object.keys(counts).length}
                   </Typography>
                 </div>
               )}
