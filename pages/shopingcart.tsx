@@ -4,13 +4,13 @@ import Header from "../components/partials/Header";
 import { Button, Card, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import Image from "next/image";
-import test from "../assets/images/camera1.png";
 import { allData } from "../assets/data/allData";
 import { useState, useRef } from "react";
 import { useAppContext } from "../store/authContext";
 import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import { CancelCart } from "../components/icons/icon";
+import test from "../assets/images/camera1.png";
 import { count } from "console";
 const headingList = ["Products", "Price", "Quantity", "Total"];
 
@@ -175,14 +175,6 @@ const shopingCart = () => {
                       min="1"
                       id={cur.id.toString()}
                       placeholder="1"
-                      // value={
-                      //   counts ?
-                      //   Object.keys(counts).map((key) => {
-                      //     cur.id == parseInt(key)
-                      //       ? Object.keys(counts)[key]
-                      //       : 1;
-                      //   }) : 1
-                      // }
                       style={{
                         marginTop: "38px",
                         textAlign: "center",

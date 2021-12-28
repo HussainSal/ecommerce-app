@@ -1,0 +1,82 @@
+.container {
+  margin: auto;
+  margin-top: 120px;
+  margin-bottom: 200px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  /* width: 1150px; */
+}
+.subContainer1 {
+  display: flex;
+  justify-content: space-between;
+  width: 1150px;
+}
+
+.subContainer1Left {
+  display: flex;
+  max-width: 570px;
+  flex-direction: column;
+}
+
+.circleContainer {
+  width: 105px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #5625df;
+  display: inline-block;
+}
+
+.circle2 {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #5726df;
+  display: inline-block;
+}
+
+.sendMailBox {
+  width: 534px;
+  height: 414px;
+}
+
+.sendMailBoxSlice1 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.addressBox {
+  display: grid;
+  width: 489px;
+  height: 155px;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.descriptionBox {
+  display: flex;
+  margin-right: 30px;
+  align-items: center;
+}
+
+.descriptionTextBox {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.imageBox {
+  width: 703px;
+  height: 691px;
+  position: absolute;
+  z-index: 1000;
+  top: 346px;
+  right: 285px;
+}

@@ -13,7 +13,8 @@ import { Grid } from "@mui/material";
 import promotinalLamp from "../assets/images/promotionallamp.png";
 import promotionChair from "../assets/images/promotionChair.png";
 import { latestProductsCategory } from "../assets/data/allData";
-import { shopexOfferList } from "../assets/data/shopexOfferData";
+// import { shopexOfferList } from "../assets/data/shopexOfferData";
+import ShopexofferList from "../components/partials/ShopexofferList";
 import uniqueProductSofa from "../assets/images/uniqueFeatureCough.png";
 import { discountedLinks } from "../assets/data/allData";
 import { Tick } from "../components/icons/icon";
@@ -303,7 +304,8 @@ export default function Home() {
           >
             <b>What Shopex Offers</b>
           </Typography>
-          <div className={classes.shopexOfferList}>
+          <ShopexofferList />
+          {/* <div className={classes.shopexOfferList}>
             {shopexOfferList.map((cur, i) => {
               return (
                 <Box key={i} className={classes.shopexOfferBox}>
@@ -334,7 +336,7 @@ export default function Home() {
                 </Box>
               );
             })}
-          </div>
+          </div> */}
         </div>
       </section>
 

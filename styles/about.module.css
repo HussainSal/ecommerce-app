@@ -1,0 +1,68 @@
+.container {
+  margin: auto;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.historyBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 1135px;
+}
+
+.imageBox {
+  width: 555px;
+  height: 390px;
+}
+
+.textBox {
+  width: 550px;
+  margin-top: 40px;
+}
+
+.featuers {
+  margin-top: 140px;
+  text-align: center;
+  margin-bottom: 130px;
+}
+
+/* CLIENTS VIEWS */
+
+.clientsViews {
+  height: 484px;
+  width: 100vw;
+  background-color: #fbfbff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 302px;
+}
+
+.reviewBox {
+  width: 689px;
+  height: 265px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pictureBox {
+  width: 192px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 64px;
+  margin-bottom: 20px;
+}
+
+.img:not(:last-child) {
+  margin-right: 13px;
+}
+
+.nameBox {
+  text-align: center;
+}

@@ -47,7 +47,7 @@ const useStyle = makeStyles({
   },
 });
 
-const navItem = ["home", "pages", "products", "shop", "contact"];
+const navItem = ["home", "pages", "products", "about", "contact"];
 
 const Layout = ({ children }) => {
   const style = useStyle();
