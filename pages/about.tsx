@@ -124,6 +124,14 @@ const about = () => {
               enim nunc, sed sapien egestas ac nam. Tristique ultrices dolor
               aliquam lacus volutpat praesent.
             </Typography>
+
+            <div className={classes.changeclientBox}>
+              <span className={classes.changeclient} />
+              <span
+                className={`${classes.changeclient} ${classes.activeClient}`}
+              />
+              <span className={classes.changeclient} />
+            </div>
           </div>
         </div>
       </div>
