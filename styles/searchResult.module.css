@@ -55,6 +55,7 @@
   align-items: center;
   cursor: pointer;
   transition: all 0.3s;
+  position: relative;
 }
 
 .searchedOutput:hover {
@@ -129,4 +130,10 @@
 
 .goldStar svg * {
   fill: #ffc416;
+}
+
+.boxSelect {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
 }

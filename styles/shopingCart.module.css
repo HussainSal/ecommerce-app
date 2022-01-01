@@ -89,3 +89,65 @@
   right: 0%;
   cursor: pointer;
 }
+
+.containerWishlistItem {
+  margin: 100px 0px;
+}
+
+.ratingStarBox {
+  /* margin-left: 16px; */
+}
+
+.goldStar svg * {
+  fill: #ffc416;
+}
+
+/* WISHLIST */
+
+.wishlistProductDescription {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wishlistProductDescription > * {
+  margin-top: 5px;
+}
+
+.wishListPriceContainer {
+  width: 140px;
+  justify-content: space-between;
+  display: flex;
+}
+
+.cartWishlistImage {
+  width: 200px;
+  padding: 32px;
+  background-color: #eaeaea;
+  margin-right: 10px;
+}
+
+.bigCard {
+  padding: 50px 100px;
+}
+
+.wishlistCard {
+  position: relative;
+}
+
+.wishlistCard:hover {
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.wishlistDeleteIcon {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color: #e8e6f1;
+}
+
+.wishlistDeleteIcon:hover {
+  color: grey;
+}

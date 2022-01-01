@@ -134,12 +134,17 @@ const Layout = ({ children }) => {
               </NextLink>
               <Login />
             </Link>
-            <Link className={`${classes.link} ${style.link}`}>
-              <Typography className={style.navigationItem} variant="subtitle1">
-                Wishlist
-              </Typography>
-              <Heart />
-            </Link>
+            <NextLink href={"/wishlist"}>
+              <Link className={`${classes.link} ${style.link}`}>
+                <Typography
+                  className={style.navigationItem}
+                  variant="subtitle1"
+                >
+                  Wishlist
+                </Typography>
+                <Heart />
+              </Link>
+            </NextLink>
             <NextLink href={"/shopingcart"}>
               <Typography
                 style={{ cursor: "pointer" }}
@@ -234,7 +239,6 @@ const Layout = ({ children }) => {
                       <Link
                         key={i}
                         style={{
-                          // textDecoration: "none",
                           cursor: "pointer",
                           color: "#8A8FB9",
                           marginBottom: "21px",

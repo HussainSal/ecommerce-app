@@ -12,13 +12,21 @@ import {
   Favourite,
   Zoomin,
   RatingStar,
+  AddToCart,
+  Heart,
 } from "../../../components/icons/icon";
 import { useRouter } from "next/dist/client/router";
 import { Pagination } from "@mui/material";
 import NextLink from "next/link";
+import { updateDoc, doc, getFirestore } from "firebase/firestore";
+import { useAppContext } from "../../../store/authContext";
+import classes2 from "../../../styles/index.module.css";
 
 const searchResults = (props) => {
   const [change, setChange] = useState("Best Match");
+  const db = getFirestore();
+  const ctx = useAppContext();
+  const [takeToCart, setTakeToCart] = useState(false);
 
   const handleChange = (event) => {
     setChange(event.target.value);
@@ -43,6 +51,33 @@ const searchResults = (props) => {
   const filteredData = allData.filter((item) =>
     item.type.includes(`${searchedItem}`)
   );
+
+  const takeToProductDetail = (id: number) => {
+    router.push(`${searchedItem}/${id}`);
+  };
+
+  // ADDING ITEM TO CART
+  const itemToCart = (id: number) => {
+    // console.log(ctx.loggedin.userData.cartItems.length);
+    updateDoc(doc(db, "user", ctx.loggedin.userId), {
+      cartItems: ctx.loggedin.userData.cartItems
+        ? [...ctx.loggedin.userData.cartItems, id]
+        : [id],
+    });
+
+    ctx.setReset((prvState) => prvState + 1);
+  };
+
+  //ADDING ITEM TO WISHLIST
+  const itemToWishlist = (id: number) => {
+    updateDoc(doc(db, "user", ctx.loggedin.userId), {
+      wishlist: ctx.loggedin.userData.wishlist
+        ? [...ctx.loggedin.userData.wishlist, id]
+        : [id],
+    });
+
+    ctx.setReset((prvState) => prvState + 1);
+  };
 
   return (
     <div>
@@ -115,91 +150,127 @@ const searchResults = (props) => {
 
         {filteredData.slice((page - 1) * 8, page * 8).map((cur, i) => {
           return (
-            <NextLink href={`${searchedItem}/${cur.id}`}>
-              <Card
-                key={cur.id}
-                style={{ transition: "all .3s" }}
-                className={classes.searchedOutput}
-              >
-                <div className={classes.searchedOutputImage}>
-                  <Image alt="" src={cur.image} />
-                </div>
-                <div className={classes.searchedOutputData}>
-                  <div className={classes.searchedOutputTextSlice1}>
-                    <Typography
-                      variant="body1"
-                      style={{ color: "#111C85", textTransform: "capitalize" }}
-                    >
-                      {cur.name}
-                    </Typography>
-                    <div className={classes.circleBox}>
-                      <div
-                        className={`${classes.circle} ${classes.color1}`}
-                      ></div>
-                      <div className={`${classes.circle} ${classes.color2}`}>
-                        {" "}
-                      </div>
-                      <div className={`${classes.circle} ${classes.color3}`}>
-                        {" "}
-                      </div>
+            // <NextLink href={`${searchedItem}/${cur.id}`}>
+            <Card
+              onClick={() => !takeToCart && takeToProductDetail(cur.id)}
+              key={cur.id}
+              style={{ transition: "all .3s" }}
+              className={classes.searchedOutput}
+            >
+              <div className={classes.searchedOutputImage}>
+                <Image alt="" src={cur.image} />
+              </div>
+              <div className={classes.searchedOutputData}>
+                <div className={classes.searchedOutputTextSlice1}>
+                  <Typography
+                    variant="body1"
+                    style={{ color: "#111C85", textTransform: "capitalize" }}
+                  >
+                    {cur.name}
+                  </Typography>
+                  <div className={classes.circleBox}>
+                    <div
+                      className={`${classes.circle} ${classes.color1}`}
+                    ></div>
+                    <div className={`${classes.circle} ${classes.color2}`}>
+                      {" "}
+                    </div>
+                    <div className={`${classes.circle} ${classes.color3}`}>
+                      {" "}
                     </div>
                   </div>
-                  <div className={classes.searchedOutputTextSlice2}>
-                    <Typography
-                      variant="body2"
-                      style={{
-                        color: "#111C85",
-                        fontSize: "14px",
-                        lineHeight: "16px",
-                        marginRight: "10px",
-                      }}
-                    >
-                      {cur.price}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      style={{
-                        fontSize: "14px",
-                        lineHeight: "16px",
-                        color: "#FF2AAA",
-                        textDecoration: "line-through",
-                      }}
-                    >
-                      {cur.orignalPrice}
-                    </Typography>
-                    <div className={classes.ratingStarBox}>
-                      {stars.map((star) => {
-                        return (
-                          <span
-                            key={star}
-                            className={`${classes.ratingStart} ${
-                              star <= cur.rating ? classes.goldStar : ""
-                            }`}
-                          >
-                            <RatingStar />
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div className={classes.searchedOutputTextSlice3}>
-                    <Typography
-                      variant="body2"
-                      style={{
-                        lineHeight: "28px",
-                        color: "#9295AA",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {cur.description}
-                    </Typography>
-                  </div>
-                  <div className={classes.searchedOutputTextSlice4}>
-                    <Cart /> <Favourite /> <Zoomin />
+                </div>
+                <div className={classes.searchedOutputTextSlice2}>
+                  <Typography
+                    variant="body2"
+                    style={{
+                      color: "#111C85",
+                      fontSize: "14px",
+                      lineHeight: "16px",
+                      marginRight: "10px",
+                    }}
+                  >
+                    {cur.price}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    style={{
+                      fontSize: "14px",
+                      lineHeight: "16px",
+                      color: "#FF2AAA",
+                      textDecoration: "line-through",
+                    }}
+                  >
+                    {cur.orignalPrice}
+                  </Typography>
+                  <div className={classes.ratingStarBox}>
+                    {stars.map((star) => {
+                      return (
+                        <span
+                          key={star}
+                          className={`${classes.ratingStart} ${
+                            star <= cur.rating ? classes.goldStar : ""
+                          }`}
+                        >
+                          <RatingStar />
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
-              </Card>
-            </NextLink>
+                <div className={classes.searchedOutputTextSlice3}>
+                  <Typography
+                    variant="body2"
+                    style={{
+                      lineHeight: "28px",
+                      color: "#9295AA",
+                      fontWeight: "400",
+                    }}
+                  >
+                    {cur.description}
+                  </Typography>
+                </div>
+                <div
+                  onMouseLeave={() => setTakeToCart(false)}
+                  onMouseOver={() => setTakeToCart(true)}
+                  className={classes.boxSelect}
+                >
+                  <div
+                    className={`${classes2.cart1} ${
+                      ctx.loggedin &&
+                      ctx.loggedin.userData.cartItems.length >= 0 &&
+                      ctx.loggedin.userData.cartItems.includes(cur.id) &&
+                      classes2.cartActive
+                    } `}
+                    onClick={() => {
+                      itemToCart(cur.id);
+                    }}
+                  >
+                    <AddToCart />
+                  </div>
+
+                  <div
+                    className={`${classes2.cart1} ${
+                      ctx.loggedin &&
+                      ctx.loggedin.userData.wishlist.length >= 0 &&
+                      ctx.loggedin.userData.wishlist.includes(cur.id) &&
+                      classes2.cartActive
+                    } `}
+                    onClick={() => {
+                      itemToWishlist(cur.id);
+                    }}
+                  >
+                    <Heart />
+                  </div>
+                  <div
+                    onClick={() => takeToProductDetail(cur.id)}
+                    className={classes2.cart1}
+                  >
+                    <Zoomin />
+                  </div>
+                </div>
+              </div>
+            </Card>
           );
         })}
         <Pagination

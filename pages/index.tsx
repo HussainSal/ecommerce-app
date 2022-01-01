@@ -13,7 +13,6 @@ import { Grid } from "@mui/material";
 import promotinalLamp from "../assets/images/promotionallamp.png";
 import promotionChair from "../assets/images/promotionChair.png";
 import { latestProductsCategory } from "../assets/data/allData";
-// import { shopexOfferList } from "../assets/data/shopexOfferData";
 import ShopexofferList from "../components/partials/ShopexofferList";
 import uniqueProductSofa from "../assets/images/uniqueFeatureCough.png";
 import { discountedLinks } from "../assets/data/allData";
@@ -24,9 +23,11 @@ import product5 from "../assets/images/trendingProduct(4).png";
 import product6 from "../assets/images/trendingProduct(5).png";
 import NextLink from "next/link";
 import { allData } from "../assets/data/allData";
-
+import { Heart, AddToCart, Zoomin } from "../components/icons/icon";
+import { doc, updateDoc, getFirestore } from "firebase/firestore";
+import { useAppContext } from "../store/authContext";
 import { collection, addDoc } from "firebase/firestore";
-import { getFirestore } from "firebase/firestore";
+import { useRouter } from "next/dist/client/router";
 
 const db = getFirestore();
 
@@ -92,12 +93,44 @@ const topProductMatch = allData.filter((product) => {
 });
 
 export default function Home() {
+  const ctx = useAppContext();
   const style = useStyle();
+  const [takeToCart, setTakeToCart] = useState(false);
+  const router = useRouter();
 
   const [discountItemActiveLink, setDiscountItemActiveLink] =
     useState("Wood Chair");
   const [changeTopCategory, setChangeTopCategory] = useState(1);
   const [changeLatestCategory, setChangeLatestCategory] = useState(0);
+
+  // ADDING ITEM TO CART
+  const itemToCart = (id: number) => {
+    // console.log(ctx.loggedin.userData.cartItems.length);
+    updateDoc(doc(db, "user", ctx.loggedin.userId), {
+      cartItems: ctx.loggedin.userData.cartItems
+        ? [...ctx.loggedin.userData.cartItems, id]
+        : [id],
+    });
+
+    ctx.setReset((prvState) => prvState + 1);
+  };
+
+  //ADDING ITEM TO WISHLIST
+  const itemToWishlist = (id: number) => {
+    updateDoc(doc(db, "user", ctx.loggedin.userId), {
+      wishlist: ctx.loggedin.userData.wishlist
+        ? [...ctx.loggedin.userData.wishlist, id]
+        : [id],
+    });
+
+    ctx.setReset((prvState) => prvState + 1);
+  };
+
+  const takeToProductDetail = (id: number) => {
+    router.push(`products/chair/${id}`);
+  };
+
+  console.log(ctx.loggedin);
 
   return (
     <Fragment>
@@ -161,48 +194,86 @@ export default function Home() {
           <div className={classes.featuredProductsList}>
             {featuredProductMatch.map((cur, i) => {
               return (
-                <NextLink key={i} href={`products/chair/${cur.id}`}>
-                  <div className={classes.featuredProduct}>
-                    <Card
-                      className={`${classes.featuredProductCard} ${style.featuredProductCard}`}
+                <div
+                  onClick={() => !takeToCart && takeToProductDetail(cur.id)}
+                  className={classes.featuredProduct}
+                >
+                  <Card
+                    className={`${classes.featuredProductCard} ${style.featuredProductCard}`}
+                  >
+                    <div
+                      onMouseLeave={() => setTakeToCart(false)}
+                      onMouseOver={() => setTakeToCart(true)}
+                      className={classes.boxSelect}
                     >
-                      <div className={classes.featuredProductImage}>
-                        <Image alt="" src={cur.image} />
+                      <div
+                        className={`${classes.cart1} ${
+                          ctx.loggedin &&
+                          ctx.loggedin.userData.cartItems &&
+                          ctx.loggedin.userData.cartItems.length >= 0 &&
+                          ctx.loggedin.userData.cartItems.includes(cur.id) &&
+                          classes.cartActive
+                        } `}
+                        onClick={() => {
+                          itemToCart(cur.id);
+                        }}
+                      >
+                        <AddToCart />
                       </div>
-                      <div className={classes.featuredProductText}>
-                        <Typography
-                          style={{ marginTop: "8px" }}
-                          color="primary"
-                          variant="body1"
-                        >
-                          {cur.heading}
-                        </Typography>
-                        <div className={classes.featuredProductChange}>
-                          <span className={classes.change}></span>
-                          <span
-                            className={`${classes.change} ${style.colorF701A8}`}
-                          ></span>
-                          <span
-                            className={`${classes.change} ${style.color00009D}`}
-                          ></span>
-                        </div>
 
-                        <Typography
-                          className={style.color151875}
-                          variant="body2"
-                        >
-                          {cur.code}
-                        </Typography>
-                        <Typography
-                          className={style.color151875}
-                          variant="body2"
-                        >
-                          {cur.price}
-                        </Typography>
+                      <div
+                        className={`${classes.cart1} ${
+                          ctx.loggedin &&
+                          ctx.loggedin.userData.wishlist &&
+                          ctx.loggedin.userData.wishlist.length >= 0 &&
+                          ctx.loggedin.userData.wishlist.includes(cur.id) &&
+                          classes.cartActive
+                        } `}
+                        onClick={() => {
+                          itemToWishlist(cur.id);
+                        }}
+                      >
+                        <Heart />
                       </div>
-                    </Card>
-                  </div>
-                </NextLink>
+                      <div
+                        onClick={() => takeToProductDetail(cur.id)}
+                        className={classes.cart1}
+                      >
+                        <Zoomin />
+                      </div>
+                    </div>
+                    <div className={classes.featuredProductImage}>
+                      <Image alt="" src={cur.image} />
+                    </div>
+                    <div className={classes.featuredProductText}>
+                      <Typography
+                        style={{ marginTop: "8px" }}
+                        color="primary"
+                        variant="body1"
+                      >
+                        {cur.heading}
+                      </Typography>
+                      <div className={classes.featuredProductChange}>
+                        <span className={classes.change}></span>
+                        <span
+                          className={`${classes.change} ${style.colorF701A8}`}
+                        ></span>
+                        <span
+                          className={`${classes.change} ${style.color00009D}`}
+                        ></span>
+                      </div>
+
+                      <Typography className={style.color151875} variant="body2">
+                        {cur.code}
+                      </Typography>
+                      <Typography className={style.color151875} variant="body2">
+                        {cur.price}
+                      </Typography>
+                    </div>
+                  </Card>
+                </div>
+                //{" "}
+                // </NextLink>
               );
             })}
           </div>
@@ -249,43 +320,92 @@ export default function Home() {
               {latestProductMatch.map((cur, i) => {
                 return (
                   cur.page == changeLatestCategory && (
-                    <NextLink key={i} href={`products/chair/${cur.id}`}>
-                      <Grid className={classes.latestGridBox} item>
-                        <Card className={style.card2}>
-                          <div className={classes.latestProductPicture}>
-                            <Image alt="" src={cur.image} />
-                          </div>
-                          <div className={classes.latestProductText}>
-                            <Typography style={{ color: "#151875" }}>
-                              {cur.name}
-                            </Typography>
+                    // <NextLink key={i} href={`products/chair/${cur.id}`}>
 
-                            <div className={classes.latestPriceText}>
-                              <Typography
-                                variant="body2"
-                                style={{
-                                  marginRight: "10px",
-                                  color: "#151875",
-                                  fontSize: "14px",
-                                }}
-                              >
-                                {cur.price}
-                              </Typography>
-                              <Typography
-                                variant="body2"
-                                style={{
-                                  textDecoration: "line-through",
-                                  color: "#FB2448",
-                                  fontSize: "12px",
-                                }}
-                              >
-                                {cur.EarlierPrice}
-                              </Typography>
-                            </div>
+                    <Grid className={classes.latestGridBox} item>
+                      <Card
+                        onClick={() =>
+                          !takeToCart && takeToProductDetail(cur.id)
+                        }
+                        className={style.card2}
+                      >
+                        <div
+                          onMouseLeave={() => setTakeToCart(false)}
+                          onMouseOver={() => setTakeToCart(true)}
+                          className={classes.boxSelect}
+                        >
+                          <div
+                            className={`${classes.cart1} ${
+                              ctx.loggedin &&
+                              ctx.loggedin.userData.cartItems &&
+                              ctx.loggedin.userData.cartItems.length >= 0 &&
+                              ctx.loggedin.userData.cartItems.includes(
+                                cur.id
+                              ) &&
+                              classes.cartActive
+                            } `}
+                            onClick={() => {
+                              itemToCart(cur.id);
+                            }}
+                          >
+                            <AddToCart />
                           </div>
-                        </Card>
-                      </Grid>
-                    </NextLink>
+
+                          <div
+                            className={`${classes.cart1} ${
+                              ctx.loggedin &&
+                              ctx.loggedin.userData.wishlist &&
+                              ctx.loggedin.userData.wishlist.length >= 0 &&
+                              ctx.loggedin.userData.wishlist.includes(cur.id) &&
+                              classes.cartActive
+                            } `}
+                            onClick={() => {
+                              itemToWishlist(cur.id);
+                            }}
+                          >
+                            <Heart />
+                          </div>
+                          <div
+                            onClick={() => takeToProductDetail(cur.id)}
+                            className={classes.cart1}
+                          >
+                            <Zoomin />
+                          </div>
+                        </div>
+                        <div className={classes.latestProductPicture}>
+                          <Image alt="" src={cur.image} />
+                        </div>
+                        <div className={classes.latestProductText}>
+                          <Typography style={{ color: "#151875" }}>
+                            {cur.name}
+                          </Typography>
+
+                          <div className={classes.latestPriceText}>
+                            <Typography
+                              variant="body2"
+                              style={{
+                                marginRight: "10px",
+                                color: "#151875",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {cur.price}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              style={{
+                                textDecoration: "line-through",
+                                color: "#FB2448",
+                                fontSize: "12px",
+                              }}
+                            >
+                              {cur.EarlierPrice}
+                            </Typography>
+                          </div>
+                        </div>
+                      </Card>
+                    </Grid>
+                    // </NextLink>
                   )
                 );
               })}
@@ -412,42 +532,84 @@ export default function Home() {
           <div className={classes.trendingProductsList1}>
             {trendingProductMatch.map((cur, i) => {
               return (
-                <NextLink key={i} href={`products/chair/${cur.id}`}>
-                  <div className={classes.trendingProduct}>
-                    <div className={classes.trendingProductImage}>
-                      <Image src={cur.image} alt="" />
+                <div
+                  onClick={() => !takeToCart && takeToProductDetail(cur.id)}
+                  className={classes.trendingProduct}
+                >
+                  <div
+                    onMouseLeave={() => setTakeToCart(false)}
+                    onMouseOver={() => setTakeToCart(true)}
+                    className={classes.boxSelect}
+                  >
+                    <div
+                      className={`${classes.cart1} ${
+                        ctx.loggedin &&
+                        ctx.loggedin.userData.cartItems &&
+                        ctx.loggedin.userData.cartItems.length >= 0 &&
+                        ctx.loggedin.userData.cartItems.includes(cur.id) &&
+                        classes.cartActive
+                      } `}
+                      onClick={() => {
+                        itemToCart(cur.id);
+                      }}
+                    >
+                      <AddToCart />
                     </div>
-                    <div className={classes.trendingProductText}>
-                      <Typography
-                        style={{ color: "#151875", marginTop: "15px" }}
-                        variant="subtitle1"
-                      >
-                        {cur.name}
-                      </Typography>
-                      <div className={classes.trendingProductPrice}>
-                        <Typography
-                          style={{
-                            fontSize: "14px",
-                            lineHeight: "14px",
-                            color: "#151875",
-                          }}
-                        >
-                          {cur.price}
-                        </Typography>
-                        <Typography
-                          style={{
-                            textDecoration: "line-through",
-                            fontSize: "12px",
-                            lineHeight: "12px",
-                            color: "#C4C4C4",
-                          }}
-                        >
-                          {cur.earlierPrice}
-                        </Typography>
-                      </div>
+
+                    <div
+                      className={`${classes.cart1} ${
+                        ctx.loggedin &&
+                        ctx.loggedin.userData.wishlist &&
+                        ctx.loggedin.userData.wishlist.length >= 0 &&
+                        ctx.loggedin.userData.wishlist.includes(cur.id) &&
+                        classes.cartActive
+                      } `}
+                      onClick={() => {
+                        itemToWishlist(cur.id);
+                      }}
+                    >
+                      <Heart />
+                    </div>
+                    <div
+                      onClick={() => takeToProductDetail(cur.id)}
+                      className={classes.cart1}
+                    >
+                      <Zoomin />
                     </div>
                   </div>
-                </NextLink>
+                  <div className={classes.trendingProductImage}>
+                    <Image src={cur.image} alt="" />
+                  </div>
+                  <div className={classes.trendingProductText}>
+                    <Typography
+                      style={{ color: "#151875", marginTop: "15px" }}
+                      variant="subtitle1"
+                    >
+                      {cur.name}
+                    </Typography>
+                    <div className={classes.trendingProductPrice}>
+                      <Typography
+                        style={{
+                          fontSize: "14px",
+                          lineHeight: "14px",
+                          color: "#151875",
+                        }}
+                      >
+                        {cur.price}
+                      </Typography>
+                      <Typography
+                        style={{
+                          textDecoration: "line-through",
+                          fontSize: "12px",
+                          lineHeight: "12px",
+                          color: "#C4C4C4",
+                        }}
+                      >
+                        {cur.earlierPrice}
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </div>

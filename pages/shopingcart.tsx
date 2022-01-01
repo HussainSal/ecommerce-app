@@ -10,15 +10,25 @@ import { useAppContext } from "../store/authContext";
 import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import { CancelCart } from "../components/icons/icon";
+const headingList = ["Products", "Price", "Quantity", "Total"];
 import test from "../assets/images/camera1.png";
 import { count } from "console";
-const headingList = ["Products", "Price", "Quantity", "Total"];
 
 const usestyle = makeStyles({
   heading: {
     fontSize: "20px",
     lineHeight: "23.44px",
     fontWeight: "bold",
+  },
+  quantityChangeButton: {
+    fontSize: "25px",
+    maxWidth: 15,
+    minWidth: 15,
+    maxHeight: 15,
+    minHeight: 15,
+    "& > *": {
+      padding: 0,
+    },
   },
 });
 
@@ -28,7 +38,6 @@ const shopingCart = () => {
   const ctx = useAppContext();
   const router = useRouter();
   const [cartItem, setCartItem] = useState([]);
-  const [quantity, setQuantity] = useState([]);
   const qtyRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -38,7 +47,6 @@ const shopingCart = () => {
   // making item 1
 
   let counts = {};
-  let data = ctx.loggedin && ctx.loggedin.userData.cartItems;
 
   function count_duplicate(a) {
     if (a != null) {
@@ -52,7 +60,9 @@ const shopingCart = () => {
     }
   }
 
-  count_duplicate(data);
+  console.log(counts);
+
+  count_duplicate(cartItem);
 
   const dataCart =
     counts &&
@@ -72,7 +82,7 @@ const shopingCart = () => {
     ctx.setReset((prvState) => prvState + 1);
   };
 
-  // REMOVING ONE ITEM
+  // REMOVING PRODUCT
   const removeOneItem = (id) => {
     setCartItem(
       cartItem.filter((cur) => {
@@ -87,11 +97,35 @@ const shopingCart = () => {
     ctx.setReset((prvState) => prvState + 1);
   };
 
-  const qtyChangeHandler = (id) => {
-    let quantity = qtyRef.current?.value;
+  // ADDING ONE ITEM
+  const quantityIncreaseHandler = (id) => {
+    updateDoc(doc(db, "user", ctx.loggedin.userId), {
+      cartItems: [...cartItem, id],
+    });
+    ctx.setReset((prvState) => prvState + 1);
   };
 
-  //
+  //REMOVING ONE ITEM
+  const quantityDecreaseHandler = (id) => {
+    cartItem.splice(cartItem.indexOf(id), 1);
+    console.log(cartItem);
+
+    updateDoc(doc(db, "user", ctx.loggedin.userId), {
+      cartItems: cartItem,
+    });
+    ctx.setReset((prvState) => prvState + 1);
+  };
+
+  let total = [];
+
+  {
+    dataCart &&
+      dataCart.map((cur) => {
+        total.push(cur && +cur.price * counts[cur.id]);
+      });
+  }
+
+  let subTotal = total.reduce((acc, cur) => acc + cur, 0);
 
   return (
     <section>
@@ -170,22 +204,31 @@ const shopingCart = () => {
                     </Typography>
                     {/*QUANTITY*/}
 
-                    <input
-                      type="number"
-                      min="1"
-                      id={cur.id.toString()}
-                      placeholder="1"
-                      style={{
-                        marginTop: "38px",
-                        textAlign: "center",
-                        marginLeft: "50px",
-                        width: "50px",
-                        height: "20px",
-                      }}
-                      onChange={() => {
-                        qtyChangeHandler(cur.id);
-                      }}
-                    ></input>
+                    <div className={classes.quantityContainer}>
+                      <Button
+                        className={style.quantityChangeButton}
+                        style={{ width: "20px" }}
+                        onClick={() => quantityDecreaseHandler(cur.id)}
+                      >
+                        -
+                      </Button>
+                      <input
+                        value={counts[cur.id]}
+                        style={{
+                          margin: "0px 10px",
+                          marginTop: "38px",
+                          textAlign: "center",
+                          width: "50px",
+                          height: "20px",
+                        }}
+                      />
+                      <Button
+                        className={style.quantityChangeButton}
+                        onClick={() => quantityIncreaseHandler(cur.id)}
+                      >
+                        +
+                      </Button>
+                    </div>
 
                     <div className={classes.lastSlice}>
                       <Typography
@@ -193,7 +236,7 @@ const shopingCart = () => {
                         color="secondary"
                         variant="body2"
                       >
-                        $ {+cur.price * 2}.00
+                        $ {+cur.price * counts[cur.id]}.00
                         <div
                           onClick={() => {
                             removeOneItem(cur.id);
@@ -204,8 +247,6 @@ const shopingCart = () => {
                         </div>
                       </Typography>
                     </div>
-
-                    {/* })} */}
                   </Card>
                 )
               );
@@ -226,16 +267,17 @@ const shopingCart = () => {
               <Typography variant="body1" color="secondary">
                 Price
               </Typography>
-              <Typography variant="body1" color="secondary">
-                29
-              </Typography>
+              <Typography
+                variant="body1"
+                color="secondary"
+              >{`$${subTotal}.00`}</Typography>
             </div>
             <div className={classes.priceitem}>
               <Typography variant="body1" color="secondary">
                 Discount
               </Typography>
               <Typography variant="body1" style={{ color: "#388e3c" }}>
-                -$21.9
+                {`$ ${Math.round(subTotal * 0.1)}.00`}
               </Typography>
             </div>
             <div className={classes.priceitem}>
@@ -255,7 +297,7 @@ const shopingCart = () => {
                 color="secondary"
                 style={{ fontWeight: "bold" }}
               >
-                $197.1
+                {`$ ${subTotal - subTotal * 0.1}.00  `}
               </Typography>
             </div>
             <Button

@@ -66,7 +66,6 @@ const login = () => {
             setDoc(doc(db, "user", user.uid), {
               name: fullNameRef,
               email: email,
-              // cartItems: [],
             });
 
             router.push("/");
@@ -97,33 +96,6 @@ const login = () => {
           });
     }
   };
-
-  // VERIFYING WHETHER USER IS SIGNED IN OR NOT
-
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     const uid = user.uid;
-
-  //     // GETTIN USER DATA i.e HIS INFORMATION
-  //     const gettingData = async () => {
-  //       const q = query(
-  //         collection(db, "user"),
-  //         where("email", "==", user.email)
-  //       );
-  //       const querySnapshot = await getDocs(q);
-  //       querySnapshot.forEach((doc) => {
-  //         console.log(doc.id, " => ", doc.data());
-  //       });
-  //     };
-  //     gettingData();
-  //   } else {
-  //     console.log("not signed in");
-  //   }
-  // });
-
-  // SIGNINGOUT EXISTING USER
-
-  console.log(signup);
 
   return (
     <section>

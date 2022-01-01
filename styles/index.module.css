@@ -65,6 +65,11 @@
   margin-bottom: 53px;
 }
 
+.featuredProductCard {
+  position: relative;
+  transition: all 0.2s;
+}
+
 .featuredProductChange {
   display: flex;
   justify-content: center;
@@ -135,6 +140,34 @@
   margin-right: 5px;
 }
 
+.boxSelect {
+  position: absolute;
+  top: 10px;
+  left: 5px;
+  /* display: flex; */
+  display: none;
+}
+
+.featuredProductCard:hover .boxSelect {
+  display: flex;
+}
+
+.boxSelect > * {
+  margin-right: 10px;
+}
+
+.cart1 > svg * {
+  fill: #00c1fe;
+}
+
+.cart1:hover > svg * {
+  fill: #2f1ac4;
+}
+
+.cartActive > svg * {
+  fill: #fb2e86;
+}
+
 /* LATEST PRODUCTS */
 
 .sectionLatestproducts {
@@ -201,6 +234,10 @@
 }
 
 .latestPriceText {
+  display: flex;
+}
+
+.latestGridBox:hover .boxSelect {
   display: flex;
 }
 
@@ -313,6 +350,7 @@
   height: 350px;
   box-shadow: 2px 4px 34px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  position: relative;
 }
 
 .trendingProductImage {
@@ -387,6 +425,13 @@
   top: 150px;
   right: 0px;
   bottom: 0px;
+}
+
+.trendingProduct:hover .boxSelect {
+  display: flex;
+  z-index: 1000;
+  top: 25px;
+  left: 25px;
 }
 
 /* DISCOUNT CATEGORIES */

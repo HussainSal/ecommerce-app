@@ -47,6 +47,9 @@ const account = () => {
           cartItems: ctx.loggedin.userData.cartItems
             ? ctx.loggedin.userData.cartItems
             : "",
+          wishlist: ctx.loggedin.userData.wishlist
+            ? ctx.loggedin.userData.wishlist
+            : "",
         });
 
       setEditable(false);
