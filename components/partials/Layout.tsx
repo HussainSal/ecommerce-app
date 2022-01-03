@@ -19,6 +19,7 @@ import { footerData1 } from "./FooterData";
 import { useRouter } from "next/dist/client/router";
 import NextLink from "next/link";
 import { useAppContext } from "../../store/authContext";
+import Loading from "./Loading";
 
 const useStyle = makeStyles({
   navigationItem: {
@@ -112,7 +113,6 @@ const Layout = ({ children }) => {
                     <MenuItem value="usd">USD</MenuItem>
                   )}
                   <MenuItem value="inr">
-                    {" "}
                     <Typography
                       className={style.navigationItem}
                       variant="subtitle1"
@@ -129,10 +129,16 @@ const Layout = ({ children }) => {
                   className={style.navigationItem}
                   variant="subtitle1"
                 >
-                  {ctx.loggedin ? "Account" : "login"}
+                  {ctx.loading ? (
+                    <Loading />
+                  ) : ctx.loggedin ? (
+                    "Account"
+                  ) : (
+                    "login"
+                  )}
                 </Typography>
               </NextLink>
-              <Login />
+              {!ctx.loading && <Login />}
             </Link>
             <NextLink href={"/wishlist"}>
               <Link className={`${classes.link} ${style.link}`}>

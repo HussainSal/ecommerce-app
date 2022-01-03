@@ -64,7 +64,6 @@ export function AppWrapper({ children }) {
         gettingData();
       } else {
         setLoggedin(null);
-        console.log("not signed in");
       }
     });
   }, [reset]);

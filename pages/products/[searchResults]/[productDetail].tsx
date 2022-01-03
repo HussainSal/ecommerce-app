@@ -15,6 +15,9 @@ import { Button } from "@material-ui/core";
 import socialsites from "../../assets/images/socialsites.png";
 import brands from "../../assets/images/brands.png";
 import { useAppContext } from "../../../store/authContext";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useState } from "react";
+
 import { doc, setDoc, getFirestore, updateDoc } from "firebase/firestore";
 
 const productDetail = () => {
@@ -30,11 +33,26 @@ const productDetail = () => {
   // ADDING ITEMS TO CART
   const itemToCart = (id: number) => {
     // console.log(ctx.loggedin.userData.cartItems.length);
-    updateDoc(doc(db, "user", ctx.loggedin.userId), {
-      cartItems: ctx.loggedin.userData.cartItems
-        ? [...ctx.loggedin.userData.cartItems, id]
-        : [id],
-    });
+    ctx.loggedin
+      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
+          cartItems: ctx.loggedin.userData.cartItems
+            ? [...ctx.loggedin.userData.cartItems, id]
+            : [id],
+        })
+      : alert("Please login / signup to use this feature");
+
+    ctx.setReset((prvState) => prvState + 1);
+  };
+
+  //ADDING ITEM TO WISHLIST
+  const itemToWishlist = (id: number) => {
+    ctx.loggedin
+      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
+          wishlist: ctx.loggedin.userData.wishlist
+            ? [...ctx.loggedin.userData.wishlist, id]
+            : [id],
+        })
+      : alert("Please login / signup to use this feature");
 
     ctx.setReset((prvState) => prvState + 1);
   };
@@ -80,7 +98,7 @@ const productDetail = () => {
                     color="secondary"
                     style={{ lineHeight: "29px", marginRight: "10px" }}
                   >
-                    {dataMatch.price}
+                    ${dataMatch.price}
                   </Typography>
                   <Typography
                     color="primary"
@@ -90,7 +108,7 @@ const productDetail = () => {
                       textDecoration: "line-through",
                     }}
                   >
-                    {dataMatch.orignalPrice}
+                    ${dataMatch.orignalPrice}
                   </Typography>
                 </div>
                 <Typography
@@ -119,20 +137,32 @@ const productDetail = () => {
                       Add To Cart
                     </Button>
                   </Typography>
-                  <Favourite />
+                  <span
+                    className={classes.heart}
+                    onClick={() => itemToWishlist(dataMatch.id)}
+                  >
+                    {ctx.loggedin &&
+                    ctx.loggedin.userData.wishlist &&
+                    ctx.loggedin.userData.wishlist.includes(dataMatch.id) ? (
+                      <FavoriteIcon style={{ color: "#FB2E86" }} />
+                    ) : (
+                      <Favourite />
+                    )}
+                  </span>
                 </div>
                 <div>
                   <Typography
                     color="secondary"
                     style={{ marginTop: "10px", lineHeight: "29px" }}
                   >
-                    <b>Categories:</b>
+                    <b>Categories : </b> {dataMatch.type[0]}
                   </Typography>
                   <Typography
                     color="secondary"
                     style={{ marginTop: "10px", lineHeight: "29px" }}
                   >
-                    <b>Tags</b>
+                    <b>Tags : </b>
+                    {(dataMatch.type[1], dataMatch.type[2], dataMatch.type[3])}
                   </Typography>
                   <div className={classes.shareBox}>
                     <Typography

@@ -4,6 +4,7 @@ import Header from "../components/partials/Header";
 import classes from "../styles/login.module.css";
 import { makeStyles } from "@material-ui/core";
 import { useRef, useState } from "react";
+import Loading from "../components/partials/Loading";
 
 import {
   getAuth,
@@ -41,6 +42,8 @@ const login = () => {
 
   const [signup, setSignup] = useState(false);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   // WHETHER USER WANT TO  SIGNUP OR LOGIN
@@ -62,6 +65,10 @@ const login = () => {
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
+            const loadingFunction = () => {
+              setLoading(true);
+            };
+            loadingFunction();
 
             setDoc(doc(db, "user", user.uid), {
               name: fullNameRef,
@@ -87,6 +94,11 @@ const login = () => {
         signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) => {
             // Signed in
+            const loadingFunction = () => {
+              setLoading(true);
+            };
+            loadingFunction();
+
             const user = userCredential.user;
             router.push("/");
           })
@@ -155,9 +167,11 @@ const login = () => {
               Forgot your password?
             </Typography>
             <Button
+              disabled={loading}
               type="submit"
               color="primary"
               variant="contained"
+              // onClick={loadingFunction}
               style={{
                 width: "472px",
                 height: "47px",
@@ -165,8 +179,9 @@ const login = () => {
                 marginTop: "20px",
               }}
             >
-              {!signup ? "Sign in" : "Sign Up"}
+              {!loading ? !signup ? "Sign in" : "Sign Up" : <Loading />}
             </Button>
+            {/* <Loading /> */}
             {error && (
               <Typography className={style.errorText}>
                 Invalid Email or Password ! Try Again.{" "}

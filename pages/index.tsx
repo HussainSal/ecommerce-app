@@ -26,8 +26,11 @@ import { allData } from "../assets/data/allData";
 import { Heart, AddToCart, Zoomin } from "../components/icons/icon";
 import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useAppContext } from "../store/authContext";
-import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
+import { collection, addDoc } from "firebase/firestore";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 
 const db = getFirestore();
 
@@ -106,22 +109,27 @@ export default function Home() {
   // ADDING ITEM TO CART
   const itemToCart = (id: number) => {
     // console.log(ctx.loggedin.userData.cartItems.length);
-    updateDoc(doc(db, "user", ctx.loggedin.userId), {
-      cartItems: ctx.loggedin.userData.cartItems
-        ? [...ctx.loggedin.userData.cartItems, id]
-        : [id],
-    });
+
+    ctx.loggedin
+      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
+          cartItems: ctx.loggedin.userData.cartItems
+            ? [...ctx.loggedin.userData.cartItems, id]
+            : [id],
+        })
+      : alert("Please login / signup to use this feature");
 
     ctx.setReset((prvState) => prvState + 1);
   };
 
   //ADDING ITEM TO WISHLIST
   const itemToWishlist = (id: number) => {
-    updateDoc(doc(db, "user", ctx.loggedin.userId), {
-      wishlist: ctx.loggedin.userData.wishlist
-        ? [...ctx.loggedin.userData.wishlist, id]
-        : [id],
-    });
+    ctx.loggedin
+      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
+          wishlist: ctx.loggedin.userData.wishlist
+            ? [...ctx.loggedin.userData.wishlist, id]
+            : [id],
+        })
+      : alert("Please login / signup to use this feature");
 
     ctx.setReset((prvState) => prvState + 1);
   };
@@ -267,7 +275,7 @@ export default function Home() {
                         {cur.code}
                       </Typography>
                       <Typography className={style.color151875} variant="body2">
-                        {cur.price}
+                        ${cur.price.toFixed(2)}
                       </Typography>
                     </div>
                   </Card>
@@ -389,7 +397,7 @@ export default function Home() {
                                 fontSize: "14px",
                               }}
                             >
-                              {cur.price}
+                              ${cur.price.toFixed(2)}
                             </Typography>
                             <Typography
                               variant="body2"
@@ -399,7 +407,7 @@ export default function Home() {
                                 fontSize: "12px",
                               }}
                             >
-                              {cur.EarlierPrice}
+                              ${cur.orignalPrice.toFixed(2)}
                             </Typography>
                           </div>
                         </div>
@@ -595,7 +603,7 @@ export default function Home() {
                           color: "#151875",
                         }}
                       >
-                        {cur.price}
+                        ${cur.price.toFixed(2)}
                       </Typography>
                       <Typography
                         style={{
@@ -605,7 +613,7 @@ export default function Home() {
                           color: "#C4C4C4",
                         }}
                       >
-                        {cur.earlierPrice}
+                        ${cur.orignalPrice.toFixed(2)}
                       </Typography>
                     </div>
                   </div>
@@ -688,7 +696,7 @@ export default function Home() {
                           style={{ color: "#151875", fontSize: "12px" }}
                           variant="body2"
                         >
-                          {cur.price}
+                          ${cur.price.toFixed(2)}
                         </Typography>
                       </div>
                     </div>
@@ -845,7 +853,7 @@ export default function Home() {
                         {cur.title}
                       </Typography>
                       <Typography color="secondary" variant="body2">
-                        {cur.price}
+                        ${cur.price.toFixed(2)}
                       </Typography>
                     </div>
                   </div>

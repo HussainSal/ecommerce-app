@@ -2,7 +2,6 @@ import { Card, Typography } from "@material-ui/core";
 import React from "react";
 import Header from "../../components/partials/Header";
 import classes from "../../styles/product.module.css";
-import img from "../../assets/images/couch3.png";
 import Image from "next/image";
 import { makeStyles } from "@material-ui/core";
 import { productData } from "../../assets/data/productData";

@@ -10,6 +10,10 @@
   /* border-radius: 25px; */
 }
 
+.heart {
+  cursor: pointer;
+}
+
 .imageBox {
   width: 357px;
   height: 487px;

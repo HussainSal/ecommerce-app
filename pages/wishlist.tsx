@@ -113,14 +113,13 @@ const wishlist = () => {
                             <Typography color="secondary">
                               {`$ ${cur.price}`}
                             </Typography>
-                            {cur.orignalPrice && (
-                              <Typography
-                                color="primary"
-                                style={{ textDecoration: "line-through" }}
-                              >
-                                {`$ ${cur.orignalPrice}.00`}
-                              </Typography>
-                            )}
+
+                            <Typography
+                              color="primary"
+                              style={{ textDecoration: "line-through" }}
+                            >
+                              {`$ ${cur.orignalPrice}`}
+                            </Typography>
                           </div>
                         </div>
                       </div>

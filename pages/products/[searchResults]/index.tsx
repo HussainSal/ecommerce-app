@@ -59,22 +59,26 @@ const searchResults = (props) => {
   // ADDING ITEM TO CART
   const itemToCart = (id: number) => {
     // console.log(ctx.loggedin.userData.cartItems.length);
-    updateDoc(doc(db, "user", ctx.loggedin.userId), {
-      cartItems: ctx.loggedin.userData.cartItems
-        ? [...ctx.loggedin.userData.cartItems, id]
-        : [id],
-    });
+    ctx.loggedin
+      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
+          cartItems: ctx.loggedin.userData.cartItems
+            ? [...ctx.loggedin.userData.cartItems, id]
+            : [id],
+        })
+      : alert("Please login / signup to use this feature");
 
     ctx.setReset((prvState) => prvState + 1);
   };
 
   //ADDING ITEM TO WISHLIST
   const itemToWishlist = (id: number) => {
-    updateDoc(doc(db, "user", ctx.loggedin.userId), {
-      wishlist: ctx.loggedin.userData.wishlist
-        ? [...ctx.loggedin.userData.wishlist, id]
-        : [id],
-    });
+    ctx.loggedin
+      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
+          wishlist: ctx.loggedin.userData.wishlist
+            ? [...ctx.loggedin.userData.wishlist, id]
+            : [id],
+        })
+      : alert("Please login / signup to use this feature");
 
     ctx.setReset((prvState) => prvState + 1);
   };
@@ -190,7 +194,7 @@ const searchResults = (props) => {
                       marginRight: "10px",
                     }}
                   >
-                    {cur.price}
+                    ${cur.price}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -201,7 +205,7 @@ const searchResults = (props) => {
                       textDecoration: "line-through",
                     }}
                   >
-                    {cur.orignalPrice}
+                    ${cur.orignalPrice}
                   </Typography>
                   <div className={classes.ratingStarBox}>
                     {stars.map((star) => {
@@ -252,7 +256,7 @@ const searchResults = (props) => {
                   <div
                     className={`${classes2.cart1} ${
                       ctx.loggedin &&
-                      ctx.loggedin.userData.wishlist.length >= 0 &&
+                      ctx.loggedin.userData.wishlist &&
                       ctx.loggedin.userData.wishlist.includes(cur.id) &&
                       classes2.cartActive
                     } `}
