@@ -279,9 +279,8 @@ export default function Home() {
                       </Typography>
                     </div>
                   </Card>
+                  {console.log(ctx.currency)}
                 </div>
-                //{" "}
-                // </NextLink>
               );
             })}
           </div>

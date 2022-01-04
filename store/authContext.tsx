@@ -28,12 +28,15 @@ const AppContext = createContext({
   loading: true,
   reset: null,
   setReset: null,
+  currency: true,
+  setCurrency: null,
 });
 
 export function AppWrapper({ children }) {
   const [loggedin, setLoggedin] = useState(null);
   const [loading, setLoading] = useState(true);
   const [reset, setReset] = useState(0);
+  const [currency, setCurrency] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -64,12 +67,15 @@ export function AppWrapper({ children }) {
         gettingData();
       } else {
         setLoggedin(null);
+        setLoading(false);
       }
     });
   }, [reset]);
 
   return (
-    <AppContext.Provider value={{ loggedin, loading, reset, setReset }}>
+    <AppContext.Provider
+      value={{ loggedin, loading, reset, setReset, currency, setCurrency }}
+    >
       {children}
     </AppContext.Provider>
   );

@@ -85,6 +85,7 @@ const Layout = ({ children }) => {
     }
   }
   count_duplicate(data);
+  console.log(ctx.loading);
 
   return (
     <Fragment>
@@ -108,6 +109,7 @@ const Layout = ({ children }) => {
                       >
                         USD
                       </Typography>
+                      {(ctx.setCurrency = true)}
                     </MenuItem>
                   ) : (
                     <MenuItem value="usd">USD</MenuItem>
@@ -119,6 +121,7 @@ const Layout = ({ children }) => {
                     >
                       INR
                     </Typography>
+                    {(ctx.setCurrency = false)}
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -229,7 +232,6 @@ const Layout = ({ children }) => {
               17 prince road,london,greater london NW1 8JR,UK
             </Typography>
           </div>
-
           {footerData1.map((cur, i) => {
             return (
               <div key={i} className={classes.slice2}>

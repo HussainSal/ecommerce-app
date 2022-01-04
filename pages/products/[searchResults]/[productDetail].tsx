@@ -12,13 +12,12 @@ import {
 import { useRouter } from "next/dist/client/router";
 import { productMatch } from "../../../assets/data/allData";
 import { Button } from "@material-ui/core";
-import socialsites from "../../assets/images/socialsites.png";
-import brands from "../../assets/images/brands.png";
 import { useAppContext } from "../../../store/authContext";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useState } from "react";
-
 import { doc, setDoc, getFirestore, updateDoc } from "firebase/firestore";
+import socialsites from "../../assets/images/socialsites.png";
+import brands from "../../assets/images/brands.png";
+import { useState } from "react";
 
 const productDetail = () => {
   const router = useRouter();
@@ -46,6 +45,9 @@ const productDetail = () => {
 
   //ADDING ITEM TO WISHLIST
   const itemToWishlist = (id: number) => {
+    if (ctx.loggedin && ctx.loggedin.userData.cartItems.includes(id)) {
+      return;
+    }
     ctx.loggedin
       ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
           wishlist: ctx.loggedin.userData.wishlist
@@ -55,6 +57,14 @@ const productDetail = () => {
       : alert("Please login / signup to use this feature");
 
     ctx.setReset((prvState) => prvState + 1);
+  };
+
+  // GOING TO CART
+  const goToCart = () => {
+    ctx.loggedin &&
+      ctx.loggedin.userData.cartItems &&
+      ctx.loggedin.userData.cartItems.includes(dataMatch.id) &&
+      router.push("/shopingcart");
   };
 
   return (
@@ -130,11 +140,16 @@ const productDetail = () => {
                     <Button
                       onClick={() => {
                         itemToCart(dataMatch.id);
+                        goToCart();
                       }}
                       variant="contained"
                       color="primary"
                     >
-                      Add To Cart
+                      {ctx.loggedin &&
+                      ctx.loggedin.userData.cartItems &&
+                      ctx.loggedin.userData.cartItems.includes(dataMatch.id)
+                        ? "Go To Cart"
+                        : "Add To Cart"}
                     </Button>
                   </Typography>
                   <span

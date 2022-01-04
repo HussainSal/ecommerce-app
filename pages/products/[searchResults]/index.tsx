@@ -231,7 +231,7 @@ const searchResults = (props) => {
                       fontWeight: "400",
                     }}
                   >
-                    {cur.description}
+                    {cur.text}
                   </Typography>
                 </div>
                 <div

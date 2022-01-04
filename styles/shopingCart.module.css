@@ -151,3 +151,13 @@
 .wishlistDeleteIcon:hover {
   color: grey;
 }
+
+.emptyCart {
+  width: 400px;
+  height: 400px;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

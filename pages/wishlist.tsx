@@ -13,6 +13,8 @@ import { useState, useEffect } from "react";
 import { updateDoc, doc, getFirestore } from "firebase/firestore";
 import { RatingStar } from "../components/icons/icon";
 import DeleteIcon from "@mui/icons-material/Delete";
+import emptyCart from "../assets/images/no_cart.png";
+import { useRouter } from "next/dist/client/router";
 
 const stars = [1, 2, 3, 4, 5];
 
@@ -20,6 +22,7 @@ const wishlist = () => {
   const ctx = useAppContext();
   const [wishlistItem, setWishlistitem] = useState([]);
   const db = getFirestore();
+  const router = useRouter();
 
   useEffect(() => {
     setWishlistitem(ctx.loggedin && ctx.loggedin.userData.wishlist);
@@ -74,65 +77,95 @@ const wishlist = () => {
       <div
         className={`${classes.cartContainer} ${classes.containerWishlistItem}`}
       >
-        <div className={classes.container}>
-          <Card className={classes.bigCard}>
-            {dataCart &&
-              dataCart.map((cur) => {
-                return (
-                  cur && (
-                    <Card
-                      className={`${classes.cartProductList} ${classes.wishlistCard}`}
-                    >
-                      <div className={classes.cartProduct}>
-                        <div className={classes.cartWishlistImage}>
-                          <Image src={cur.image} alt="" />
-                        </div>
-
-                        <div className={classes.wishlistProductDescription}>
-                          <Typography
-                            style={{ fontWeight: "bold", marginTop: "15px" }}
-                            variant="body1"
-                          >
-                            {cur.name}
-                          </Typography>
-                          <div className={classes.ratingStarBox}>
-                            {stars.map((star) => {
-                              return (
-                                <span
-                                  key={star}
-                                  className={`${classes.ratingStart} ${
-                                    star <= cur.rating ? classes.goldStar : ""
-                                  }`}
-                                >
-                                  <RatingStar />
-                                </span>
-                              );
-                            })}
+        {dataCart.length < 1 ? (
+          <div className={classes.emptyCart}>
+            <Image alt="" src={emptyCart} />
+            <Typography
+              style={{ marginTop: "25px" }}
+              color="primary"
+              variant="h5"
+            >
+              No Favorite Item Found!
+            </Typography>
+            <Typography
+              style={{ marginTop: "25px" }}
+              color="primary"
+              variant="body1"
+            >
+              Add item now
+            </Typography>
+            <Button
+              onClick={() => {
+                router.push("/");
+              }}
+              variant="contained"
+              color="primary"
+              style={{ textDecoration: "capitalize", marginTop: "25px" }}
+            >
+              Add Items
+            </Button>
+          </div>
+        ) : (
+          <div className={classes.container}>
+            <Card className={classes.bigCard}>
+              {dataCart &&
+                dataCart.map((cur) => {
+                  return (
+                    cur && (
+                      <Card
+                        className={`${classes.cartProductList} ${classes.wishlistCard}`}
+                      >
+                        <div className={classes.cartProduct}>
+                          <div className={classes.cartWishlistImage}>
+                            <Image src={cur.image} alt="" />
                           </div>
-                          <div className={classes.wishListPriceContainer}>
-                            <Typography color="secondary">
-                              {`$ ${cur.price}`}
-                            </Typography>
 
+                          <div className={classes.wishlistProductDescription}>
                             <Typography
-                              color="primary"
-                              style={{ textDecoration: "line-through" }}
+                              style={{ fontWeight: "bold", marginTop: "15px" }}
+                              variant="body1"
                             >
-                              {`$ ${cur.orignalPrice}`}
+                              {cur.name}
                             </Typography>
+                            <div className={classes.ratingStarBox}>
+                              {stars.map((star) => {
+                                return (
+                                  <span
+                                    key={star}
+                                    className={`${classes.ratingStart} ${
+                                      star <= cur.rating ? classes.goldStar : ""
+                                    }`}
+                                  >
+                                    <RatingStar />
+                                  </span>
+                                );
+                              })}
+                            </div>
+                            <div className={classes.wishListPriceContainer}>
+                              <Typography color="secondary">
+                                {`$ ${cur.price}`}
+                              </Typography>
+
+                              <Typography
+                                color="primary"
+                                style={{ textDecoration: "line-through" }}
+                              >
+                                {`$ ${cur.orignalPrice}`}
+                              </Typography>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <DeleteIcon
-                        onClick={() => removeOneItem(cur.id)}
-                        className={classes.wishlistDeleteIcon}
-                      />
-                    </Card>
-                  )
-                );
-              })}
-          </Card>
-        </div>
+                        <DeleteIcon
+                          onClick={() => removeOneItem(cur.id)}
+                          className={classes.wishlistDeleteIcon}
+                        />
+                      </Card>
+                    )
+                  );
+                })}
+            </Card>
+          </div>
+        )}
       </div>
     </section>
   );

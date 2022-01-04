@@ -10,6 +10,7 @@ import { useAppContext } from "../store/authContext";
 import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import { CancelCart } from "../components/icons/icon";
+import emptyCart from "../assets/images/no_cart.png";
 const headingList = ["Products", "Price", "Quantity", "Total"];
 import test from "../assets/images/camera1.png";
 import { count } from "console";
@@ -38,6 +39,7 @@ const shopingCart = () => {
   const ctx = useAppContext();
   const router = useRouter();
   const [cartItem, setCartItem] = useState([]);
+  // const [emptyCartState, setEmptyCartState] = useState(false);
   const qtyRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -127,210 +129,242 @@ const shopingCart = () => {
 
   let subTotal = total.reduce((acc, cur) => acc + cur, 0);
 
+  console.log(dataCart);
+
   return (
     <section>
       <Header type={"Shoping Cart"}></Header>
-      <div className={classes.cartSection}>
-        <div className={classes.cartContainer}>
-          <div className={classes.productsContainerHeading}>
-            <Typography
-              variant="subtitle2"
-              color="secondary"
-              className={style.heading}
-              style={{ marginRight: "120px" }}
-            >
-              Product
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              color="secondary"
-              className={style.heading}
-            >
-              Price
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              color="secondary"
-              className={style.heading}
-              style={{ marginRight: "18px" }}
-            >
-              Quantity
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              color="secondary"
-              className={style.heading}
-            >
-              Total
-            </Typography>
-          </div>
-
-          {dataCart &&
-            dataCart.map((cur) => {
-              return (
-                cur && (
-                  <Card className={classes.cartProductList}>
-                    <div className={classes.cartProduct}>
-                      <div className={classes.cartProductImage}>
-                        <Image src={cur.image} alt="" />
-                      </div>
-                      <div className={classes.cartProductDescription}>
-                        <Typography
-                          style={{ fontWeight: "bold", marginTop: "15px" }}
-                          variant="body1"
-                        >
-                          {cur.name}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          style={{ color: "#A1A8C1", marginTop: "15px" }}
-                        >
-                          size:XL
-                        </Typography>
-                      </div>
-                    </div>
-
-                    {/*PRICE  */}
-                    <Typography
-                      style={{
-                        marginTop: "38px",
-                        textAlign: "center",
-                        marginRight: "40px",
-                      }}
-                      color="secondary"
-                      variant="body2"
-                    >
-                      $ {+cur.price}.00
-                    </Typography>
-                    {/*QUANTITY*/}
-
-                    <div className={classes.quantityContainer}>
-                      <Button
-                        className={style.quantityChangeButton}
-                        style={{ width: "20px" }}
-                        onClick={() => quantityDecreaseHandler(cur.id)}
-                      >
-                        -
-                      </Button>
-                      <input
-                        value={counts[cur.id]}
-                        style={{
-                          margin: "0px 10px",
-                          marginTop: "38px",
-                          textAlign: "center",
-                          width: "50px",
-                          height: "20px",
-                        }}
-                      />
-                      <Button
-                        className={style.quantityChangeButton}
-                        onClick={() => quantityIncreaseHandler(cur.id)}
-                      >
-                        +
-                      </Button>
-                    </div>
-
-                    <div className={classes.lastSlice}>
-                      <Typography
-                        style={{ marginTop: "38px", textAlign: "center" }}
-                        color="secondary"
-                        variant="body2"
-                      >
-                        $ {+cur.price * counts[cur.id]}.00
-                        <div
-                          onClick={() => {
-                            removeOneItem(cur.id);
-                          }}
-                          className={classes.cancelItem}
-                        >
-                          <CancelCart />
-                        </div>
-                      </Typography>
-                    </div>
-                  </Card>
-                )
-              );
-            })}
-        </div>
-
-        <div className={classes.totalContainer}>
+      {dataCart.length < 1 ? (
+        <div className={classes.emptyCart}>
+          <Image alt="" src={emptyCart} />
           <Typography
-            variant="subtitle2"
-            color="secondary"
-            className={style.heading}
-            style={{ marginBottom: "42px" }}
+            style={{ marginTop: "25px" }}
+            color="primary"
+            variant="h5"
           >
-            Cart Total
+            Your cart is Empty
           </Typography>
-          <div className={classes.totalPriceContainer}>
-            <div className={classes.priceitem}>
-              <Typography variant="body1" color="secondary">
+          <Typography
+            style={{ marginTop: "25px" }}
+            color="primary"
+            variant="body1"
+          >
+            Add item now
+          </Typography>
+          <Button
+            onClick={() => {
+              router.push("/");
+            }}
+            variant="contained"
+            color="primary"
+            style={{ textDecoration: "capitalize", marginTop: "25px" }}
+          >
+            Add Items
+          </Button>
+        </div>
+      ) : (
+        <div className={classes.cartSection}>
+          <div className={classes.cartContainer}>
+            <div className={classes.productsContainerHeading}>
+              <Typography
+                variant="subtitle2"
+                color="secondary"
+                className={style.heading}
+                style={{ marginRight: "120px" }}
+              >
+                Product
+              </Typography>
+              <Typography
+                variant="subtitle2"
+                color="secondary"
+                className={style.heading}
+              >
                 Price
               </Typography>
               <Typography
-                variant="body1"
+                variant="subtitle2"
                 color="secondary"
-              >{`$${subTotal}.00`}</Typography>
-            </div>
-            <div className={classes.priceitem}>
-              <Typography variant="body1" color="secondary">
-                Discount
-              </Typography>
-              <Typography variant="body1" style={{ color: "#388e3c" }}>
-                {`$ ${Math.round(subTotal * 0.1)}.00`}
-              </Typography>
-            </div>
-            <div className={classes.priceitem}>
-              <Typography variant="body1" color="secondary">
-                Delivery Charges
-              </Typography>
-              <Typography variant="body1" style={{ color: "#388e3c" }}>
-                FREE
-              </Typography>
-            </div>
-            <div className={`${classes.priceitem} ${classes.priceItemTotal}`}>
-              <Typography variant="body1" color="secondary">
-                Total
+                className={style.heading}
+                style={{ marginRight: "18px" }}
+              >
+                Quantity
               </Typography>
               <Typography
-                variant="body1"
+                variant="subtitle2"
                 color="secondary"
-                style={{ fontWeight: "bold" }}
+                className={style.heading}
               >
-                {`$ ${subTotal - subTotal * 0.1}.00  `}
+                Total
               </Typography>
             </div>
+
+            {dataCart &&
+              dataCart.map((cur) => {
+                return (
+                  cur && (
+                    <Card className={classes.cartProductList}>
+                      <div className={classes.cartProduct}>
+                        <div className={classes.cartProductImage}>
+                          <Image src={cur.image} alt="" />
+                        </div>
+                        <div className={classes.cartProductDescription}>
+                          <Typography
+                            style={{ fontWeight: "bold", marginTop: "15px" }}
+                            variant="body1"
+                          >
+                            {cur.name}
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            style={{ color: "#A1A8C1", marginTop: "15px" }}
+                          >
+                            size:XL
+                          </Typography>
+                        </div>
+                      </div>
+
+                      {/*PRICE  */}
+                      <Typography
+                        style={{
+                          marginTop: "38px",
+                          textAlign: "center",
+                          marginRight: "40px",
+                        }}
+                        color="secondary"
+                        variant="body2"
+                      >
+                        $ {+cur.price}.00
+                      </Typography>
+                      {/*QUANTITY*/}
+
+                      <div className={classes.quantityContainer}>
+                        <Button
+                          className={style.quantityChangeButton}
+                          style={{ width: "20px" }}
+                          onClick={() => quantityDecreaseHandler(cur.id)}
+                        >
+                          -
+                        </Button>
+                        <input
+                          value={counts[cur.id]}
+                          style={{
+                            margin: "0px 10px",
+                            marginTop: "38px",
+                            textAlign: "center",
+                            width: "50px",
+                            height: "20px",
+                          }}
+                        />
+                        <Button
+                          className={style.quantityChangeButton}
+                          onClick={() => quantityIncreaseHandler(cur.id)}
+                        >
+                          +
+                        </Button>
+                      </div>
+
+                      <div className={classes.lastSlice}>
+                        <Typography
+                          style={{ marginTop: "38px", textAlign: "center" }}
+                          color="secondary"
+                          variant="body2"
+                        >
+                          $ {+cur.price * counts[cur.id]}.00
+                          <div
+                            onClick={() => {
+                              removeOneItem(cur.id);
+                            }}
+                            className={classes.cancelItem}
+                          >
+                            <CancelCart />
+                          </div>
+                        </Typography>
+                      </div>
+                    </Card>
+                  )
+                );
+              })}
+          </div>
+
+          <div className={classes.totalContainer}>
+            <Typography
+              variant="subtitle2"
+              color="secondary"
+              className={style.heading}
+              style={{ marginBottom: "42px" }}
+            >
+              Cart Total
+            </Typography>
+            <div className={classes.totalPriceContainer}>
+              <div className={classes.priceitem}>
+                <Typography variant="body1" color="secondary">
+                  Price
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color="secondary"
+                >{`$${subTotal}.00`}</Typography>
+              </div>
+              <div className={classes.priceitem}>
+                <Typography variant="body1" color="secondary">
+                  Discount
+                </Typography>
+                <Typography variant="body1" style={{ color: "#388e3c" }}>
+                  {`$ ${Math.round(subTotal * 0.1)}.00`}
+                </Typography>
+              </div>
+              <div className={classes.priceitem}>
+                <Typography variant="body1" color="secondary">
+                  Delivery Charges
+                </Typography>
+                <Typography variant="body1" style={{ color: "#388e3c" }}>
+                  FREE
+                </Typography>
+              </div>
+              <div className={`${classes.priceitem} ${classes.priceItemTotal}`}>
+                <Typography variant="body1" color="secondary">
+                  Total
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color="secondary"
+                  style={{ fontWeight: "bold" }}
+                >
+                  {`$ ${subTotal - subTotal * 0.1}.00  `}
+                </Typography>
+              </div>
+              <Button
+                onClick={() => {
+                  router.push("/ordercompleted");
+                }}
+                variant="contained"
+                style={{
+                  backgroundColor: "#19D16F",
+                  width: "312px",
+                  height: "40px",
+                  color: "#FFF",
+                  textTransform: "capitalize",
+                }}
+              >
+                Place order
+              </Button>
+            </div>
             <Button
-              onClick={() => {
-                router.push("/ordercompleted");
-              }}
               variant="contained"
+              color="primary"
+              onClick={clearCart}
               style={{
-                backgroundColor: "#19D16F",
                 width: "312px",
                 height: "40px",
-                color: "#FFF",
                 textTransform: "capitalize",
+                marginTop: "80px",
               }}
             >
-              Place order
+              Clear Cart
             </Button>
           </div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={clearCart}
-            style={{
-              width: "312px",
-              height: "40px",
-              textTransform: "capitalize",
-              marginTop: "80px",
-            }}
-          >
-            Clear Cart
-          </Button>
         </div>
-      </div>
+      )}
     </section>
   );
 };

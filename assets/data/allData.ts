@@ -89,8 +89,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 5,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Dictum chair",
@@ -100,8 +99,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 3,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic chair",
@@ -111,8 +109,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic chair",
@@ -122,8 +119,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic chair",
@@ -133,8 +129,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic chair",
@@ -144,8 +139,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic chair",
@@ -155,8 +149,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic chair",
@@ -166,8 +159,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic chair",
@@ -177,8 +169,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -188,8 +179,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -199,8 +189,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -210,8 +199,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -221,8 +209,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -232,8 +219,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -243,8 +229,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -254,8 +239,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -265,8 +249,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
   {
     name: "Plastic Chair",
@@ -276,8 +259,7 @@ export const allData = [
     price: 26,
     orignalPrice: 52,
     rating: 4,
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est adipiscing in phasellus non in justo.",
   },
 
   // FEATURED PRODUCTS
