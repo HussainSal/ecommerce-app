@@ -28,42 +28,48 @@ const productDetail = () => {
   const stars = [1, 2, 3, 4, 5];
   const additionalInfo = ["Description", "AdditionalInfo", "Reviews", "Video"];
   const ctx = useAppContext();
+  const [addToWishlist, setAddtoWishlist] = useState(false);
 
   // ADDING ITEMS TO CART
   const itemToCart = (id: number) => {
     // console.log(ctx.loggedin.userData.cartItems.length);
-    ctx.loggedin
-      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
-          cartItems: ctx.loggedin.userData.cartItems
-            ? [...ctx.loggedin.userData.cartItems, id]
-            : [id],
-        })
-      : alert("Please login / signup to use this feature");
+    if (ctx.loggedin && ctx.loggedin.userData.cartItems.includes(id)) {
+      return;
+    } else {
+      ctx.loggedin
+        ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
+            cartItems: ctx.loggedin.userData.cartItems
+              ? [...ctx.loggedin.userData.cartItems, id]
+              : [id],
+          })
+        : alert("Please login / signup to use this feature");
 
-    ctx.setReset((prvState) => prvState + 1);
+      ctx.setReset((prvState) => prvState + 1);
+    }
   };
 
   //ADDING ITEM TO WISHLIST
   const itemToWishlist = (id: number) => {
-    if (ctx.loggedin && ctx.loggedin.userData.cartItems.includes(id)) {
+    if (ctx.loggedin && ctx.loggedin.userData.wishlist.includes(id)) {
       return;
-    }
-    ctx.loggedin
-      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
-          wishlist: ctx.loggedin.userData.wishlist
-            ? [...ctx.loggedin.userData.wishlist, id]
-            : [id],
-        })
-      : alert("Please login / signup to use this feature");
+    } else {
+      ctx.loggedin
+        ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
+            wishlist: ctx.loggedin.userData.wishlist
+              ? [...ctx.loggedin.userData.wishlist, id]
+              : [id],
+          })
+        : alert("Please login / signup to use this feature");
 
-    ctx.setReset((prvState) => prvState + 1);
+      ctx.setReset((prvState) => prvState + 1);
+    }
   };
 
   // GOING TO CART
-  const goToCart = () => {
+  const goToCart = (id) => {
     ctx.loggedin &&
       ctx.loggedin.userData.cartItems &&
-      ctx.loggedin.userData.cartItems.includes(dataMatch.id) &&
+      ctx.loggedin.userData.cartItems.includes(id) &&
       router.push("/shopingcart");
   };
 
@@ -140,7 +146,7 @@ const productDetail = () => {
                     <Button
                       onClick={() => {
                         itemToCart(dataMatch.id);
-                        goToCart();
+                        goToCart(dataMatch.id);
                       }}
                       variant="contained"
                       color="primary"

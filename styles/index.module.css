@@ -199,7 +199,9 @@
 }
 
 .linkStyleLatestCategory {
-  text-decoration: underline;
+  /* text-decoration: underline; */
+  border-bottom: 2px solid #fb2e86;
+  padding-bottom: 3px;
   color: #fb2e86;
 }
 

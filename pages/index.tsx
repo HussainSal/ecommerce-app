@@ -28,9 +28,9 @@ import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useAppContext } from "../store/authContext";
 import { useRouter } from "next/dist/client/router";
 import { collection, addDoc } from "firebase/firestore";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Stack from "@mui/material/Stack";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
 
 const db = getFirestore();
 
@@ -62,6 +62,18 @@ const useStyle = makeStyles({
       "& > *": {
         color: "#fff",
       },
+    },
+    "&:hover .MuiPaper-elevation1": {
+      boxShadow: "none",
+    },
+  },
+  buttonShadow: {
+    transition: "all .2s",
+    "&:hover": {
+      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+    },
+    "&:active": {
+      boxShadow: "0px 2px 3px rgba(0, 0, 0, 0.12)",
     },
   },
 });
@@ -171,6 +183,8 @@ export default function Home() {
                 in phasellus non in justo.
               </Typography>
               <Button
+                disableElevation
+                className={style.buttonShadow}
                 style={{
                   width: "163px",
                   height: "50px",
@@ -207,6 +221,9 @@ export default function Home() {
                   className={classes.featuredProduct}
                 >
                   <Card
+                    style={{
+                      filter: "drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.12)",
+                    }}
                     className={`${classes.featuredProductCard} ${style.featuredProductCard}`}
                   >
                     <div
@@ -227,6 +244,7 @@ export default function Home() {
                         }}
                       >
                         <AddToCart />
+                        {/* <ShoppingCartIcon /> */}
                       </div>
 
                       <div
@@ -241,12 +259,15 @@ export default function Home() {
                           itemToWishlist(cur.id);
                         }}
                       >
+                        {/* <FavoriteIcon /> */}
+
                         <Heart />
                       </div>
                       <div
                         onClick={() => takeToProductDetail(cur.id)}
                         className={classes.cart1}
                       >
+                        {/* <ZoomInIcon /> */}
                         <Zoomin />
                       </div>
                     </div>
@@ -313,7 +334,6 @@ export default function Home() {
                   }`}
                   onClick={() => {
                     setChangeLatestCategory(i);
-                    console.log(i);
                   }}
                   style={{ cursor: "pointer" }}
                 >
@@ -506,12 +526,14 @@ export default function Home() {
             </Typography>
             <div className={classes.uniqueButtonBox}>
               <Button
+                disableElevation
                 style={{
                   marginRight: "20px",
                   width: "157px",
                   height: "45px",
                   textTransform: "capitalize",
                 }}
+                className={style.buttonShadow}
                 variant="contained"
                 color="primary"
               >
@@ -791,6 +813,7 @@ export default function Home() {
 
                     <NextLink href={`products/chair/${data.id}`}>
                       <Button
+                        className={style.buttonShadow}
                         variant="contained"
                         color="primary"
                         style={{
@@ -840,6 +863,7 @@ export default function Home() {
                             marginTop: "170px",
                             backgroundColor: "#08d15f",
                             color: "#fff",
+                            textTransform: "capitalize",
                           }}
                           variant="contained"
                         >

@@ -85,7 +85,6 @@ const Layout = ({ children }) => {
     }
   }
   count_duplicate(data);
-  console.log(ctx.loading);
 
   return (
     <Fragment>

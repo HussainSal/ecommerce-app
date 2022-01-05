@@ -15,6 +15,7 @@ import { RatingStar } from "../components/icons/icon";
 import DeleteIcon from "@mui/icons-material/Delete";
 import emptyCart from "../assets/images/no_cart.png";
 import { useRouter } from "next/dist/client/router";
+import Loading from "../components/partials/Loading";
 
 const stars = [1, 2, 3, 4, 5];
 
@@ -41,8 +42,6 @@ const wishlist = () => {
       }
     }
   }
-
-  console.log(counts);
 
   count_duplicate(wishlistItem);
 
@@ -108,7 +107,10 @@ const wishlist = () => {
         ) : (
           <div className={classes.container}>
             <Card className={classes.bigCard}>
-              {dataCart &&
+              {ctx.loading ? (
+                <Loading />
+              ) : (
+                dataCart &&
                 dataCart.map((cur) => {
                   return (
                     cur && (
@@ -143,14 +145,14 @@ const wishlist = () => {
                             </div>
                             <div className={classes.wishListPriceContainer}>
                               <Typography color="secondary">
-                                {`$ ${cur.price}`}
+                                {`$ ${cur.price}.00`}
                               </Typography>
 
                               <Typography
                                 color="primary"
                                 style={{ textDecoration: "line-through" }}
                               >
-                                {`$ ${cur.orignalPrice}`}
+                                {`$ ${cur.orignalPrice}.00`}
                               </Typography>
                             </div>
                           </div>
@@ -162,7 +164,8 @@ const wishlist = () => {
                       </Card>
                     )
                   );
-                })}
+                })
+              )}
             </Card>
           </div>
         )}

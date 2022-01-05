@@ -1,8 +1,8 @@
 export const AddToCart = () => {
   return (
     <svg
-      width="18"
-      height="14"
+      width="19"
+      height="18"
       viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -26,8 +26,8 @@ export const AddToCart = () => {
 export const Heart = () => {
   return (
     <svg
-      width="16"
-      height="14"
+      width="19"
+      height="19"
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

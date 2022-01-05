@@ -13,7 +13,6 @@ import { CancelCart } from "../components/icons/icon";
 import emptyCart from "../assets/images/no_cart.png";
 const headingList = ["Products", "Price", "Quantity", "Total"];
 import test from "../assets/images/camera1.png";
-import { count } from "console";
 
 const usestyle = makeStyles({
   heading: {
@@ -39,14 +38,11 @@ const shopingCart = () => {
   const ctx = useAppContext();
   const router = useRouter();
   const [cartItem, setCartItem] = useState([]);
-  // const [emptyCartState, setEmptyCartState] = useState(false);
   const qtyRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setCartItem(ctx.loggedin && ctx.loggedin.userData.cartItems);
   }, [ctx.loggedin]);
-
-  // making item 1
 
   let counts = {};
 
@@ -101,8 +97,10 @@ const shopingCart = () => {
 
   // ADDING ONE ITEM
   const quantityIncreaseHandler = (id) => {
+    cartItem.push(id);
+
     updateDoc(doc(db, "user", ctx.loggedin.userId), {
-      cartItems: [...cartItem, id],
+      cartItems: [...cartItem],
     });
     ctx.setReset((prvState) => prvState + 1);
   };
@@ -110,7 +108,6 @@ const shopingCart = () => {
   //REMOVING ONE ITEM
   const quantityDecreaseHandler = (id) => {
     cartItem.splice(cartItem.indexOf(id), 1);
-    console.log(cartItem);
 
     updateDoc(doc(db, "user", ctx.loggedin.userId), {
       cartItems: cartItem,
@@ -330,7 +327,7 @@ const shopingCart = () => {
                   color="secondary"
                   style={{ fontWeight: "bold" }}
                 >
-                  {`$ ${subTotal - subTotal * 0.1}.00  `}
+                  {`$ ${(subTotal - subTotal * 0.1).toFixed(2)}  `}
                 </Typography>
               </div>
               <Button
