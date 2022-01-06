@@ -100,3 +100,7 @@
   align-items: center;
   padding-bottom: 15px;
 }
+
+.favIcon:hover {
+  width: 23px;
+}

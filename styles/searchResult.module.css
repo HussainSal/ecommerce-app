@@ -137,3 +137,9 @@
   justify-content: space-between;
   width: 100px;
 }
+
+.favIcon > * {
+  color: #f52b70;
+  max-width: 19px;
+  max-height: 19px;
+}

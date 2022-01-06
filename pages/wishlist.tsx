@@ -145,14 +145,18 @@ const wishlist = () => {
                             </div>
                             <div className={classes.wishListPriceContainer}>
                               <Typography color="secondary">
-                                {`$ ${cur.price}.00`}
+                                {ctx.currency
+                                  ? `$${cur.price.toFixed(2)}`
+                                  : `₹${(cur.price * 70).toFixed(2)}`}
                               </Typography>
 
                               <Typography
                                 color="primary"
                                 style={{ textDecoration: "line-through" }}
                               >
-                                {`$ ${cur.orignalPrice}.00`}
+                                {ctx.currency
+                                  ? `$${cur.orignalPrice.toFixed(2)}`
+                                  : `₹${(cur.orignalPrice * 70).toFixed(2)}`}
                               </Typography>
                             </div>
                           </div>

@@ -54,6 +54,7 @@ const useStyle = makeStyles({
   card2: {
     width: "360px",
     Height: "306px",
+    boxShadow: "0px 0px 0px rgba(0,0,0,0) !important",
   },
   featuredProductCard: {
     transition: "all .3s ",
@@ -120,28 +121,56 @@ export default function Home() {
 
   // ADDING ITEM TO CART
   const itemToCart = (id: number) => {
-    // console.log(ctx.loggedin.userData.cartItems.length);
+    if (!ctx.loggedin) {
+      alert("Please login / signup to use this feature");
+      return;
+    }
 
-    ctx.loggedin
-      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
-          cartItems: ctx.loggedin.userData.cartItems
-            ? [...ctx.loggedin.userData.cartItems, id]
-            : [id],
-        })
-      : alert("Please login / signup to use this feature");
+    if (
+      ctx.loggedin.userData.cartItems &&
+      ctx.loggedin.userData.cartItems.includes(id)
+    ) {
+      const updatedArray = ctx.loggedin.userData.cartItems.filter((item) => {
+        return item != id;
+      });
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        cartItems: updatedArray,
+      });
+    } else {
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        cartItems: ctx.loggedin.userData.cartItems
+          ? [...ctx.loggedin.userData.cartItems, id]
+          : [id],
+      });
+    }
 
     ctx.setReset((prvState) => prvState + 1);
   };
 
   //ADDING ITEM TO WISHLIST
   const itemToWishlist = (id: number) => {
-    ctx.loggedin
-      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
-          wishlist: ctx.loggedin.userData.wishlist
-            ? [...ctx.loggedin.userData.wishlist, id]
-            : [id],
-        })
-      : alert("Please login / signup to use this feature");
+    if (!ctx.loggedin) {
+      alert("Please login / signup to use this feature");
+      return;
+    }
+
+    if (
+      ctx.loggedin.userData.wishlist &&
+      ctx.loggedin.userData.wishlist.includes(id)
+    ) {
+      const updatedWishlist = ctx.loggedin.userData.wishlist.filter((item) => {
+        return item != id;
+      });
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        wishlist: updatedWishlist,
+      });
+    } else {
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        wishlist: ctx.loggedin.userData.wishlist
+          ? [...ctx.loggedin.userData.wishlist, id]
+          : [id],
+      });
+    }
 
     ctx.setReset((prvState) => prvState + 1);
   };
@@ -243,8 +272,15 @@ export default function Home() {
                           itemToCart(cur.id);
                         }}
                       >
-                        <AddToCart />
-                        {/* <ShoppingCartIcon /> */}
+                        {ctx.loggedin &&
+                        ctx.loggedin.userData.cartItems &&
+                        ctx.loggedin.userData.cartItems.includes(cur.id) ? (
+                          <div className={classes.favIcon}>
+                            <ShoppingCartIcon />
+                          </div>
+                        ) : (
+                          <AddToCart />
+                        )}
                       </div>
 
                       <div
@@ -259,9 +295,15 @@ export default function Home() {
                           itemToWishlist(cur.id);
                         }}
                       >
-                        {/* <FavoriteIcon /> */}
-
-                        <Heart />
+                        {ctx.loggedin &&
+                        ctx.loggedin.userData.wishlist &&
+                        ctx.loggedin.userData.wishlist.includes(cur.id) ? (
+                          <div className={classes.favIcon}>
+                            <FavoriteIcon />
+                          </div>
+                        ) : (
+                          <Heart />
+                        )}
                       </div>
                       <div
                         onClick={() => takeToProductDetail(cur.id)}
@@ -296,7 +338,9 @@ export default function Home() {
                         {cur.code}
                       </Typography>
                       <Typography className={style.color151875} variant="body2">
-                        ${cur.price.toFixed(2)}
+                        {ctx.currency
+                          ? `$${cur.price.toFixed(2)}`
+                          : `₹${(cur.price * 70).toFixed(2)}`}
                       </Typography>
                     </div>
                   </Card>
@@ -351,6 +395,7 @@ export default function Home() {
 
                     <Grid className={classes.latestGridBox} item>
                       <Card
+                        // style={{bo}}
                         onClick={() =>
                           !takeToCart && takeToProductDetail(cur.id)
                         }
@@ -375,7 +420,15 @@ export default function Home() {
                               itemToCart(cur.id);
                             }}
                           >
-                            <AddToCart />
+                            {ctx.loggedin &&
+                            ctx.loggedin.userData.cartItems &&
+                            ctx.loggedin.userData.cartItems.includes(cur.id) ? (
+                              <div className={classes.favIcon}>
+                                <ShoppingCartIcon />
+                              </div>
+                            ) : (
+                              <AddToCart />
+                            )}
                           </div>
 
                           <div
@@ -390,7 +443,15 @@ export default function Home() {
                               itemToWishlist(cur.id);
                             }}
                           >
-                            <Heart />
+                            {ctx.loggedin &&
+                            ctx.loggedin.userData.wishlist &&
+                            ctx.loggedin.userData.wishlist.includes(cur.id) ? (
+                              <div className={classes.favIcon}>
+                                <FavoriteIcon />
+                              </div>
+                            ) : (
+                              <Heart />
+                            )}
                           </div>
                           <div
                             onClick={() => takeToProductDetail(cur.id)}
@@ -416,7 +477,9 @@ export default function Home() {
                                 fontSize: "14px",
                               }}
                             >
-                              ${cur.price.toFixed(2)}
+                              {ctx.currency
+                                ? `$${cur.price.toFixed(2)}`
+                                : `₹${(cur.price * 70).toFixed(2)}`}
                             </Typography>
                             <Typography
                               variant="body2"
@@ -426,7 +489,9 @@ export default function Home() {
                                 fontSize: "12px",
                               }}
                             >
-                              ${cur.orignalPrice.toFixed(2)}
+                              {ctx.currency
+                                ? `$${cur.orignalPrice.toFixed(2)}`
+                                : `₹${(cur.orignalPrice * 70).toFixed(2)}`}
                             </Typography>
                           </div>
                         </div>
@@ -582,7 +647,15 @@ export default function Home() {
                         itemToCart(cur.id);
                       }}
                     >
-                      <AddToCart />
+                      {ctx.loggedin &&
+                      ctx.loggedin.userData.cartItems &&
+                      ctx.loggedin.userData.cartItems.includes(cur.id) ? (
+                        <div className={classes.favIcon}>
+                          <ShoppingCartIcon />
+                        </div>
+                      ) : (
+                        <AddToCart />
+                      )}
                     </div>
 
                     <div
@@ -597,7 +670,15 @@ export default function Home() {
                         itemToWishlist(cur.id);
                       }}
                     >
-                      <Heart />
+                      {ctx.loggedin &&
+                      ctx.loggedin.userData.wishlist &&
+                      ctx.loggedin.userData.wishlist.includes(cur.id) ? (
+                        <div className={classes.favIcon}>
+                          <FavoriteIcon />
+                        </div>
+                      ) : (
+                        <Heart />
+                      )}
                     </div>
                     <div
                       onClick={() => takeToProductDetail(cur.id)}
@@ -622,9 +703,12 @@ export default function Home() {
                           fontSize: "14px",
                           lineHeight: "14px",
                           color: "#151875",
+                          paddingRight: "10px",
                         }}
                       >
-                        ${cur.price.toFixed(2)}
+                        {ctx.currency
+                          ? `$${cur.price.toFixed(2)}`
+                          : `₹${(cur.price * 70).toFixed(2)}`}
                       </Typography>
                       <Typography
                         style={{
@@ -634,7 +718,9 @@ export default function Home() {
                           color: "#C4C4C4",
                         }}
                       >
-                        ${cur.orignalPrice.toFixed(2)}
+                        {ctx.currency
+                          ? `$${cur.orignalPrice.toFixed(2)}`
+                          : `₹${(cur.orignalPrice * 70).toFixed(2)}`}
                       </Typography>
                     </div>
                   </div>
@@ -717,7 +803,9 @@ export default function Home() {
                           style={{ color: "#151875", fontSize: "12px" }}
                           variant="body2"
                         >
-                          ${cur.price.toFixed(2)}
+                          {ctx.currency
+                            ? `$${cur.price.toFixed(2)}`
+                            : `₹${(cur.price * 70).toFixed(2)}`}
                         </Typography>
                       </div>
                     </div>
@@ -858,7 +946,8 @@ export default function Home() {
                       </div>
                       <NextLink href={`products/chair/${cur.id}`}>
                         <Button
-                          className={classes.topCategoryButton}
+                          disableElevation
+                          className={`${classes.topCategoryButton} ${style.buttonShadow}`}
                           style={{
                             marginTop: "170px",
                             backgroundColor: "#08d15f",
@@ -876,7 +965,9 @@ export default function Home() {
                         {cur.title}
                       </Typography>
                       <Typography color="secondary" variant="body2">
-                        ${cur.price.toFixed(2)}
+                        {ctx.currency
+                          ? `$${cur.price.toFixed(2)}`
+                          : `₹${(cur.price * 70).toFixed(2)}`}
                       </Typography>
                     </div>
                   </div>

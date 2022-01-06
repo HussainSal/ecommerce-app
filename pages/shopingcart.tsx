@@ -58,8 +58,6 @@ const shopingCart = () => {
     }
   }
 
-  console.log(counts);
-
   count_duplicate(cartItem);
 
   const dataCart =
@@ -117,10 +115,22 @@ const shopingCart = () => {
 
   let total = [];
 
+  // cur && +cur.price * counts[cur.id];
+
+  // {
+  //   ctx.currency
+  //     ? `${(+cur.price * counts[cur.id]).toFixed(2)}`
+  //     : `₹${((+cur.price * 70 )* counts[cur.id]).toFixed(2)}`
+  // }
+
   {
     dataCart &&
       dataCart.map((cur) => {
-        total.push(cur && +cur.price * counts[cur.id]);
+        total.push(
+          cur && ctx.currency
+            ? +cur.price * counts[cur.id]
+            : +cur.price * 70 * counts[cur.id]
+        );
       });
   }
 
@@ -230,7 +240,9 @@ const shopingCart = () => {
                         color="secondary"
                         variant="body2"
                       >
-                        $ {+cur.price}.00
+                        {ctx.currency
+                          ? `$${cur.price.toFixed(2)}`
+                          : `₹${(cur.price * 70).toFixed(2)}`}
                       </Typography>
                       {/*QUANTITY*/}
 
@@ -266,7 +278,12 @@ const shopingCart = () => {
                           color="secondary"
                           variant="body2"
                         >
-                          $ {+cur.price * counts[cur.id]}.00
+                          {ctx.currency
+                            ? `$${(cur.price * counts[cur.id]).toFixed(2)}`
+                            : `₹${(cur.price * 70 * counts[cur.id]).toFixed(
+                                2
+                              )}`}
+
                           <div
                             onClick={() => {
                               removeOneItem(cur.id);
@@ -297,10 +314,9 @@ const shopingCart = () => {
                 <Typography variant="body1" color="secondary">
                   Price
                 </Typography>
-                <Typography
-                  variant="body1"
-                  color="secondary"
-                >{`$${subTotal}.00`}</Typography>
+                <Typography variant="body1" color="secondary">
+                  {ctx.currency ? `$${subTotal}.00` : `₹${subTotal}.00`}
+                </Typography>
               </div>
               <div className={classes.priceitem}>
                 <Typography variant="body1" color="secondary">
@@ -327,7 +343,9 @@ const shopingCart = () => {
                   color="secondary"
                   style={{ fontWeight: "bold" }}
                 >
-                  {`$ ${(subTotal - subTotal * 0.1).toFixed(2)}  `}
+                  {ctx.currency
+                    ? `$ ${(subTotal - subTotal * 0.1).toFixed(2)}`
+                    : `₹ ${(subTotal - subTotal * 0.1).toFixed(2)}`}
                 </Typography>
               </div>
               <Button

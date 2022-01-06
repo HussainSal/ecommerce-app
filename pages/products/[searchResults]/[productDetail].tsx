@@ -18,11 +18,24 @@ import { doc, setDoc, getFirestore, updateDoc } from "firebase/firestore";
 import socialsites from "../../assets/images/socialsites.png";
 import brands from "../../assets/images/brands.png";
 import { useState } from "react";
+import { makeStyles } from "@material-ui/core";
+
+const useStyle = makeStyles({
+  buttonShadow: {
+    transition: "all .2s",
+    "&:hover": {
+      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+    },
+    "&:active": {
+      boxShadow: "0px 2px 3px rgba(0, 0, 0, 0.12)",
+    },
+  },
+});
 
 const productDetail = () => {
+  const style = useStyle();
   const router = useRouter();
   const productId = router.query.productDetail;
-  // console.log(productId);
   const db = getFirestore();
   const dataMatch = productMatch(+productId);
   const stars = [1, 2, 3, 4, 5];
@@ -50,19 +63,24 @@ const productDetail = () => {
 
   //ADDING ITEM TO WISHLIST
   const itemToWishlist = (id: number) => {
-    if (ctx.loggedin && ctx.loggedin.userData.wishlist.includes(id)) {
-      return;
-    } else {
-      ctx.loggedin
-        ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
-            wishlist: ctx.loggedin.userData.wishlist
-              ? [...ctx.loggedin.userData.wishlist, id]
-              : [id],
-          })
-        : alert("Please login / signup to use this feature");
+    !ctx.loggedin && alert("Please login / signup to use this feature");
 
-      ctx.setReset((prvState) => prvState + 1);
+    if (ctx.loggedin && ctx.loggedin.userData.wishlist.includes(id)) {
+      const updatedWishlist = ctx.loggedin.userData.wishlist.filter((item) => {
+        return item != id;
+      });
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        wishlist: updatedWishlist,
+      });
+    } else if (ctx.loggedin) {
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        wishlist: ctx.loggedin.userData.wishlist
+          ? [...ctx.loggedin.userData.wishlist, id]
+          : [id],
+      });
     }
+
+    ctx.setReset((prvState) => prvState + 1);
   };
 
   // GOING TO CART
@@ -114,7 +132,9 @@ const productDetail = () => {
                     color="secondary"
                     style={{ lineHeight: "29px", marginRight: "10px" }}
                   >
-                    ${dataMatch.price}
+                    {ctx.currency
+                      ? `$${dataMatch.price.toFixed(2)}`
+                      : `₹${(dataMatch.price * 70).toFixed(2)}`}
                   </Typography>
                   <Typography
                     color="primary"
@@ -124,7 +144,9 @@ const productDetail = () => {
                       textDecoration: "line-through",
                     }}
                   >
-                    ${dataMatch.orignalPrice}
+                    {ctx.currency
+                      ? `$${dataMatch.price.toFixed(2)}`
+                      : `₹${(dataMatch.price * 70).toFixed(2)}`}
                   </Typography>
                 </div>
                 <Typography
@@ -144,6 +166,8 @@ const productDetail = () => {
                     style={{ lineHeight: "29px", marginRight: "20px" }}
                   >
                     <Button
+                      className={style.buttonShadow}
+                      disableElevation
                       onClick={() => {
                         itemToCart(dataMatch.id);
                         goToCart(dataMatch.id);
@@ -165,9 +189,17 @@ const productDetail = () => {
                     {ctx.loggedin &&
                     ctx.loggedin.userData.wishlist &&
                     ctx.loggedin.userData.wishlist.includes(dataMatch.id) ? (
-                      <FavoriteIcon style={{ color: "#FB2E86" }} />
+                      <FavoriteIcon
+                        style={{
+                          color: "#FB2E86",
+                          maxWidth: "22px",
+                          maxHeight: "22px",
+                        }}
+                      />
                     ) : (
-                      <Favourite />
+                      <div className={classes.favIcon}>
+                        <Favourite />
+                      </div>
                     )}
                   </span>
                 </div>

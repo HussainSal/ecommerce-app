@@ -652,3 +652,9 @@
 .topCategoryActive {
   background-color: #f52b70;
 }
+
+.favIcon > * {
+  color: #f52b70;
+  max-width: 19px;
+  max-height: 19px;
+}

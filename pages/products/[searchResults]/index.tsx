@@ -21,6 +21,8 @@ import NextLink from "next/link";
 import { updateDoc, doc, getFirestore } from "firebase/firestore";
 import { useAppContext } from "../../../store/authContext";
 import classes2 from "../../../styles/index.module.css";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const searchResults = (props) => {
   const [change, setChange] = useState("Best Match");
@@ -58,27 +60,50 @@ const searchResults = (props) => {
 
   // ADDING ITEM TO CART
   const itemToCart = (id: number) => {
-    // console.log(ctx.loggedin.userData.cartItems.length);
-    ctx.loggedin
-      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
-          cartItems: ctx.loggedin.userData.cartItems
-            ? [...ctx.loggedin.userData.cartItems, id]
-            : [id],
-        })
-      : alert("Please login / signup to use this feature");
+    if (!ctx.loggedin) {
+      alert("Please login / signup to use this feature");
+      return;
+    }
+
+    if (ctx.loggedin.userData.cartItems.includes(id)) {
+      const updatedArray = ctx.loggedin.userData.cartItems.filter((item) => {
+        return item != id;
+      });
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        cartItems: updatedArray,
+      });
+    } else {
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        cartItems: ctx.loggedin.userData.cartItems
+          ? [...ctx.loggedin.userData.cartItems, id]
+          : [id],
+      });
+    }
 
     ctx.setReset((prvState) => prvState + 1);
   };
 
   //ADDING ITEM TO WISHLIST
   const itemToWishlist = (id: number) => {
-    ctx.loggedin
-      ? updateDoc(doc(db, "user", ctx.loggedin.userId), {
-          wishlist: ctx.loggedin.userData.wishlist
-            ? [...ctx.loggedin.userData.wishlist, id]
-            : [id],
-        })
-      : alert("Please login / signup to use this feature");
+    if (!ctx.loggedin) {
+      alert("Please login / signup to use this feature");
+      return;
+    }
+
+    if (ctx.loggedin.userData.wishlist.includes(id)) {
+      const updatedWishlist = ctx.loggedin.userData.wishlist.filter((item) => {
+        return item != id;
+      });
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        wishlist: updatedWishlist,
+      });
+    } else {
+      updateDoc(doc(db, "user", ctx.loggedin.userId), {
+        wishlist: ctx.loggedin.userData.wishlist
+          ? [...ctx.loggedin.userData.wishlist, id]
+          : [id],
+      });
+    }
 
     ctx.setReset((prvState) => prvState + 1);
   };
@@ -104,7 +129,6 @@ const searchResults = (props) => {
                 lineHeight: "16px",
                 marginTop: "15px",
                 fontWeight: "bold",
-                // color: "#8A8FB9",
               }}
               variant="body1"
             >
@@ -194,7 +218,9 @@ const searchResults = (props) => {
                       marginRight: "10px",
                     }}
                   >
-                    ${cur.price}
+                    {ctx.currency
+                      ? `$${cur.price.toFixed(2)}`
+                      : `₹${(cur.price * 70).toFixed(2)}`}
                   </Typography>
                   <Typography
                     variant="body2"
@@ -205,7 +231,9 @@ const searchResults = (props) => {
                       textDecoration: "line-through",
                     }}
                   >
-                    ${cur.orignalPrice}
+                    {ctx.currency
+                      ? `$${cur.orignalPrice.toFixed(2)}`
+                      : `₹${(cur.orignalPrice * 70).toFixed(2)}`}
                   </Typography>
                   <div className={classes.ratingStarBox}>
                     {stars.map((star) => {
@@ -250,7 +278,14 @@ const searchResults = (props) => {
                       itemToCart(cur.id);
                     }}
                   >
-                    <AddToCart />
+                    {ctx.loggedin &&
+                    ctx.loggedin.userData.cartItems.includes(cur.id) ? (
+                      <div className={classes.favIcon}>
+                        <ShoppingCartIcon />
+                      </div>
+                    ) : (
+                      <AddToCart />
+                    )}
                   </div>
 
                   <div
@@ -264,7 +299,14 @@ const searchResults = (props) => {
                       itemToWishlist(cur.id);
                     }}
                   >
-                    <Heart />
+                    {ctx.loggedin &&
+                    ctx.loggedin.userData.wishlist.includes(cur.id) ? (
+                      <div className={classes.favIcon}>
+                        <FavoriteIcon />
+                      </div>
+                    ) : (
+                      <Heart />
+                    )}
                   </div>
                   <div
                     onClick={() => takeToProductDetail(cur.id)}

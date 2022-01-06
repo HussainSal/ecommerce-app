@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core";
 import { productData } from "../../assets/data/productData";
 import { Grid } from "@mui/material";
 import NextLink from "next/link";
+import { useAppContext } from "../../store/authContext";
 
 const useStyle = makeStyles({
   colorEC42A2: {
@@ -19,6 +20,7 @@ const useStyle = makeStyles({
 
 const index = () => {
   const style = useStyle();
+  const ctx = useAppContext();
 
   return (
     <section>
@@ -62,7 +64,9 @@ const index = () => {
                           color="secondary"
                           style={{ fontSize: "14px", fontWeight: "bold" }}
                         >
-                          ${cur.price}.00
+                          {ctx.currency
+                            ? `$${cur.price.toFixed(2)}`
+                            : `₹${(cur.price * 70).toFixed(2)}`}
                         </Typography>
                         <Typography
                           color="primary"
@@ -73,7 +77,9 @@ const index = () => {
                             fontWeight: "bold",
                           }}
                         >
-                          ${cur.orignalPrice}.00
+                          {ctx.currency
+                            ? `$${cur.orignalPrice.toFixed(2)}`
+                            : `₹${(cur.orignalPrice * 70).toFixed(2)}`}
                         </Typography>
                       </div>
                     </div>

@@ -46,9 +46,12 @@ const useStyle = makeStyles({
   footerText1: {
     color: "#8A8FB9",
   },
+  link3: {
+    color: "#FB2E86",
+  },
 });
 
-const navItem = ["home", "pages", "products", "about", "contact"];
+const navItem = ["home", "products", "about", "contact"];
 
 const Layout = ({ children }) => {
   const style = useStyle();
@@ -86,6 +89,8 @@ const Layout = ({ children }) => {
   }
   count_duplicate(data);
 
+  console.log(ctx.currency);
+
   return (
     <Fragment>
       <nav className={classes.navigationComplete}>
@@ -101,26 +106,29 @@ const Layout = ({ children }) => {
                   disableUnderline
                 >
                   {currency === "usd" ? (
-                    <MenuItem value={currency}>
+                    <MenuItem
+                      onClick={() => ctx.setCurrency(true)}
+                      value={currency}
+                    >
                       <Typography
                         className={style.navigationItem}
                         variant="subtitle1"
                       >
                         USD
                       </Typography>
-                      {(ctx.setCurrency = true)}
                     </MenuItem>
                   ) : (
-                    <MenuItem value="usd">USD</MenuItem>
+                    <MenuItem onClick={() => ctx.setCurrency(true)} value="usd">
+                      USD
+                    </MenuItem>
                   )}
-                  <MenuItem value="inr">
+                  <MenuItem onClick={() => ctx.setCurrency(false)} value="inr">
                     <Typography
                       className={style.navigationItem}
                       variant="subtitle1"
                     >
                       INR
                     </Typography>
-                    {(ctx.setCurrency = false)}
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -191,7 +199,13 @@ const Layout = ({ children }) => {
             {navItem.map((cur, i) => {
               return (
                 <NextLink href={cur === "home" ? "/" : `/${cur}`} key={i}>
-                  <Typography className={style.link2}>{cur}</Typography>
+                  <Typography
+                    className={`${style.link2} ${
+                      router.pathname.includes(cur) && style.link3
+                    }`}
+                  >
+                    {cur}
+                  </Typography>
                 </NextLink>
               );
             })}
