@@ -270,6 +270,7 @@ const searchResults = (props) => {
                   <div
                     className={`${classes2.cart1} ${
                       ctx.loggedin &&
+                      ctx.loggedin.userData.cartItems &&
                       ctx.loggedin.userData.cartItems.length >= 0 &&
                       ctx.loggedin.userData.cartItems.includes(cur.id) &&
                       classes2.cartActive
@@ -279,6 +280,7 @@ const searchResults = (props) => {
                     }}
                   >
                     {ctx.loggedin &&
+                    ctx.loggedin.userData.cartItems &&
                     ctx.loggedin.userData.cartItems.includes(cur.id) ? (
                       <div className={classes.favIcon}>
                         <ShoppingCartIcon />
@@ -300,6 +302,7 @@ const searchResults = (props) => {
                     }}
                   >
                     {ctx.loggedin &&
+                    ctx.loggedin.userData.wishlist &&
                     ctx.loggedin.userData.wishlist.includes(cur.id) ? (
                       <div className={classes.favIcon}>
                         <FavoriteIcon />

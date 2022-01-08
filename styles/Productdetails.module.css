@@ -10,10 +10,6 @@
   /* border-radius: 25px; */
 }
 
-.heart {
-  cursor: pointer;
-}
-
 .imageBox {
   width: 357px;
   height: 487px;
@@ -101,6 +97,17 @@
   padding-bottom: 15px;
 }
 
-.favIcon:hover {
-  width: 23px;
+.heart {
+  cursor: pointer;
+}
+
+.heart:hover svg {
+  /* cursor: pointer; */
+  animation: heartPopUp 0.8s linear infinite;
+}
+
+@keyframes heartPopUp {
+  50% {
+    transform: scale(1.07);
+  }
 }

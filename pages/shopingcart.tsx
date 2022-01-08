@@ -11,8 +11,6 @@ import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import { CancelCart } from "../components/icons/icon";
 import emptyCart from "../assets/images/no_cart.png";
-const headingList = ["Products", "Price", "Quantity", "Total"];
-import test from "../assets/images/camera1.png";
 
 const usestyle = makeStyles({
   heading: {
@@ -41,6 +39,8 @@ const shopingCart = () => {
   const qtyRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    // setTimeout(() => {
+    // }, 100);
     setCartItem(ctx.loggedin && ctx.loggedin.userData.cartItems);
   }, [ctx.loggedin]);
 
@@ -114,14 +114,6 @@ const shopingCart = () => {
   };
 
   let total = [];
-
-  // cur && +cur.price * counts[cur.id];
-
-  // {
-  //   ctx.currency
-  //     ? `${(+cur.price * counts[cur.id]).toFixed(2)}`
-  //     : `₹${((+cur.price * 70 )* counts[cur.id]).toFixed(2)}`
-  // }
 
   {
     dataCart &&

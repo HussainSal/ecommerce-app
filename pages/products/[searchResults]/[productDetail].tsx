@@ -36,6 +36,8 @@ const productDetail = () => {
   const style = useStyle();
   const router = useRouter();
   const productId = router.query.productDetail;
+  const productType = router.query.searchResult;
+  console.log(productType);
   const db = getFirestore();
   const dataMatch = productMatch(+productId);
   const stars = [1, 2, 3, 4, 5];
@@ -186,21 +188,19 @@ const productDetail = () => {
                     className={classes.heart}
                     onClick={() => itemToWishlist(dataMatch.id)}
                   >
-                    {ctx.loggedin &&
-                    ctx.loggedin.userData.wishlist &&
-                    ctx.loggedin.userData.wishlist.includes(dataMatch.id) ? (
-                      <FavoriteIcon
-                        style={{
-                          color: "#FB2E86",
-                          maxWidth: "22px",
-                          maxHeight: "22px",
-                        }}
-                      />
-                    ) : (
-                      <div className={classes.favIcon}>
-                        <Favourite />
-                      </div>
-                    )}
+                    <FavoriteIcon
+                      style={{
+                        color:
+                          ctx.loggedin &&
+                          ctx.loggedin.userData.wishlist &&
+                          ctx.loggedin.userData.wishlist.includes(dataMatch.id)
+                            ? "#FB2E86"
+                            : "#ACACAC",
+                        maxWidth: "22px",
+                        maxHeight: "22px",
+                        // transition: "all .1s",
+                      }}
+                    />
                   </span>
                 </div>
                 <div>

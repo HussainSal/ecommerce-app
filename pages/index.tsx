@@ -1,14 +1,7 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import classes from "../styles/index.module.css";
 import Image from "next/image";
-import {
-  Button,
-  Typography,
-  makeStyles,
-  Card,
-  Link,
-  Box,
-} from "@material-ui/core";
+import { Button, Typography, makeStyles, Card, Link } from "@material-ui/core";
 import { Grid } from "@mui/material";
 import promotinalLamp from "../assets/images/promotionallamp.png";
 import promotionChair from "../assets/images/promotionChair.png";
@@ -27,10 +20,8 @@ import { Heart, AddToCart, Zoomin } from "../components/icons/icon";
 import { doc, updateDoc, getFirestore } from "firebase/firestore";
 import { useAppContext } from "../store/authContext";
 import { useRouter } from "next/dist/client/router";
-import { collection, addDoc } from "firebase/firestore";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
 
 const db = getFirestore();
 
@@ -212,6 +203,7 @@ export default function Home() {
                 in phasellus non in justo.
               </Typography>
               <Button
+                onClick={() => router.push("/products")}
                 disableElevation
                 className={style.buttonShadow}
                 style={{

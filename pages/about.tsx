@@ -1,14 +1,14 @@
 import React from "react";
 import Header from "../components/partials/Header";
 import classes from "../styles/about.module.css";
-import meeting from "../assets/assets/img/meeting.png";
+import meeting from "../assets/images/meeting.png";
 import Image from "next/image";
 import { Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import ShopexofferList from "../components/partials/ShopexofferList";
-import client1 from "../assets/assets/img/client1.png";
-import client2 from "../assets/assets/img/client2.png";
-import client3 from "../assets/assets/img/client3.png";
+import client1 from "../assets/images/client1.png";
+import client2 from "../assets/images/client2.png";
+import client3 from "../assets/images/client3.png";
 
 const useStyle = makeStyles({
   heading: {

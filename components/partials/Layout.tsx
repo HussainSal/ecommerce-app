@@ -49,6 +49,16 @@ const useStyle = makeStyles({
   link3: {
     color: "#FB2E86",
   },
+  select: {
+    "& > *": {
+      color: "#FFF",
+    },
+  },
+  menuItem: {
+    "& > *": {
+      color: "#000",
+    },
+  },
 });
 
 const navItem = ["home", "products", "about", "contact"];
@@ -88,7 +98,7 @@ const Layout = ({ children }) => {
     }
   }
   count_duplicate(data);
-
+  console.log(router.pathname);
   console.log(ctx.currency);
 
   return (
@@ -99,6 +109,7 @@ const Layout = ({ children }) => {
             <Box sx={{ minWidth: 60 }}>
               <FormControl>
                 <Select
+                  className={style.select}
                   id="demo-simple-select"
                   value={currency}
                   label="Age"
@@ -107,11 +118,12 @@ const Layout = ({ children }) => {
                 >
                   {currency === "usd" ? (
                     <MenuItem
+                      className={classes.menuItem}
                       onClick={() => ctx.setCurrency(true)}
                       value={currency}
                     >
                       <Typography
-                        className={style.navigationItem}
+                        className={style.menuItem}
                         variant="subtitle1"
                       >
                         USD
@@ -119,14 +131,16 @@ const Layout = ({ children }) => {
                     </MenuItem>
                   ) : (
                     <MenuItem onClick={() => ctx.setCurrency(true)} value="usd">
-                      USD
+                      <Typography
+                        className={style.menuItem}
+                        variant="subtitle1"
+                      >
+                        USD
+                      </Typography>
                     </MenuItem>
                   )}
                   <MenuItem onClick={() => ctx.setCurrency(false)} value="inr">
-                    <Typography
-                      className={style.navigationItem}
-                      variant="subtitle1"
-                    >
+                    <Typography className={style.menuItem} variant="subtitle1">
                       INR
                     </Typography>
                   </MenuItem>
@@ -201,7 +215,9 @@ const Layout = ({ children }) => {
                 <NextLink href={cur === "home" ? "/" : `/${cur}`} key={i}>
                   <Typography
                     className={`${style.link2} ${
-                      router.pathname.includes(cur) && style.link3
+                      cur === "home"
+                        ? router.pathname === "/" && style.link3
+                        : router.pathname.includes(cur) && style.link3
                     }`}
                   >
                     {cur}

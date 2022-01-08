@@ -1,17 +1,16 @@
-import chair1 from "../assets/img/chair14.png";
-import couch from "../assets/img/couch3.png";
-import sofa from "../assets/img/couch2.png";
-import chair2 from "../assets/img/chair13.png";
-import bag from "../assets/img/bag1.png";
-import smartWatch from "../assets/img/smart-watch2.png";
-import watch from "../assets/img/watch8.png";
-import headset from "../assets/img/head-phone1.png";
-import securityCamera from "../assets/img/cctv-camera2.png";
-import airpod from "../assets/img/earpod1.png";
-import ladiesWatch from "../assets/img/watch6.png";
-import camera from "../assets/img/camera1.png";
+import chair1 from "../images/chair14.png";
+import couch from "../images/couch3.png";
+import sofa from "../images/couch2.png";
+import chair2 from "../images/chair14.png";
+import bag from "../images/bag1.png";
+import smartWatch from "../images/smart-watch2.png";
+import watch from "../images/watch8.png";
+import headset from "../images/head-phone1.png";
+import securityCamera from "../images/cctv-camera2.png";
+import airpod from "../images/earpod1.png";
+import ladiesWatch from "../images/watch6.png";
+import camera from "../images/camera1.png";
 import { ProductPageData } from "../store/types/types";
-// import schoolBag from "../assets/img/bag2.png";
 
 export const productData: ProductPageData[] = [
   {

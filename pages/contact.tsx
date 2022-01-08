@@ -5,7 +5,7 @@ import classes from "../styles/contact.module.css";
 import { makeStyles } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import Image from "next/dist/client/image";
-import communication from "../assets/assets/img/communication.png";
+import communication from "../assets/images/communication.png";
 
 const useStyle = makeStyles({
   headingMain: {

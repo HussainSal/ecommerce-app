@@ -1,56 +1,87 @@
 import React from "react";
+import styles from "../styles/OrderConfirmed.module.css";
+import { Typography, makeStyles, Button } from "@material-ui/core";
+import Image from "next/image";
+import clock from "../assets/images/clock.png";
+import checkMark from "../assets/images/checkmark.png";
+import taskbook from "../assets/images/taskbook.png";
 import Header from "../components/partials/Header";
-import classes from "../styles/ordercompleted.module.css";
-import { Button, Typography } from "@material-ui/core";
+import Divider from "../components/partials/Divider";
 import { useRouter } from "next/dist/client/router";
 
-const orderComplete = () => {
+const useStyles = makeStyles({
+  heading: {
+    color: "#151875",
+    marginBottom: 28,
+    textTransform: "capitalize",
+  },
+  text: {
+    lineHeight: "30px",
+    color: "#8D92A7",
+    marginBottom: 20,
+  },
+  btn: {
+    textTransform: "capitalize",
+    width: 208,
+    height: 59,
+    borderRadius: 3,
+
+    "&:hover": {
+      boxShadow: "1px 5px 5px rgba(0,0,0,.12)",
+    },
+    "&:active": {
+      boxShadow: "none",
+    },
+  },
+});
+
+const OrderConfirmed = () => {
   const router = useRouter();
+  const classes = useStyles();
 
   return (
-    <section>
+    <React.Fragment>
       <Header type={"Order Completed"} />
-      {/* <div className={classes.clockImage}>
-        <Image alt="" src={clock} />
-      </div> */}
-      <div className={classes.container}>
-        <div className={classes.imageContainer}>
-          {/* <Image alt="" src={} /> */}
+
+      <section className={styles.orderConfirmed}>
+        <div className={styles.innerContainer}>
+          <div className={styles.clockImg}>
+            <Image src={clock} alt="clock-img" />
+          </div>
+          <div className={styles.taskbookImg}>
+            <Image src={taskbook} alt="taskbook-img" />
+          </div>
+          <div className={styles.textContainer}>
+            <div className={styles.checkMarkImg}>
+              <Image src={checkMark} alt="checkmark-img" />
+            </div>
+
+            <Typography variant="h3" className={classes.heading}>
+              your order is completed!
+            </Typography>
+            <Typography variant="subtitle2" className={classes.text}>
+              Thank you for your order! Your order is being processed and will
+              be completed within 3-6 hours. You will receive an email
+              confirmation when your order is completed.
+            </Typography>
+            <Button
+              variant="contained"
+              className={classes.btn}
+              color="primary"
+              disableElevation
+              onClick={() => router.push("/")}
+            >
+              continue shopping
+            </Button>
+          </div>
         </div>
-        <Typography
-          variant="h3"
-          color="secondary"
-          style={{ fontWeight: "bold" }}
-        >
-          Your Order Is Completed!
-        </Typography>
-        <Typography
-          variant="body1"
-          style={{
-            lineHeight: "30px",
-            color: "#8D92A7",
-            fontSize: "16px",
-            marginTop: "25px",
-            marginBottom: "15px",
-          }}
-        >
-          Thank you for your order! Your order is being processed and will be
-          completed within 3-6 hours. You will receive an email confirmation
-          when your order is completed.
-        </Typography>
-        <Button
-          onClick={() => {
-            router.push("/");
-          }}
-          variant="contained"
-          color="primary"
-          style={{ textTransform: "capitalize" }}
-        >
-          Continue Shopping
-        </Button>
-      </div>
-    </section>
+      </section>
+
+      <Divider />
+    </React.Fragment>
   );
 };
 
-export default orderComplete;
+export default OrderConfirmed;
+
+// color: "#151875",
