@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import classes from "../styles/index.module.css";
 import Image from "next/image";
 import { Button, Typography, makeStyles, Card, Link } from "@material-ui/core";
@@ -103,12 +103,19 @@ export default function Home() {
   const ctx = useAppContext();
   const style = useStyle();
   const [takeToCart, setTakeToCart] = useState(false);
+  const [userCart, setUserCart] = useState([]);
+  const [userWishlist, setUserWishlist] = useState([]);
   const router = useRouter();
 
   const [discountItemActiveLink, setDiscountItemActiveLink] =
     useState("Wood Chair");
   const [changeTopCategory, setChangeTopCategory] = useState(1);
   const [changeLatestCategory, setChangeLatestCategory] = useState(0);
+
+  useEffect(() => {
+    ctx.loggedin && setUserCart(ctx.loggedin.userData.cartItems);
+    ctx.loggedin && setUserWishlist(ctx.loggedin.userData.wishlist);
+  }, [ctx.loggedin]);
 
   // ADDING ITEM TO CART
   const itemToCart = (id: number) => {
@@ -124,10 +131,12 @@ export default function Home() {
       const updatedArray = ctx.loggedin.userData.cartItems.filter((item) => {
         return item != id;
       });
+      setUserCart(updatedArray);
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         cartItems: updatedArray,
       });
     } else {
+      setUserCart((prvState) => (prvState ? [...prvState, id] : [id]));
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         cartItems: ctx.loggedin.userData.cartItems
           ? [...ctx.loggedin.userData.cartItems, id]
@@ -152,10 +161,12 @@ export default function Home() {
       const updatedWishlist = ctx.loggedin.userData.wishlist.filter((item) => {
         return item != id;
       });
+      setUserWishlist(updatedWishlist);
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         wishlist: updatedWishlist,
       });
     } else {
+      setUserWishlist((prvState) => (prvState ? [...prvState, id] : [id]));
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         wishlist: ctx.loggedin.userData.wishlist
           ? [...ctx.loggedin.userData.wishlist, id]
@@ -265,8 +276,8 @@ export default function Home() {
                         }}
                       >
                         {ctx.loggedin &&
-                        ctx.loggedin.userData.cartItems &&
-                        ctx.loggedin.userData.cartItems.includes(cur.id) ? (
+                        userCart &&
+                        userCart.includes(cur.id) ? (
                           <div className={classes.favIcon}>
                             <ShoppingCartIcon />
                           </div>
@@ -288,8 +299,8 @@ export default function Home() {
                         }}
                       >
                         {ctx.loggedin &&
-                        ctx.loggedin.userData.wishlist &&
-                        ctx.loggedin.userData.wishlist.includes(cur.id) ? (
+                        userWishlist &&
+                        userWishlist.includes(cur.id) ? (
                           <div className={classes.favIcon}>
                             <FavoriteIcon />
                           </div>
@@ -413,8 +424,8 @@ export default function Home() {
                             }}
                           >
                             {ctx.loggedin &&
-                            ctx.loggedin.userData.cartItems &&
-                            ctx.loggedin.userData.cartItems.includes(cur.id) ? (
+                            userCart &&
+                            userCart.includes(cur.id) ? (
                               <div className={classes.favIcon}>
                                 <ShoppingCartIcon />
                               </div>
@@ -436,8 +447,8 @@ export default function Home() {
                             }}
                           >
                             {ctx.loggedin &&
-                            ctx.loggedin.userData.wishlist &&
-                            ctx.loggedin.userData.wishlist.includes(cur.id) ? (
+                            userWishlist &&
+                            userWishlist.includes(cur.id) ? (
                               <div className={classes.favIcon}>
                                 <FavoriteIcon />
                               </div>
@@ -639,9 +650,7 @@ export default function Home() {
                         itemToCart(cur.id);
                       }}
                     >
-                      {ctx.loggedin &&
-                      ctx.loggedin.userData.cartItems &&
-                      ctx.loggedin.userData.cartItems.includes(cur.id) ? (
+                      {ctx.loggedin && userCart && userCart.includes(cur.id) ? (
                         <div className={classes.favIcon}>
                           <ShoppingCartIcon />
                         </div>
@@ -663,8 +672,8 @@ export default function Home() {
                       }}
                     >
                       {ctx.loggedin &&
-                      ctx.loggedin.userData.wishlist &&
-                      ctx.loggedin.userData.wishlist.includes(cur.id) ? (
+                      userWishlist &&
+                      userWishlist.includes(cur.id) ? (
                         <div className={classes.favIcon}>
                           <FavoriteIcon />
                         </div>

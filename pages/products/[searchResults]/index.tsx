@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../../components/partials/Header";
 import classes from "../../../styles/searchResult.module.css";
 import { Select, MenuItem } from "@material-ui/core";
@@ -29,6 +29,13 @@ const searchResults = (props) => {
   const db = getFirestore();
   const ctx = useAppContext();
   const [takeToCart, setTakeToCart] = useState(false);
+  const [userCart, setUserCart] = useState([]);
+  const [userWishlist, setUserWishlist] = useState([]);
+
+  useEffect(() => {
+    ctx.loggedin && setUserCart(ctx.loggedin.userData.cartItems);
+    ctx.loggedin && setUserWishlist(ctx.loggedin.userData.wishlist);
+  }, [ctx.loggedin]);
 
   const handleChange = (event) => {
     setChange(event.target.value);
@@ -69,10 +76,12 @@ const searchResults = (props) => {
       const updatedArray = ctx.loggedin.userData.cartItems.filter((item) => {
         return item != id;
       });
+      setUserCart(updatedArray);
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         cartItems: updatedArray,
       });
     } else {
+      setUserCart((prvState) => [...prvState, id]);
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         cartItems: ctx.loggedin.userData.cartItems
           ? [...ctx.loggedin.userData.cartItems, id]
@@ -94,10 +103,12 @@ const searchResults = (props) => {
       const updatedWishlist = ctx.loggedin.userData.wishlist.filter((item) => {
         return item != id;
       });
+      setUserWishlist(updatedWishlist);
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         wishlist: updatedWishlist,
       });
     } else {
+      setUserWishlist((prvState) => [...prvState, id]);
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         wishlist: ctx.loggedin.userData.wishlist
           ? [...ctx.loggedin.userData.wishlist, id]
@@ -279,9 +290,7 @@ const searchResults = (props) => {
                       itemToCart(cur.id);
                     }}
                   >
-                    {ctx.loggedin &&
-                    ctx.loggedin.userData.cartItems &&
-                    ctx.loggedin.userData.cartItems.includes(cur.id) ? (
+                    {ctx.loggedin && userCart && userCart.includes(cur.id) ? (
                       <div className={classes.favIcon}>
                         <ShoppingCartIcon />
                       </div>

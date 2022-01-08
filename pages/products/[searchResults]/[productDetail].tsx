@@ -46,6 +46,9 @@ const productDetail = () => {
   const [addToWishlist, setAddtoWishlist] = useState(false);
 
   // ADDING ITEMS TO CART
+
+  
+
   const itemToCart = (id: number) => {
     // console.log(ctx.loggedin.userData.cartItems.length);
     if (ctx.loggedin && ctx.loggedin.userData.cartItems.includes(id)) {
