@@ -72,7 +72,10 @@ const searchResults = (props) => {
       return;
     }
 
-    if (ctx.loggedin.userData.cartItems.includes(id)) {
+    if (
+      ctx.loggedin.userData.cartItems &&
+      ctx.loggedin.userData.cartItems.includes(id)
+    ) {
       const updatedArray = ctx.loggedin.userData.cartItems.filter((item) => {
         return item != id;
       });
@@ -81,7 +84,7 @@ const searchResults = (props) => {
         cartItems: updatedArray,
       });
     } else {
-      setUserCart((prvState) => [...prvState, id]);
+      setUserCart((prvState) => (prvState ? [...prvState, id] : [id]));
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         cartItems: ctx.loggedin.userData.cartItems
           ? [...ctx.loggedin.userData.cartItems, id]
@@ -99,7 +102,10 @@ const searchResults = (props) => {
       return;
     }
 
-    if (ctx.loggedin.userData.wishlist.includes(id)) {
+    if (
+      ctx.loggedin.userData.wishlist &&
+      ctx.loggedin.userData.wishlist.includes(id)
+    ) {
       const updatedWishlist = ctx.loggedin.userData.wishlist.filter((item) => {
         return item != id;
       });
@@ -108,7 +114,7 @@ const searchResults = (props) => {
         wishlist: updatedWishlist,
       });
     } else {
-      setUserWishlist((prvState) => [...prvState, id]);
+      setUserWishlist((prvState) => (prvState ? [...prvState, id] : [id]));
       updateDoc(doc(db, "user", ctx.loggedin.userId), {
         wishlist: ctx.loggedin.userData.wishlist
           ? [...ctx.loggedin.userData.wishlist, id]

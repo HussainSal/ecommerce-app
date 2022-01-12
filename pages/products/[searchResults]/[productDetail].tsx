@@ -23,6 +23,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyle = makeStyles({
   buttonShadow: {
     transition: "all .2s",
+    textTransform: "capitalize",
     "&:hover": {
       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
     },
@@ -47,11 +48,12 @@ const productDetail = () => {
 
   // ADDING ITEMS TO CART
 
-  
-
   const itemToCart = (id: number) => {
     // console.log(ctx.loggedin.userData.cartItems.length);
-    if (ctx.loggedin && ctx.loggedin.userData.cartItems.includes(id)) {
+    if (
+      ctx.loggedin.userData.cartItems &&
+      ctx.loggedin.userData.cartItems.includes(id)
+    ) {
       return;
     } else {
       ctx.loggedin
@@ -70,7 +72,10 @@ const productDetail = () => {
   const itemToWishlist = (id: number) => {
     !ctx.loggedin && alert("Please login / signup to use this feature");
 
-    if (ctx.loggedin && ctx.loggedin.userData.wishlist.includes(id)) {
+    if (
+      ctx.loggedin.userData.wishlist &&
+      ctx.loggedin.userData.wishlist.includes(id)
+    ) {
       const updatedWishlist = ctx.loggedin.userData.wishlist.filter((item) => {
         return item != id;
       });
