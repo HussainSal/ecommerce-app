@@ -181,8 +181,6 @@ export default function Home() {
     router.push(`products/chair/${id}`);
   };
 
-  console.log(ctx.loggedin);
-
   return (
     <Fragment>
       <header className={classes.sectionHeader}>
@@ -249,6 +247,7 @@ export default function Home() {
             {featuredProductMatch.map((cur, i) => {
               return (
                 <div
+                  key={cur.id}
                   onClick={() => !takeToCart && takeToProductDetail(cur.id)}
                   className={classes.featuredProduct}
                 >
@@ -347,7 +346,6 @@ export default function Home() {
                       </Typography>
                     </div>
                   </Card>
-                  {console.log(ctx.currency)}
                 </div>
               );
             })}
@@ -396,7 +394,7 @@ export default function Home() {
                   cur.page == changeLatestCategory && (
                     // <NextLink key={i} href={`products/chair/${cur.id}`}>
 
-                    <Grid className={classes.latestGridBox} item>
+                    <Grid key={cur.id} className={classes.latestGridBox} item>
                       <Card
                         // style={{bo}}
                         onClick={() =>
@@ -630,6 +628,7 @@ export default function Home() {
             {trendingProductMatch.map((cur, i) => {
               return (
                 <div
+                  key={cur.id}
                   onClick={() => !takeToCart && takeToProductDetail(cur.id)}
                   className={classes.trendingProduct}
                 >
@@ -788,7 +787,7 @@ export default function Home() {
             <div className={classes.exclusiveSeatChairBox}>
               {trendingProductMatch2.map((cur, i) => {
                 return (
-                  <NextLink key={i} href={`products/chair/${cur.id}`}>
+                  <NextLink key={cur.id} href={`products/chair/${cur.id}`}>
                     <div className={classes.exclusiveSeatChair}>
                       <div className={classes.exclusiveChairImage}>
                         <Image alt="" src={cur.image} />

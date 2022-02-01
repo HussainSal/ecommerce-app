@@ -15,8 +15,6 @@ const useStyle = makeStyles({});
 
 const db = getFirestore();
 
-// console.log(item);
-
 const account = () => {
   const style = useStyle();
   const router = useRouter();
@@ -25,8 +23,6 @@ const account = () => {
   const [editable, setEditable] = useState(false);
   const [phonenumber, setPhoneumber] = useState("");
   const [address, setAddress] = useState("");
-
-  console.log(ctx.loggedin);
 
   //  SENDING UPDATED PHONENUMBER AND ADDRESS
 
@@ -58,12 +54,9 @@ const account = () => {
   const signoutHandler = () => {
     signOut(auth)
       .then(() => {
-        console.log("signout succesfully");
         router.push("./");
       })
-      .catch((error) => {
-        console.log("signout failed");
-      });
+      .catch((error) => {});
   };
 
   useEffect(() => {

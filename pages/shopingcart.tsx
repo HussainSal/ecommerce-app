@@ -128,8 +128,6 @@ const shopingCart = () => {
 
   let subTotal = total.reduce((acc, cur) => acc + cur, 0);
 
-  console.log(dataCart);
-
   return (
     <section>
       <Header type={"Shoping Cart"}></Header>
@@ -201,7 +199,7 @@ const shopingCart = () => {
               dataCart.map((cur) => {
                 return (
                   cur && (
-                    <Card className={classes.cartProductList}>
+                    <Card key={cur.id} className={classes.cartProductList}>
                       <div className={classes.cartProduct}>
                         <div className={classes.cartProductImage}>
                           <Image src={cur.image} alt="" />

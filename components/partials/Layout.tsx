@@ -98,8 +98,6 @@ const Layout = ({ children }) => {
     }
   }
   count_duplicate(data);
-  console.log(router.pathname);
-  console.log(ctx.currency);
 
   return (
     <Fragment>

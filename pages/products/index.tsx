@@ -34,7 +34,7 @@ const index = () => {
         >
           {productData.map((cur) => {
             return (
-              <Grid item>
+              <Grid key={cur.id} item>
                 <NextLink href={`products/${cur.type}`}>
                   <Card
                     style={{ transition: "all .3s" }}

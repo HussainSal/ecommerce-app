@@ -38,7 +38,6 @@ const productDetail = () => {
   const router = useRouter();
   const productId = router.query.productDetail;
   const productType = router.query.searchResult;
-  console.log(productType);
   const db = getFirestore();
   const dataMatch = productMatch(+productId);
   const stars = [1, 2, 3, 4, 5];
@@ -49,7 +48,6 @@ const productDetail = () => {
   // ADDING ITEMS TO CART
 
   const itemToCart = (id: number) => {
-    // console.log(ctx.loggedin.userData.cartItems.length);
     if (
       ctx.loggedin.userData.cartItems &&
       ctx.loggedin.userData.cartItems.includes(id)
@@ -251,7 +249,7 @@ const productDetail = () => {
           <div className={classes.descrptionHeading}>
             {additionalInfo.map((cur) => {
               return (
-                <Typography variant="h5" color="secondary">
+                <Typography key={cur} variant="h5" color="secondary">
                   {cur}
                 </Typography>
               );
@@ -291,7 +289,7 @@ const productDetail = () => {
             {stars.map((cur) => {
               return (
                 cur <= 4 && (
-                  <div className={classes.moredetailsDescription}>
+                  <div key={cur} className={classes.moredetailsDescription}>
                     <ArrowRight />
                     <Typography
                       variant="body2"

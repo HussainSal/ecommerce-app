@@ -53,7 +53,6 @@ const searchResults = (props) => {
   const router = useRouter();
 
   let searchedItem = router.query.searchResults;
-  console.log(searchedItem);
 
   const stars = [1, 2, 3, 4, 5];
 

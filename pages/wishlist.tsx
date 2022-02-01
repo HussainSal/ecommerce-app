@@ -115,6 +115,7 @@ const wishlist = () => {
                   return (
                     cur && (
                       <Card
+                        key={cur.id}
                         className={`${classes.cartProductList} ${classes.wishlistCard}`}
                       >
                         <div className={classes.cartProduct}>
