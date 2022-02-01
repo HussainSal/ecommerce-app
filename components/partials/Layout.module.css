@@ -1,6 +1,6 @@
 .navigation {
   background-color: #7e33e0;
-  max-width: 100vw;
+  max-width: 100%;
   height: 44px;
   display: flex;
   justify-content: flex-end;
@@ -145,4 +145,78 @@
 
 .search2::-webkit-input-placeholder {
   color: #8a8fb9;
+}
+
+/* BREAKPOINTS */
+
+@media (max-width: 1000px) {
+  .navigation2 {
+    /* display: flex; */
+    /* align-items: center; */
+    max-width: 800px;
+    max-height: 40px;
+    margin: 19px auto;
+  }
+
+  .linkBox2 {
+    margin-right: 50px;
+  }
+
+  .searchBox {
+    width: 150px;
+  }
+
+  /*FOOTER */
+  .slice1 {
+    margin-right: 25px;
+    width: 140px;
+  }
+  .slice2 {
+    margin-right: 10px !important;
+    width: 100px;
+  }
+}
+
+@media (max-width: 840px) {
+  .searchBox {
+    display: none;
+  }
+
+  .navBox {
+    margin-right: 62px;
+  }
+  .slice1 {
+    display: none;
+  }
+}
+
+@media (max-width: 550px) {
+  .slice2 {
+    display: none;
+  }
+  .linkBox2 {
+    margin-left: 0px;
+    max-width: 300px;
+
+    /* margin-right: 227px; */
+  }
+
+  .linkBox2:not(:last-child) {
+    margin-right: 2px;
+  }
+
+  .navigation2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    /* align-items: center; */
+    /* max-width: 800px;
+    max-height: 40px;
+    margin: 19px auto; */
+  }
+
+  .navBox {
+    margin-right: 0px;
+  }
 }

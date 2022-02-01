@@ -173,7 +173,7 @@ const login = () => {
               variant="contained"
               // onClick={loadingFunction}
               style={{
-                width: "472px",
+                width: "300px",
                 height: "47px",
                 textTransform: "capitalize",
                 marginTop: "20px",

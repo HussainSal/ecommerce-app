@@ -157,7 +157,7 @@ const searchResults = (props) => {
               <Typography>Per Page:</Typography>
               <input value="8" className={classes.inputPerPage} />
             </label>
-            <label className={classes.inputPerPageLabel}>
+            <label className={classes.inputPerPageLabel2}>
               <Typography>Sort By</Typography>
               <Select
                 id="demo-simple-select"
@@ -195,7 +195,6 @@ const searchResults = (props) => {
 
         {filteredData.slice((page - 1) * 8, page * 8).map((cur, i) => {
           return (
-            // <NextLink href={`${searchedItem}/${cur.id}`}>
             <Card
               onClick={() => !takeToCart && takeToProductDetail(cur.id)}
               key={cur.id}

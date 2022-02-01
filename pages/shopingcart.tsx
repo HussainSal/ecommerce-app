@@ -225,7 +225,7 @@ const shopingCart = () => {
                       {/*PRICE  */}
                       <Typography
                         style={{
-                          marginTop: "38px",
+                          marginTop: "55px",
                           textAlign: "center",
                           marginRight: "40px",
                         }}
@@ -250,7 +250,7 @@ const shopingCart = () => {
                           value={counts[cur.id]}
                           style={{
                             margin: "0px 10px",
-                            marginTop: "38px",
+                            marginTop: "55px",
                             textAlign: "center",
                             width: "50px",
                             height: "20px",
@@ -266,7 +266,7 @@ const shopingCart = () => {
 
                       <div className={classes.lastSlice}>
                         <Typography
-                          style={{ marginTop: "38px", textAlign: "center" }}
+                          style={{ marginTop: "55px", textAlign: "center" }}
                           color="secondary"
                           variant="body2"
                         >
@@ -297,7 +297,7 @@ const shopingCart = () => {
               variant="subtitle2"
               color="secondary"
               className={style.heading}
-              style={{ marginBottom: "42px" }}
+              style={{ marginBottom: "12px" }}
             >
               Cart Total
             </Typography>

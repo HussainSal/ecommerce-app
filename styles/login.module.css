@@ -31,3 +31,31 @@
   width: 580px;
   height: 550px;
 }
+
+@media (max-width: 560px) {
+  .card {
+    margin: auto;
+    max-width: 345px;
+    height: 472px;
+    /* padding-top: 25px; */
+  }
+
+  .input {
+    width: 310px;
+    height: 52px;
+  }
+}
+
+@media (max-width: 370px) {
+  .card {
+    margin: auto;
+    max-width: 320px;
+    height: 472px;
+    /* padding-top: 25px; */
+  }
+
+  .input {
+    width: 310px;
+    height: 52px;
+  }
+}

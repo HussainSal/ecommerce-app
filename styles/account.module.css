@@ -31,6 +31,7 @@
   align-items: center;
   justify-content: space-around;
   margin-top: 50px;
+
   /* justify-content: ; */
 }
 
@@ -71,4 +72,64 @@
   position: absolute;
   top: 25%;
   left: 27%;
+}
+
+@media (max-width: 1200px) {
+  .accountContainer {
+    /* display: flex; */
+    max-width: 550px;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: 120px; */
+    /* margin-bottom: 80px; */
+  }
+}
+
+@media (max-width: 550px) {
+  .accountContainer {
+    display: flex;
+    max-width: 450px;
+    justify-content: space-around;
+    flex-direction: column;
+    /* margin-top: 120px; */
+    /* margin-bottom: 80px; */
+    align-items: flex-start;
+  }
+
+  .profileContainer {
+    height: 450px;
+    width: 400px;
+    margin: 40px 0px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 450px) {
+  .accountContainer {
+    display: flex;
+    max-width: 360px;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profileItem {
+    width: 320px;
+  }
+
+  .profileContainer {
+    width: 330px;
+    display: flex;
+    align-items: flex-start;
+  }
 }

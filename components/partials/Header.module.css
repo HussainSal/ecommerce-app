@@ -11,3 +11,11 @@
 .subTextContainer {
   display: flex;
 }
+
+@media (max-width: 550px) {
+  .textContainer {
+    margin: 95px 0px 125px 30px;
+    display: inline-block;
+  }
+}
+

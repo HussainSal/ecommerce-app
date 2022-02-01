@@ -91,7 +91,7 @@ const account = () => {
               <Typography>Name :</Typography>
               <TextField
                 value={ctx.loggedin ? ctx.loggedin.userData.name : "Name"}
-                style={{ width: "270px" }}
+                style={{ width: "220px" }}
                 disabled
                 variant="outlined"
               ></TextField>
@@ -100,7 +100,7 @@ const account = () => {
               <Typography>Email :</Typography>
               <TextField
                 value={ctx.loggedin ? ctx.loggedin.userData.email : "Email"}
-                style={{ width: "270px" }}
+                style={{ width: "220px" }}
                 disabled
                 variant="outlined"
               ></TextField>
@@ -109,7 +109,7 @@ const account = () => {
               <Typography>Phone :</Typography>
               <TextField
                 type="number"
-                style={{ width: "270px" }}
+                style={{ width: "220px" }}
                 disabled={!editable}
                 onChange={(e) => {
                   setPhoneumber(e.target.value);
@@ -122,7 +122,7 @@ const account = () => {
               <Typography>Address :</Typography>
               <TextField
                 id="address"
-                style={{ width: "270px" }}
+                style={{ width: "220px" }}
                 disabled={!editable}
                 variant="outlined"
                 onChange={(e) => {

@@ -34,7 +34,7 @@ const AppContext = createContext({
 
 export function AppWrapper({ children }) {
   const [loggedin, setLoggedin] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [reset, setReset] = useState(0);
   const [currency, setCurrency] = useState(true);
   const router = useRouter();

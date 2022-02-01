@@ -37,6 +37,11 @@
   color: #8a8fb9;
 }
 
+.inputPerPageLabel2 {
+  display: flex;
+  color: #8a8fb9;
+}
+
 /* SEARCHED SECTION */
 
 .searchedOutputSection {
@@ -48,7 +53,7 @@
 }
 
 .searchedOutput {
-  width: 921px;
+  max-width: 921px;
   height: 230px;
   display: flex;
   margin: 28px;
@@ -144,4 +149,52 @@
   color: #f52b70;
   max-width: 19px;
   max-height: 19px;
+}
+
+@media (max-width: 800px) {
+  .searchedOutputImage {
+    padding: 50px;
+  }
+}
+
+@media (max-width: 600px) {
+  .inputPerPageLabel2 {
+    display: none;
+    color: #8a8fb9;
+  }
+
+  .searchResultItem {
+    width: 178px;
+  }
+
+  .searchedOutputImage {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 488px) {
+  .searchResultItem {
+    display: none;
+  }
+  .searchedOutputImage {
+    padding: 80px;
+  }
+
+  .searchedOutput {
+    max-width: 921px;
+    height: 480px;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .searchedOutputImage {
+    /* width: 284px;
+  height: 197px;
+  background-color: #dbdbdb;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+    /* padding: 70px;
+  transition: all 0.3s; */
+    margin-left: 0px;
+  }
 }

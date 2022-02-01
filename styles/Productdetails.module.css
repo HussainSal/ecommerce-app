@@ -7,7 +7,6 @@
   justify-content: space-around;
   box-shadow: 1px 10px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 130px;
-  /* border-radius: 25px; */
 }
 
 .imageBox {
@@ -77,7 +76,7 @@
   justify-content: start;
   padding-top: 110px;
   padding-bottom: 121px;
-  width: 1155px;
+  max-width: 1155px;
   cursor: pointer;
 }
 
@@ -109,5 +108,72 @@
 @keyframes heartPopUp {
   50% {
     transform: scale(1.07);
+  }
+}
+
+@media (max-width: 1200px) {
+  .card {
+    max-width: 800px;
+    height: 509px;
+    justify-content: space-between;
+  }
+
+  .imageBox {
+    width: 300px;
+    height: 487px;
+    padding: 50px;
+  }
+}
+
+@media (max-width: 800px) {
+  .card {
+    max-width: 600px;
+    height: 509px;
+    justify-content: space-between;
+  }
+
+  .imageBox {
+    width: 300px;
+    height: 487px;
+    padding: 50px;
+  }
+}
+
+@media (max-width: 680px) {
+  .card {
+    max-width: 500px;
+    height: 809px;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .imageBox {
+    width: 300px;
+    height: 207px;
+    padding: 50px;
+  }
+
+  .descrptionContainer {
+    display: none;
+  }
+
+  .textBox {
+    width: 400px;
+  }
+}
+
+@media (max-width: 500px) {
+  .card {
+    max-width: 320px;
+  }
+
+  .imageBox {
+    width: 250px;
+    height: 180px;
+    padding: 50px;
+  }
+  .textBox {
+    width: 300px;
   }
 }

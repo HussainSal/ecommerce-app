@@ -244,7 +244,6 @@ const Layout = ({ children }) => {
         </div>
       </nav>
       {children}
-
       <footer className={classes.footerBox}>
         <div className={classes.footer1}>
           <div className={classes.slice1}>

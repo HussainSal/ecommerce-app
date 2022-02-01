@@ -26,7 +26,12 @@ const index = () => {
     <section>
       <Header type={"Products"} />
       <div className={classes.container}>
-        <Grid style={{ marginTop: "103px" }} container columnGap="53px">
+        <Grid
+          style={{ marginTop: "103px" }}
+          container
+          columnGap="53px"
+          justifyContent="center"
+        >
           {productData.map((cur) => {
             return (
               <Grid item>
