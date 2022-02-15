@@ -80,3 +80,57 @@
   top: 346px;
   right: 285px;
 }
+
+.longTextfield {
+  width: 500px;
+}
+
+@media (max-width: 1850px) {
+  .imageBox {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .subContainer1 {
+    justify-content: center;
+  }
+
+  .subContainer1Right {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .subContainer1Left {
+    padding-left: 10px;
+  }
+
+  .sendMailBox {
+    max-width: 534px;
+    height: 414px;
+  }
+
+  .sendMailBoxSlice2 {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 300px;
+  }
+
+  .longTextfield {
+    width: 300px;
+  }
+
+  .sendMailBoxSlice1 {
+    flex-direction: column;
+    align-items: left;
+  }
+}
+
+@media (max-width: 550px) {
+  .sendMailBox {
+    max-width: 300px;
+    height: 414px;
+  }
+}

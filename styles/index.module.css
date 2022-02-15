@@ -258,7 +258,7 @@
 }
 
 .shopexOfferList {
-  width: 1164px;
+  max-width: 1164px;
   display: flex;
   justify-content: space-between;
 }
@@ -657,4 +657,11 @@
   color: #f52b70;
   max-width: 19px;
   max-height: 19px;
+}
+
+@media (max-width: 1150px) {
+  .shopexOfferList {
+    flex-direction: column;
+    align-items: center;
+  }
 }

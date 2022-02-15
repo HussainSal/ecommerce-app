@@ -98,21 +98,24 @@ const contactus = () => {
                   style={{ width: "255px" }}
                 ></TextField>
               </div>
-              <TextField
-                required
-                placeholder="Subject"
-                style={{ width: "534px", marginTop: "34px" }}
-              ></TextField>
-              <TextField
-                required
-                placeholder="Type Your Message"
-                style={{
-                  width: "534px",
-                  // height: "166px",
-                  marginTop: "47px",
-                  marginBottom: "30px",
-                }}
-              ></TextField>
+              <div className={classes.sendMailBoxSlice2}>
+                <TextField
+                  className={classes.longTextfield}
+                  required
+                  placeholder="Subject"
+                  style={{ marginTop: "34px" }}
+                ></TextField>
+                <TextField
+                  className={classes.longTextfield}
+                  required
+                  placeholder="Type Your Message"
+                  style={{
+                    // height: "166px",
+                    marginTop: "47px",
+                    marginBottom: "30px",
+                  }}
+                ></TextField>
+              </div>
               <Button
                 color="primary"
                 variant="contained"

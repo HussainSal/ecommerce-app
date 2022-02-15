@@ -10,17 +10,22 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  width: 1135px;
+  max-width: 1135px;
 }
 
 .imageBox {
-  width: 555px;
+  max-width: 555px;
   height: 390px;
 }
 
 .textBox {
-  width: 550px;
+  max-width: 550px;
+  height: 250px;
   margin-top: 40px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .featuers {
@@ -43,7 +48,7 @@
 }
 
 .reviewBox {
-  width: 689px;
+  max-width: 689px;
   height: 265px;
   display: flex;
   flex-direction: column;
@@ -84,4 +89,24 @@
 
 .activeClient {
   width: 30px;
+}
+
+@media (max-width: 1150px) {
+  .historyBox {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .featuers {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  .textBox {
+    margin-top: 0px;
+    height: 365px;
+  }
 }
