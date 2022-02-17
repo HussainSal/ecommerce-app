@@ -258,7 +258,7 @@
 }
 
 .shopexOfferList {
-  max-width: 1164px;
+  width: 1164px;
   display: flex;
   justify-content: space-between;
 }
@@ -663,5 +663,6 @@
   .shopexOfferList {
     flex-direction: column;
     align-items: center;
+    width: max-content;
   }
 }
