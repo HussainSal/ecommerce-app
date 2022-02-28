@@ -388,15 +388,24 @@ export default function Home() {
             })}
           </div>
           <div className={classes.latestProductList}>
-            <Grid container columnGap="37px" rowGap="120px">
+            <Grid
+              justifyContent="center"
+              container
+              columnGap="37px"
+              rowGap="120px"
+            >
               {latestProductMatch.map((cur, i) => {
                 return (
                   cur.page == changeLatestCategory && (
                     // <NextLink key={i} href={`products/chair/${cur.id}`}>
 
-                    <Grid key={cur.id} className={classes.latestGridBox} item>
+                    <Grid
+                      justifyContent="center"
+                      key={cur.id}
+                      className={classes.latestGridBox}
+                      item
+                    >
                       <Card
-                        // style={{bo}}
                         onClick={() =>
                           !takeToCart && takeToProductDetail(cur.id)
                         }

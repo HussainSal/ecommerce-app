@@ -2,11 +2,11 @@ import { ThemeProvider } from "@material-ui/styles";
 import "../styles/globals.css";
 import theme from "../theme";
 import Layout from "../components/partials/Layout";
-import Authcontext from "../store/authContext";
 import { initializeApp } from "firebase/app";
 import { AppWrapper } from "../store/authContext";
-// import { getFirestore } from "firebase/firestore";
+import Authcontext from "../store/authContext";
 
+// import { getFirestore } from "firebase/firestore";
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyCTR6jPCrHSJXxUaOmfsq6hXScTthW3CG0",
   authDomain: "ecommercetest-f9107.firebaseapp.com",

@@ -226,7 +226,7 @@ const Layout = ({ children }) => {
           </div>
           <form onSubmit={submitHandler} className={classes.searchBox}>
             <input ref={inputRef} className={classes.input} required />
-            <div className={classes.searchIcon}>
+            <div onClick={submitHandler} className={classes.searchIcon}>
               <Button
                 style={{
                   borderRadius: "0",

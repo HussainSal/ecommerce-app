@@ -35,7 +35,6 @@
 
 .promotionText {
   width: 644px;
-  /* height: 248px; */
 }
 
 .promotionChair {
@@ -192,7 +191,7 @@
 
 .latestProductList {
   margin-top: 50px;
-  width: 1164px;
+  max-width: 1164px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -659,10 +658,50 @@
   max-height: 19px;
 }
 
-@media (max-width: 1150px) {
+@media (max-width: 1650px) {
+  .imgContainer {
+    display: none;
+  }
+}
+
+@media (max-width: 1250px) {
   .shopexOfferList {
     flex-direction: column;
     align-items: center;
     width: max-content;
+  }
+
+  .featuredProductsList {
+    flex-direction: column;
+  }
+
+  .sectionUnique {
+    display: none;
+  }
+
+  .sectionDiscount {
+    display: none;
+  }
+
+  .trendingProductsList1 {
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+  }
+
+  .topCategoriesList {
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+  }
+
+  .promotionChair {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .promotionText {
+    width: 400px;
   }
 }

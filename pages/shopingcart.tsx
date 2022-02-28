@@ -39,8 +39,6 @@ const shopingCart = () => {
   const qtyRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    // setTimeout(() => {
-    // }, 100);
     setCartItem(ctx.loggedin && ctx.loggedin.userData.cartItems);
   }, [ctx.loggedin]);
 
@@ -244,6 +242,7 @@ const shopingCart = () => {
                         >
                           -
                         </Button>
+                        {/* counts[cur.id] */}
                         <input
                           value={counts[cur.id]}
                           style={{
