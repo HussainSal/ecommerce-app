@@ -143,7 +143,6 @@
   position: absolute;
   top: 10px;
   left: 5px;
-  /* display: flex; */
   display: none;
 }
 
@@ -702,6 +701,33 @@
 
 @media (max-width: 700px) {
   .promotionText {
-    width: 400px;
+    width: 350px;
+  }
+}
+
+@media (max-width: 460px) {
+  .latestProductsCategory {
+    justify-content: space-around;
+    width: 320px !important;
+  }
+
+  .trendingProductOffer {
+    width: 350px;
+  }
+
+  .trendingProductOffer3 {
+    width: 350px;
+  }
+
+  .featuredProduct:not(:last-child) {
+    margin-right: 0px;
+  }
+
+  .promotionText {
+    max-width: 320px;
+  }
+
+  .promotion {
+    margin-right: 0px;
   }
 }

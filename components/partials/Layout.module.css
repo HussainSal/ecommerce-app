@@ -151,8 +151,6 @@
 
 @media (max-width: 1000px) {
   .navigation2 {
-    /* display: flex; */
-    /* align-items: center; */
     max-width: 800px;
     max-height: 40px;
     margin: 19px auto;
@@ -197,8 +195,6 @@
   .linkBox2 {
     margin-left: 0px;
     max-width: 300px;
-
-    /* margin-right: 227px; */
   }
 
   .linkBox2:not(:last-child) {
@@ -208,12 +204,6 @@
   .navigation2 {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-
-    /* align-items: center; */
-    /* max-width: 800px;
-    max-height: 40px;
-    margin: 19px auto; */
   }
 
   .navBox {

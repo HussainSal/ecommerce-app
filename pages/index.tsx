@@ -43,7 +43,7 @@ const useStyle = makeStyles({
     color: "#151875",
   },
   card2: {
-    width: "360px",
+    width: "320px",
     Height: "306px",
     boxShadow: "0px 0px 0px rgba(0,0,0,0) !important",
   },
