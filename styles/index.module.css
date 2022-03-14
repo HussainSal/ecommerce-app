@@ -670,6 +670,11 @@
     width: max-content;
   }
 
+  .shopexOfferBox {
+    box-shadow: 2px 3px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+
   .featuredProductsList {
     flex-direction: column;
   }
@@ -688,6 +693,10 @@
     width: 300px;
   }
 
+  .trendingProduct {
+    margin-bottom: 30px;
+  }
+
   .topCategoriesList {
     flex-direction: column;
     align-items: center;
@@ -696,6 +705,14 @@
 
   .promotionChair {
     display: none;
+  }
+
+  .featuredproduct {
+    margin-right: 0px;
+  }
+
+  .featuredProduct:not(:last-child) {
+    margin-bottom: 29px;
   }
 }
 
@@ -717,10 +734,6 @@
 
   .trendingProductOffer3 {
     width: 350px;
-  }
-
-  .featuredProduct:not(:last-child) {
-    margin-right: 0px;
   }
 
   .promotionText {
