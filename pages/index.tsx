@@ -22,6 +22,8 @@ import { useAppContext } from "../store/authContext";
 import { useRouter } from "next/dist/client/router";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import * as Realm from "realm-web";
+import { async } from "@firebase/util";
 
 const db = getFirestore();
 
@@ -106,6 +108,7 @@ export default function Home() {
   const [userCart, setUserCart] = useState([]);
   const [userWishlist, setUserWishlist] = useState([]);
   const router = useRouter();
+  const [allProduct, setAllProduct] = useState([]);
 
   const [discountItemActiveLink, setDiscountItemActiveLink] =
     useState("Wood Chair");
@@ -116,6 +119,25 @@ export default function Home() {
     ctx.loggedin && setUserCart(ctx.loggedin.userData.cartItems);
     ctx.loggedin && setUserWishlist(ctx.loggedin.userData.wishlist);
   }, [ctx.loggedin]);
+
+  useEffect(() => {
+    const gettingProducts = async () => {
+      const REALM_APP_ID = "products-dyupk";
+      const app = new Realm.App({ id: REALM_APP_ID });
+      const credentials = Realm.Credentials.anonymous();
+      try {
+        const user = await app.logIn(credentials);
+        const allProduts = await user.functions.getAllProducts();
+        setAllProduct(allProduts);
+      } catch (err) {
+        console.error("Failed to log in", err);
+      }
+    };
+
+    gettingProducts();
+  }, []);
+
+  allProduct && console.log(allProduct);
 
   // ADDING ITEM TO CART
   const itemToCart = (id: number) => {
