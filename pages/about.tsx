@@ -1,4 +1,4 @@
-import React from "react";
+import React , from "react";
 import Header from "../components/partials/Header";
 import classes from "../styles/about.module.css";
 import meeting from "../assets/images/meeting.png";
@@ -9,6 +9,7 @@ import ShopexofferList from "../components/partials/ShopexofferList";
 import client1 from "../assets/images/client1.png";
 import client2 from "../assets/images/client2.png";
 import client3 from "../assets/images/client3.png";
+
 
 const useStyle = makeStyles({
   heading: {
@@ -30,6 +31,11 @@ const useStyle = makeStyles({
 
 const about = () => {
   const style = useStyle();
+
+  const timeout = setTimeout(()=>{
+      console.log('hello ')
+  },3000 )
+
 
   return (
     <section>
@@ -110,6 +116,7 @@ const about = () => {
               </Typography>
             </div>
             <Typography
+            onClick={()=>{}}
               variant="body1"
               style={{
                 textAlign: "center",

@@ -30,6 +30,8 @@ const AppContext = createContext({
   setReset: null,
   currency: true,
   setCurrency: null,
+  setLang: null,
+  lang: null,
 });
 
 export function AppWrapper({ children }) {
@@ -38,6 +40,7 @@ export function AppWrapper({ children }) {
   const [reset, setReset] = useState(0);
   const [currency, setCurrency] = useState(true);
   const router = useRouter();
+  const [lang, setLang] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -74,7 +77,16 @@ export function AppWrapper({ children }) {
 
   return (
     <AppContext.Provider
-      value={{ loggedin, loading, reset, setReset, currency, setCurrency }}
+      value={{
+        loggedin,
+        loading,
+        reset,
+        setReset,
+        currency,
+        setCurrency,
+        setLang,
+        lang,
+      }}
     >
       {children}
     </AppContext.Provider>

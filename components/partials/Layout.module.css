@@ -176,8 +176,15 @@
 }
 
 @media (max-width: 840px) {
+  .navigation2 {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
   .searchBox {
-    display: none;
+    position: absolute;
+    left: 6px;
+    top: -60px;
   }
 
   .navBox {
@@ -185,6 +192,18 @@
   }
   .slice1 {
     display: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .hektoHeading {
+    display: none;
+  }
+
+  .searchBox {
+    position: absolute;
+    left: 65px;
+    top: 60px;
   }
 }
 
@@ -204,6 +223,8 @@
   .navigation2 {
     display: flex;
     flex-direction: column;
+    height: 800px !important;
+    justify-content: flex-end;
   }
 
   .navBox {

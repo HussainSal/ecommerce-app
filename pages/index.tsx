@@ -17,13 +17,15 @@ import product6 from "../assets/images/trendingProduct(5).png";
 import NextLink from "next/link";
 import { allData } from "../assets/data/allData";
 import { Heart, AddToCart, Zoomin } from "../components/icons/icon";
-import { doc, updateDoc, getFirestore } from "firebase/firestore";
+import { doc, updateDoc, getFirestore, query } from "firebase/firestore";
 import { useAppContext } from "../store/authContext";
 import { useRouter } from "next/dist/client/router";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import * as Realm from "realm-web";
 import { async } from "@firebase/util";
+import en from "../assets/locales/en";
+import fr from "../assets/locales/fr";
 
 const db = getFirestore();
 
@@ -139,6 +141,17 @@ export default function Home() {
 
   allProduct && console.log(allProduct);
 
+  // let { locale } = router;
+  // let t = router.query.lang === "fr" ? fr : en;
+  // console.log(router);
+  // console.log(t);
+
+  // console.log(router.locale);
+  if (ctx.lang) {
+    router.locale = ctx.lang;
+  }
+  let t = router.locale === "fr" ? fr : router.locale === "en-US" ? en : "";
+
   // ADDING ITEM TO CART
   const itemToCart = (id: number) => {
     if (!ctx.loggedin) {
@@ -222,7 +235,7 @@ export default function Home() {
                 variant="h1"
                 style={{ textTransform: "capitalize", marginTop: 12 }}
               >
-                new furniture collection trends in 2021
+                {t.header /* new furniture collection trends in 2021 */}
               </Typography>
               <Typography
                 variant="subtitle1"

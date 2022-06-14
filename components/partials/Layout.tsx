@@ -74,6 +74,10 @@ const Layout = ({ children }) => {
     setcurrency(event.target.value);
   };
 
+  const languageChange = (event) => {
+    setcurrency(event.target.value);
+  };
+
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     const searchedData = inputRef.current?.value.toLocaleLowerCase();
@@ -104,6 +108,30 @@ const Layout = ({ children }) => {
       <nav className={classes.navigationComplete}>
         <div className={classes.navigation}>
           <div className={classes.navBox}>
+            <Box sx={{ minWidth: 60 }}>
+              <FormControl>
+                <Select
+                  className={style.select}
+                  id="demo-simple-select"
+                  value={currency}
+                  label="Age"
+                  onChange={languageChange}
+                  disableUnderline
+                >
+                  <MenuItem onClick={() => ctx.setLang("fr")} value="usd">
+                    <Typography className={style.menuItem} variant="subtitle1">
+                      Fr
+                    </Typography>
+                  </MenuItem>
+
+                  <MenuItem onClick={() => ctx.setLang("en-US")} value="inr">
+                    <Typography className={style.menuItem} variant="subtitle1">
+                      En
+                    </Typography>
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
             <Box sx={{ minWidth: 60 }}>
               <FormControl>
                 <Select
@@ -203,6 +231,7 @@ const Layout = ({ children }) => {
             <Typography
               style={{ color: "#0D0E43", cursor: "pointer" }}
               variant="h4"
+              className={classes.hektoHeading}
             >
               Hekto
             </Typography>
